@@ -18,7 +18,29 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 export default function RequestForm() {
-  const [open, setOpen] = useState(false);
+  const [w_ms_email_id, setw_ms_email_id] = useState(false);
+  const [w_a_submission_d, setw_a_submission_d] = useState(false);
+  const [w_name, setw_name] = useState(false);
+  const [w_email, setw_email] = useState(false);
+  const [w_p_number, setw_p_number] = useState(false);
+  const [w_nic, setw_nic] = useState(false);
+  const [w_organization, setw_organization] = useState(false);
+  const [w_occupation, setw_occupation] = useState(false);
+  const [w_name_c_attended, setw_name_c_attended] = useState(false);
+  const [w_name_lecturer, setw_name_lecturer] = useState(false);
+  const [w_s_date_course, setw_s_date_course] = useState(false);
+  const [w_e_date_course, setw_e_date_course] = useState(false);
+  const [w_c_o_a_submission, setw_c_o_a_submission] = useState(false);
+  const [w_tvec_certificate, setw_tvec_certificate] = useState(false);
+  const [w_k_a_cadd_center, setw_k_a_cadd_center] = useState(false);
+  const [w_r_cadd_center, setw_r_cadd_center] = useState(false);
+  const [w_r_l_experience, setw_r_l_experience] = useState(false);
+  const [w_l_t_proficiency, setw_l_t_proficiency] = useState(false);
+  const [w_s_coordination, setw_s_coordination] = useState(false);
+  const [w_c_fee_payment, setw_c_fee_payment] = useState(false);
+  const [w_c_person, setw_c_person] = useState(false);
+  const [w_feedbak, setw_feedbak] = useState(false);
+
   const vertical = "top";
   const horizontal = "right";
 
@@ -77,7 +99,49 @@ export default function RequestForm() {
       bank_slip,
     };
     if (ms_email_id == "") {
-      setOpen(true);
+      setw_ms_email_id(true);
+    } else if (a_submission_d == "") {
+      setw_a_submission_d(true);
+    } else if (name == "") {
+      setw_name(true);
+    } else if (email == "") {
+      setw_email(true);
+    } else if (p_number.length !== 10) {
+      setw_p_number(true);
+    } else if (nic.length != 10) {
+      setw_nic(true);
+    } else if (organization == "") {
+      setw_organization(true);
+    } else if ((occupation = "")) {
+      setw_occupation(true);
+    } else if (name_c_attended == "") {
+      setw_name_c_attended(true);
+    } else if (name_lecturer == "") {
+      setw_name_lecturer(true);
+    } else if (s_date_course == "") {
+      setw_s_date_course(true);
+    } else if (e_date_course == "") {
+      setw_e_date_course(true);
+    } else if (c_o_a_submission == "") {
+      setw_c_o_a_submission(true);
+    } else if (tvec_certificate == "") {
+      setw_tvec_certificate(true);
+    } else if (k_a_cadd_center == "") {
+      setw_k_a_cadd_center(true);
+    } else if (r_cadd_center == "") {
+      setw_r_cadd_center(false);
+    } else if (r_l_experience) {
+      setw_r_l_experience(false);
+    } else if (l_t_proficiency == "") {
+      setw_l_t_proficiency(true);
+    } else if (s_coordination == "") {
+      setw_s_coordination(true);
+    } else if (c_fee_payment == "") {
+      setw_c_fee_payment(true);
+    } else if (c_person == "") {
+      setw_c_person(true);
+    } else if (feedbak == "") {
+      setw_feedbak(true);
     } else {
       axios.post(`http://localhost:8070/student/requset`, data).then((res) => {
         console.log("Data Added");
@@ -89,7 +153,28 @@ export default function RequestForm() {
     if (reason === "clickaway") {
       return;
     }
-    setOpen(false);
+    setw_ms_email_id(false);
+    setw_a_submission_d(false);
+    setw_name(false);
+    setw_email(false);
+    setw_p_number(false);
+    setw_nic(false);
+    setw_organization(false);
+    setw_occupation(false);
+    setw_name_c_attended(false);
+    setw_name_lecturer(false);
+    setw_s_date_course(false);
+    setw_e_date_course(false);
+    setw_c_o_a_submission(false);
+    setw_tvec_certificate(false);
+    setw_k_a_cadd_center(false);
+    setw_r_cadd_center(false);
+    setw_r_l_experience(false);
+    setw_l_t_proficiency(false);
+    setw_s_coordination(false);
+    setw_c_fee_payment(false);
+    setw_c_person(false);
+    setw_feedbak(false);
   };
 
   return (
@@ -545,14 +630,223 @@ export default function RequestForm() {
         </Stack>
       </div>
       <Snackbar
-        open={open}
-        autoHideDuration={6000}
+        open={w_ms_email_id}
+        autoHideDuration={3000}
         onClose={handleClose}
         anchorOrigin={{ vertical, horizontal }}
-        key={vertical + horizontal}
       >
         <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
-          This is a success message!
+          Enter the your MS Teams EmailID
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={w_a_submission_d}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          Enter the your Assignment submission date
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={w_name}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          Enter the your Name (as in NIC/Passport) for entering on cetificate
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={w_email}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          Enter the your email address
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={w_p_number}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          Enter the your correct phone number
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={w_nic}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          Enter the your correct NIC number
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={w_organization}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          Enter the your Organization/School/Institution/University
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={w_occupation}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          Select the your Occupation
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={w_name_c_attended}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          Enter the your name of the course attended
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={w_name_lecturer}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          Enter the your name of the lecturer
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={w_s_date_course}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          Enter the your start date of the course
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={w_e_date_course}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          Enter the your end date of the course
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={w_c_o_a_submission}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          Select the your completed the online assignment submission
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={w_tvec_certificate}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          Select the do you require a TVEC Certificate
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={w_k_a_cadd_center}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          Select the how do you know about CADD Center
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={w_r_cadd_center}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          Select the Do you recommended CADD Center for others
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={w_r_l_experience}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          Select the rate the entire learning experience at CADD Center
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={w_l_t_proficiency}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          Select the rate the lecturer's training proficiency
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={w_s_coordination}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          Select the rate the student coordination
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={w_c_fee_payment}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          Select the completed the course fee payment
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={w_c_person}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          Select the name of the contact person
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={w_feedbak}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          Enter the Feekback/Suggestion
         </Alert>
       </Snackbar>
     </div>

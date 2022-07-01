@@ -66,7 +66,7 @@ export default function RequestForm() {
       feedbak,
       bank_slip,
     };
-    axios.post(`http://localhost:8070/testing/requset`, data).then((res) => {
+    axios.post(`http://localhost:8070/student/requset`, data).then((res) => {
       console.log("Data Added");
     });
   };

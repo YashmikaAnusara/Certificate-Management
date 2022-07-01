@@ -13,7 +13,7 @@ router.route("/requset").post((req, res) => {
   const reqdata = req.body
   pool.getConnection((err, connection) => {
     try {
-      connection.query("INSERT INTO test SET ?", reqdata, (error) => {
+      connection.query("INSERT INTO request SET ?", reqdata, (error) => {
         connection.release();
         if (error) {
           console.log("this is try error");

@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Radio from "@mui/material/Radio";
@@ -7,6 +8,7 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import axios from "axios"
 import "../CSS/Requsetpage.css";
 
 export default function RequestForm() {
@@ -35,6 +37,39 @@ export default function RequestForm() {
   const [c_person, setc_person] = useState("");
   const [feedbak, setfeedbak] = useState("");
   const [bank_slip, setbank_slip] = useState("");
+
+  const submithandler = (e) => {
+    const data = {
+      ms_email_id,
+      a_submission_d,
+      name,
+      email,
+      p_number,
+      nic,
+      organization,
+      occupation,
+      class_id,
+      name_cerificate,
+      name_c_attended,
+      name_lecturer,
+      s_date_course,
+      e_date_course,
+      c_o_a_submission,
+      tvec_certificate,
+      k_a_cadd_center,
+      r_cadd_center,
+      r_l_experience,
+      l_t_proficiency,
+      s_coordination,
+      c_fee_payment,
+      c_person,
+      feedbak,
+      bank_slip,
+    };
+    axios.post(`http://localhost:8070/testing/requset`, data).then((res) => {
+      console.log("Data Added");
+    });
+  };
 
   return (
     <div className="FromeBody">
@@ -483,7 +518,7 @@ export default function RequestForm() {
           </div>
         </Box>
         <Stack spacing={2} direction="row">
-          <Button type="submit" variant="contained">
+          <Button type="submit" variant="contained" onClick={submithandler}>
             Submit
           </Button>
         </Stack>

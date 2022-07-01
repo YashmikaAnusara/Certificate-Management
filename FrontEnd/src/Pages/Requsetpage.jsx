@@ -10,6 +10,32 @@ import Button from "@mui/material/Button";
 import "../CSS/Requsetpage.css";
 
 export default function RequestForm() {
+  const [ms_email_id, setms_email_id] = useState("");
+  const [a_submission_d, seta_submission_d] = useState("");
+  const [name, setname] = useState("");
+  const [email, setemail] = useState("");
+  const [p_number, setp_number] = useState("");
+  const [nic, setnic] = useState("");
+  const [organization, setorganization] = useState("");
+  const [occupation, setoccupation] = useState("");
+  const [class_id, setclass_id] = useState("");
+  const [name_cerificate, setname_cerificate] = useState("");
+  const [name_c_attended, setname_c_attended] = useState("");
+  const [name_lecturer, setname_lecturer] = useState("");
+  const [s_date_course, sets_date_course] = useState("");
+  const [e_date_course, sete_date_course] = useState("");
+  const [c_o_a_submission, setc_o_a_submission] = useState("");
+  const [tvec_certificate, settvec_certificate] = useState("");
+  const [k_a_cadd_center, setk_a_cadd_center] = useState("");
+  const [r_cadd_center, setr_cadd_center] = useState("");
+  const [r_l_experience, setr_l_experience] = useState("");
+  const [l_t_proficiency, setl_t_proficiency] = useState("");
+  const [s_coordination, sets_coordination] = useState("");
+  const [c_fee_payment, setc_fee_payment] = useState("");
+  const [c_person, setc_person] = useState("");
+  const [feedbak, setfeedbak] = useState("");
+  const [bank_slip, setbank_slip] = useState("");
+
   return (
     <div className="FromeBody">
       <div className="FromeCon">
@@ -25,6 +51,9 @@ export default function RequestForm() {
             label="MS Teams EmailID :"
             variant="outlined"
             value={ms_email_id}
+            onChange={(e) => {
+              setms_email_id(e.target.value);
+            }}
             required
           />
           <TextField
@@ -32,6 +61,9 @@ export default function RequestForm() {
             variant="outlined"
             type="date"
             value={a_submission_d}
+            onChange={(e) => {
+              seta_submission_d(e.target.value);
+            }}
             InputLabelProps={{
               shrink: true,
             }}
@@ -41,6 +73,9 @@ export default function RequestForm() {
             label="Name (as in NIC/Passport) for entering on cetificate :"
             variant="outlined"
             value={name}
+            onChange={(e) => {
+              setname(e.target.value);
+            }}
             required
           />
           <TextField
@@ -48,6 +83,9 @@ export default function RequestForm() {
             variant="outlined"
             type="email"
             value={email}
+            onChange={(e) => {
+              setemail(e.target.value);
+            }}
             required
           />
           <TextField
@@ -55,6 +93,9 @@ export default function RequestForm() {
             variant="outlined"
             type="number"
             value={p_number}
+            onChange={(e) => {
+              setp_number(e.target.value);
+            }}
             required
           />
           <TextField
@@ -62,6 +103,9 @@ export default function RequestForm() {
             variant="outlined"
             type="email"
             value={nic}
+            onChange={(e) => {
+              setnic(e.target.value);
+            }}
             required
           />
         </Box>
@@ -77,6 +121,9 @@ export default function RequestForm() {
             label="Organization/School/Institution/University :"
             variant="outlined"
             value={organization}
+            onChange={(e) => {
+              setorganization(e.target.value);
+            }}
             required
           />
         </Box>
@@ -88,6 +135,10 @@ export default function RequestForm() {
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
               name="radio-buttons-group"
+              value={occupation}
+              onChange={(e) => {
+                setoccupation(e.target.value);
+              }}
             >
               <FormControlLabel
                 value="Student"
@@ -129,22 +180,34 @@ export default function RequestForm() {
             label="Class ID (Leave blank if unknown) :"
             variant="outlined"
             value={class_id}
+            onChange={(e) => {
+              setclass_id(e.target.value);
+            }}
           />
           <TextField
             label="Name of Certificate applying for? (Leave blank if unknown) :"
             variant="outlined"
             value={name_cerificate}
+            onChange={(e) => {
+              setname_cerificate(e.target.value);
+            }}
           />
           <TextField
             label="Name of the Course Attended :"
             variant="outlined"
             value={name_c_attended}
+            onChange={(e) => {
+              setname_c_attended(e.target.value);
+            }}
             required
           />
           <TextField
             label="Name of the Lecturer :"
             variant="outlined"
             value={name_lecturer}
+            onChange={(e) => {
+              setname_lecturer(e.target.value);
+            }}
             required
           />
           <TextField
@@ -152,6 +215,9 @@ export default function RequestForm() {
             variant="outlined"
             type="date"
             value={s_date_course}
+            onChange={(e) => {
+              sets_date_course(e.target.value);
+            }}
             InputLabelProps={{
               shrink: true,
             }}
@@ -162,6 +228,9 @@ export default function RequestForm() {
             variant="outlined"
             type="date"
             value={e_date_course}
+            onChange={(e) => {
+              sete_date_course(e.target.value);
+            }}
             InputLabelProps={{
               shrink: true,
             }}
@@ -177,6 +246,10 @@ export default function RequestForm() {
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 name="radio-buttons-group"
+                value={c_o_a_submission}
+                onChange={(e) => {
+                  setc_o_a_submission(e.target.value);
+                }}
               >
                 <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
                 <FormControlLabel value="No" control={<Radio />} label="No" />
@@ -191,6 +264,10 @@ export default function RequestForm() {
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 name="radio-buttons-group"
+                value={tvec_certificate}
+                onChange={(e) => {
+                  settvec_certificate(e.target.value);
+                }}
               >
                 <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
                 <FormControlLabel value="No" control={<Radio />} label="No" />
@@ -205,6 +282,10 @@ export default function RequestForm() {
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 name="radio-buttons-group"
+                value={k_a_cadd_center}
+                onChange={(e) => {
+                  setk_a_cadd_center(e.target.value);
+                }}
               >
                 <FormControlLabel value="Web" control={<Radio />} label="Web" />
                 <FormControlLabel
@@ -228,6 +309,10 @@ export default function RequestForm() {
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 name="radio-buttons-group"
+                value={r_cadd_center}
+                onChange={(e) => {
+                  setr_cadd_center(e.target.value);
+                }}
               >
                 <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
                 <FormControlLabel value="No" control={<Radio />} label="No" />
@@ -247,6 +332,10 @@ export default function RequestForm() {
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 name="radio-buttons-group"
+                value={r_l_experience}
+                onChange={(e) => {
+                  setr_l_experience(e.target.value);
+                }}
               >
                 <FormControlLabel value="1" control={<Radio />} label="1" />
                 <FormControlLabel value="2" control={<Radio />} label="2" />
@@ -269,6 +358,10 @@ export default function RequestForm() {
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 name="radio-buttons-group"
+                value={l_t_proficiency}
+                onChange={(e) => {
+                  setl_t_proficiency(e.target.value);
+                }}
               >
                 <FormControlLabel value="1" control={<Radio />} label="1" />
                 <FormControlLabel value="2" control={<Radio />} label="2" />
@@ -291,6 +384,10 @@ export default function RequestForm() {
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 name="radio-buttons-group"
+                value={s_coordination}
+                onChange={(e) => {
+                  sets_coordination(e.target.value);
+                }}
               >
                 <FormControlLabel value="1" control={<Radio />} label="1" />
                 <FormControlLabel value="2" control={<Radio />} label="2" />
@@ -308,6 +405,10 @@ export default function RequestForm() {
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 name="radio-buttons-group"
+                value={c_fee_payment}
+                onChange={(e) => {
+                  setc_fee_payment(e.target.value);
+                }}
               >
                 <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
                 <FormControlLabel value="No" control={<Radio />} label="No" />
@@ -322,6 +423,10 @@ export default function RequestForm() {
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 name="radio-buttons-group"
+                value={c_person}
+                onChange={(e) => {
+                  setc_person(e.target.value);
+                }}
               >
                 <FormControlLabel
                   value="Ms. Shyama"
@@ -354,6 +459,9 @@ export default function RequestForm() {
               label="Feekback/Suggestion :"
               variant="outlined"
               value={feedbak}
+              onChange={(e) => {
+                setfeedbak(e.target.value);
+              }}
               required
             />
           </div>
@@ -364,6 +472,9 @@ export default function RequestForm() {
               variant="outlined"
               type="file"
               value={bank_slip}
+              onChange={(e) => {
+                setbank_slip(e.target.value);
+              }}
               InputLabelProps={{
                 shrink: true,
               }}

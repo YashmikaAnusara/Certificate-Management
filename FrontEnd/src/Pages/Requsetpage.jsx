@@ -21,11 +21,17 @@ export default function RequestForm() {
           noValidate
           autoComplete="off"
         >
-          <TextField label="MS Teams EmailID :" variant="outlined" required />
+          <TextField
+            label="MS Teams EmailID :"
+            variant="outlined"
+            value={ms_email_id}
+            required
+          />
           <TextField
             label="Assignment submission date :"
             variant="outlined"
             type="date"
+            value={a_submission_d}
             InputLabelProps={{
               shrink: true,
             }}
@@ -34,21 +40,30 @@ export default function RequestForm() {
           <TextField
             label="Name (as in NIC/Passport) for entering on cetificate :"
             variant="outlined"
+            value={name}
             required
           />
           <TextField
             label="Email Address :"
             variant="outlined"
             type="email"
+            value={email}
             required
           />
           <TextField
             label="Phone Number :"
             variant="outlined"
             type="number"
+            value={p_number}
             required
           />
-          <TextField label="NIC :" variant="outlined" type="email" required />
+          <TextField
+            label="NIC :"
+            variant="outlined"
+            type="email"
+            value={nic}
+            required
+          />
         </Box>
         <Box
           sx={{
@@ -61,6 +76,7 @@ export default function RequestForm() {
             fullWidth
             label="Organization/School/Institution/University :"
             variant="outlined"
+            value={organization}
             required
           />
         </Box>
@@ -71,7 +87,6 @@ export default function RequestForm() {
             </FormLabel>
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue="female"
               name="radio-buttons-group"
             >
               <FormControlLabel
@@ -113,25 +128,30 @@ export default function RequestForm() {
           <TextField
             label="Class ID (Leave blank if unknown) :"
             variant="outlined"
+            value={class_id}
           />
           <TextField
             label="Name of Certificate applying for? (Leave blank if unknown) :"
             variant="outlined"
+            value={name_cerificate}
           />
           <TextField
             label="Name of the Course Attended :"
             variant="outlined"
+            value={name_c_attended}
             required
           />
           <TextField
             label="Name of the Lecturer :"
             variant="outlined"
+            value={name_lecturer}
             required
           />
           <TextField
             label="Start date of the course :"
             variant="outlined"
             type="date"
+            value={s_date_course}
             InputLabelProps={{
               shrink: true,
             }}
@@ -141,6 +161,7 @@ export default function RequestForm() {
             label="End date of the course :"
             variant="outlined"
             type="date"
+            value={e_date_course}
             InputLabelProps={{
               shrink: true,
             }}
@@ -332,6 +353,7 @@ export default function RequestForm() {
               fullWidth
               label="Feekback/Suggestion :"
               variant="outlined"
+              value={feedbak}
               required
             />
           </div>
@@ -341,6 +363,7 @@ export default function RequestForm() {
               label="Upload bank slip :"
               variant="outlined"
               type="file"
+              value={bank_slip}
               InputLabelProps={{
                 shrink: true,
               }}

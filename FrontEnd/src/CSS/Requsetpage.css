@@ -1,0 +1,28 @@
+.FromeBody {
+  display: flex;
+  /* height: 100vh; */
+  justify-content: center;
+  align-items: center;
+}
+.FromeCon {
+  max-width: 1100px;
+  width: 100%;
+  background: rgb(255, 255, 255);
+  padding: 25px 30px;
+  border-radius: 5px;
+}
+.radiobutton {
+  margin-top: 8px;
+  margin-right: 8px;
+  margin-left: 8px;
+  display: grid;
+}
+.radiobutton_sub {
+  margin-bottom: 8px;
+  margin-right: 8px;
+}
+.textfeild_sub {
+  margin-top: 8px;
+  margin-right: 8px;
+  margin-bottom: 20px;
+}

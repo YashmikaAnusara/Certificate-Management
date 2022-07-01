@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.clearfix {
+    overflow: auto
+}
+.certificate-temp-add-btn-wrapper{
+    width: 100%;
+    padding-right: 25px;
+    margin-top: 20px;
+    margin-bottom:15px;
+}
+.certificate-temp-add-dis{
+    float: left;
+    font-size: 15px;
+    font-weight: 500;
+}
+ 
+.certificate-temp-add-btn{
+    float: right;
+    color:rgb(30, 92, 8)
+
+}
+.certificate-temp-add-btn:hover{
+    border-radius:50% ;
+    background-color:rgb(229, 255, 237);
+
+}
+
+.certificate-temp-body-wrapper{
+    width:100%;
+    padding-top: 20px;
+     overflow: hidden;
+}
+.certificate-temp-dis2{
+    font-size: 15px;
+    font-weight: 500;
+}
+.certificate-temp-wrapper{
+    width:150px;
+    height: 180px;
+    float: left;
+    background-color: rgb(247, 247, 247);
+    margin-top: 20px;
+    margin-right:10px ;
+    border: 1px solid rgb(213, 213, 213);
+    border-radius:5px;
+}
+.certificate-temp-wrapper:hover{
+    transform: scale(1.007); 
+}
+#deleteIcon{
+    margin-right: 5px;
+    margin-top: 5px;
+    float: right;
+    display: none;
+    color:rgb(250, 49, 49);
+    width:fit-content;
+}
+.certificate-temp-wrapper:hover #deleteIcon{
+    display: block; 
+}
+.pdf-icon-wrapper{
+    margin-top: 30px;
+}
+.pdf-icon{
+    width:100%;
+}
+.name-wrapper{
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+
+/* -------------------------------------------------- */
+
+.tempplate-adding-wrapper{
+    width:100%;
+    background-color: white;
+    margin-top: 40px;
+    border: 1px solid rgb(213, 213, 213);
+    border-radius: 5px;
+    padding: 20px;
+}
+ 
+.upload-btn{
+    float: right;
+    margin-right:10px
+}

@@ -68,7 +68,7 @@ sendMail()
   .catch((error) => console.log(error.message));
 
 app.use("/request", require("./Routes/request_route"));
-app.use("/testing", require("./Routes/sqldata"));
+app.use("/student", require("./Routes/sqldata"));
 
 //saveing templates...
 app.use("/template/save", upload.single("template"), function (req, res) {

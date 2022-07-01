@@ -8,10 +8,20 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import axios from "axios"
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import axios from "axios";
 import "../CSS/Requsetpage.css";
 
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 export default function RequestForm() {
+  const [open, setOpen] = useState(false);
+  const vertical = "top";
+  const horizontal = "right";
+
   const [ms_email_id, setms_email_id] = useState("");
   const [a_submission_d, seta_submission_d] = useState("");
   const [name, setname] = useState("");
@@ -66,9 +76,20 @@ export default function RequestForm() {
       feedbak,
       bank_slip,
     };
-    axios.post(`http://localhost:8070/student/requset`, data).then((res) => {
-      console.log("Data Added");
-    });
+    if (ms_email_id == "") {
+      setOpen(true);
+    } else {
+      axios.post(`http://localhost:8070/student/requset`, data).then((res) => {
+        console.log("Data Added");
+      });
+    }
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
   };
 
   return (
@@ -523,6 +544,17 @@ export default function RequestForm() {
           </Button>
         </Stack>
       </div>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+        key={vertical + horizontal}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          This is a success message!
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

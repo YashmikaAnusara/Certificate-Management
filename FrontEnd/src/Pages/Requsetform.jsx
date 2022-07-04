@@ -138,9 +138,7 @@ const PersonalDetails = () => {
         </Box>
         <Box
           sx={{
-            width: 966,
-            maxWidth: "100%",
-            m: 1,
+            "& > :not(style)": { m: 1, maxWidth: "98.5%", minWidth: "55ch" },
           }}
         >
           <Controller
@@ -601,8 +599,7 @@ const FeedbackPaymentDetails = () => {
       <div className="Form">
         <Box
           sx={{
-            width: 966,
-            maxWidth: "100%",
+            "& > :not(style)": { m: 1, maxWidth: "98.5%", minWidth: "55ch" },
           }}
         >
           <Controller

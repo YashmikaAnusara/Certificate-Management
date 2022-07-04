@@ -7,6 +7,7 @@ import AccountMenu from "../Components/Profile";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
+import BarChart from "../Components/BarChart";
 
 function AdminHome() {
   return (
@@ -49,8 +50,12 @@ function AdminHome() {
           </div>
           <p className="body-topic">Overview</p>
           <div className="admin-dashboard-graph-wrapper">
-            <div className="garph-wrapper1"></div>
-            <div className="garph-wrapper2"></div>
+            <div className="garph-wrapper1">
+              <BarChart/>
+            </div>
+            {/* <div className="garph-wrapper2">
+              <h1>hi2</h1>
+            </div> */}
           </div>
           {/* ------------------------------------------------------ */}
         </div>

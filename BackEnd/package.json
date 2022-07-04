@@ -22,7 +22,5 @@
     "nodemailer": "^6.7.5",
     "nodemon": "^2.0.18",
     "@pdftron/pdfnet-node": "^9.2.0-1"
-
   }
 }
-

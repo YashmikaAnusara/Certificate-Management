@@ -10,10 +10,10 @@ const pool = mysql.createPool({
 });
 
 router.route("/requset").post((req, res) => {
-  const reqdata = req.body
-  pool.getConnection((err, connection) => {
+  const reqdata = req.body;
+  pool.getConnection((err,connection) => {
     try {
-      connection.query("INSERT INTO test SET ?", reqdata, (error) => {
+      connection.query("INSERT INTO request SET ?", reqdata, (error) => {
         connection.release();
         if (error) {
           console.log("this is an error");
@@ -22,9 +22,8 @@ router.route("/requset").post((req, res) => {
         }
       });
     } catch (e) {
-      console.log('this is a try catch error');
+      console.log("this is a try catch error");
     }
   });
 });
-
 module.exports = router;

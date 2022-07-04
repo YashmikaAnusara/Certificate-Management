@@ -1,3 +1,6 @@
+.Form{
+  margin-top: 2%;
+}
 .FromeBody {
   display: flex;
   /* height: 100vh; */
@@ -5,7 +8,7 @@
   align-items: center;
 }
 .FromeCon {
-  max-width: 1100px;
+  max-width: 70%;
   width: 100%;
   background: rgb(255, 255, 255);
   padding: 25px 30px;

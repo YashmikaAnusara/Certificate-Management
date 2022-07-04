@@ -721,7 +721,7 @@ export default function RequsetForm() {
   const horizontal = "right";
 
   const [activeStep, setActiveStep] = useState(0);
-  const [skippedSteps, setSkippedSteps] = useState([]);
+  const [skippedSteps] = useState([]);
   const steps = getSteps();
 
   const isStepSkipped = (step) => {

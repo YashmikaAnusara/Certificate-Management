@@ -16,7 +16,7 @@ router.route("/requset").post((req, res) => {
       connection.query("INSERT INTO request SET ?", reqdata, (error) => {
         connection.release();
         if (error) {
-          console.log("this is try error");
+          console.log("this is an error");
         } else {
           res.json("Data Added");
         }

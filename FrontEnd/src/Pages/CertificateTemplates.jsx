@@ -141,7 +141,7 @@ function Templates(props) {
   };
   const tpmViewHandler = () => {
     axios({
-      url: `http://localhost:8070/request/template/${props.name}`,
+      url: `http://${Port}:8070/request/template/${props.name}`,
       method: "GET",
       responseType: "blob",
     })

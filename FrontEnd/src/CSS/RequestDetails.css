@@ -90,7 +90,7 @@
     width: 100%;    
     margin-bottom: 30px;
     margin-top: 20px;
-    margin-left: 20px;
+    padding-left: 20px;
     font-size: 14px;
     color: rgb(0, 0, 0)
 
@@ -135,4 +135,16 @@
 }
 .check-btn:hover{
     background-color:rgb(142, 193, 245);
+}
+.reject-reason-body{
+    padding: 20px;
+}
+.message-area{
+    width:95%;
+    padding: 10px;
+    font-size:14px;
+    resize:none;
+    outline:none;
+    border-radius: 8px;
+    margin-bottom: 20px;
 }

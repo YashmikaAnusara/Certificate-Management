@@ -103,6 +103,12 @@ function RejectCertificateDetails() {
                                 <p className='student-answer'>Yes</p>
                             </div>
                         </div>
+                        <hr />
+                        <div className='reject-reason-body'>
+                           <p style={{fontSize:"14px",fontWeight:"500",marginBottom:"15px"}}>Reason for Reject the Certificate</p>
+                           <p style={{fontSize:"14px"}}>Reason for Regect the Certificate</p>
+                        </div>
+
                     </div>
 
                     {/* ------------------------------------------------------ */}

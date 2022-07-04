@@ -3,10 +3,6 @@ import "../CSS/AdminHome.css";
 import AdminNavBar from "../Components/AdminNavBar";
 import MobNavBar from "../Components/MobNavBar";
 import AccountMenu from "../Components/Profile";
-
-import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
-import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
-import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 import BarChart from "../Components/BarChart";
 
 function AdminHome() {

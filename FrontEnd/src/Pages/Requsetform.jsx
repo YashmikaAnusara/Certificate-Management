@@ -760,17 +760,17 @@ export default function RequsetForm() {
     //     data.bank_slip,
     // }
 
-    if (activeStep == 0) {
-      if (data.ms_email_id == "") {
+    if (activeStep === 0) {
+      if (data.ms_email_id === "") {
         setw_ms_email_id(true);
         setActiveStep(activeStep);
-      } else if (data.a_submission_d == "") {
+      } else if (data.a_submission_d === "") {
         setw_a_submission_d(true);
         setActiveStep(activeStep);
-      } else if (data.name == "") {
+      } else if (data.name === "") {
         setw_name(true);
         setActiveStep(activeStep);
-      } else if (data.email == "") {
+      } else if (data.email === "") {
         setw_email(true);
         setActiveStep(activeStep);
       } else if (data.p_number.length !== 10) {
@@ -779,74 +779,74 @@ export default function RequsetForm() {
       } else if (data.nic.length !== 10) {
         setw_nic(true);
         setActiveStep(activeStep);
-      } else if (data.organization == "") {
+      } else if (data.organization === "") {
         setw_organization(true);
         setActiveStep(activeStep);
-      } else if (data.occupation == "") {
+      } else if (data.occupation === "") {
         setw_occupation(true);
         setActiveStep(activeStep);
       } else {
         setActiveStep(activeStep + 1);
       }
-    } else if (activeStep == 1) {
-      if (data.name_c_attended == "") {
+    } else if (activeStep === 1) {
+      if (data.name_c_attended === "") {
         setw_name_c_attended(true);
         setActiveStep(activeStep);
-      } else if (data.name_lecturer == "") {
+      } else if (data.name_lecturer === "") {
         setw_name_lecturer(true);
         setActiveStep(activeStep);
       } else if ((data.s_date_course = "")) {
         setw_s_date_course(true);
         setActiveStep(activeStep);
-      } else if (data.e_date_course == "") {
+      } else if (data.e_date_course === "") {
         setw_e_date_course(true);
         setActiveStep(activeStep);
       } else {
         setActiveStep(activeStep + 1);
       }
-    } else if (activeStep == 2) {
-      if (data.c_o_a_submission == "") {
+    } else if (activeStep === 2) {
+      if (data.c_o_a_submission === "") {
         setw_c_o_a_submission(true);
         setActiveStep(activeStep);
       } else if ((data.tvec_certificate = "")) {
         setw_tvec_certificate(true);
         setActiveStep(activeStep);
-      } else if (data.k_a_cadd_center == "") {
+      } else if (data.k_a_cadd_center === "") {
         setw_k_a_cadd_center(true);
         setActiveStep(activeStep);
-      } else if (data.r_cadd_center == "") {
+      } else if (data.r_cadd_center === "") {
         setw_r_cadd_center(false);
         setActiveStep(activeStep);
-      } else if (data.r_l_experience == "") {
+      } else if (data.r_l_experience === "") {
         setw_r_l_experience(false);
         setActiveStep(activeStep);
-      } else if (data.l_t_proficiency == "") {
+      } else if (data.l_t_proficiency === "") {
         setw_l_t_proficiency(true);
         setActiveStep(activeStep);
-      } else if (data.s_coordination == "") {
+      } else if (data.s_coordination === "") {
         setw_s_coordination(true);
         setActiveStep(activeStep);
-      } else if (data.c_fee_payment == "") {
+      } else if (data.c_fee_payment === "") {
         setw_c_fee_payment(true);
         setActiveStep(activeStep);
-      } else if (data.c_person == "") {
+      } else if (data.c_person === "") {
         setw_c_person(true);
         setActiveStep(activeStep);
       } else {
         setActiveStep(activeStep + 1);
       }
-    } else if (activeStep == 3) {
-      if (data.feedbak == "") {
+    } else if (activeStep === 3) {
+      if (data.feedbak === "") {
         setw_feedbak(true);
         setActiveStep(activeStep);
-      } else if (data.bank_slip == "") {
+      } else if (data.bank_slip === "") {
         setw_bank_slip(true);
         setActiveStep(activeStep);
       } else {
         setActiveStep(activeStep + 1);
       }
     }
-    if (activeStep == steps.length - 1) {
+    if (activeStep === steps.length - 1) {
       axios.post(`http://localhost:8070/student/requset`, data).then((res) => {
         console.log("Data Added");
         setActiveStep(activeStep + 1);
@@ -856,7 +856,7 @@ export default function RequsetForm() {
     // else {
     //   setActiveStep(activeStep + 1);
     //   setSkippedSteps(
-    //     skippedSteps.filter((skipItem) => skipItem !== activeStep)
+    //     skippedSteps.filter((skipItem) => skipItem !=== activeStep)
     //   );
     // }
   };

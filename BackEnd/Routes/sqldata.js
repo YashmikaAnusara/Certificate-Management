@@ -11,7 +11,7 @@ const pool = mysql.createPool({
 
 router.route("/requset").post((req, res) => {
   const reqdata = req.body;
-  pool.getConnection((connection) => {
+  pool.getConnection((err,connection) => {
     try {
       connection.query("INSERT INTO request SET ?", reqdata, (error) => {
         connection.release();
@@ -26,5 +26,4 @@ router.route("/requset").post((req, res) => {
     }
   });
 });
-
 module.exports = router;

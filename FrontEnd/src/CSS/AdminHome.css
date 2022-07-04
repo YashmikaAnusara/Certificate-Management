@@ -152,7 +152,7 @@
   border-radius: 5px;
   background-color: rgb(244, 188, 68);
   padding-top: 3px;
-  padding-left: 10px;
+  padding-left: 18px;
   color: white;
 }
 .card-detail-box2 {
@@ -161,9 +161,9 @@
   float: left;
   margin: 10px;
   border-radius: 5px;
-  background-color: rgb(102, 186, 255);
+  background-color: rgb(28, 212, 7);
   padding-top: 3px;
-  padding-left: 10px;
+  padding-left: 25px;
   color: white;
 }
 .card-detail-box3 {
@@ -174,7 +174,7 @@
   border-radius: 5px;
   background-color: rgb(255, 88, 100);
   padding-top: 3px;
-  padding-left: 10px;
+  padding-left: 18px;
   color: white;
 }
 
@@ -196,6 +196,54 @@
 .garph-wrapper2 {
   width: 50%;
   background-color: rgb(255, 255, 255);
+}
+.pending {
+  color: rgb(255, 255, 255);
+  animation: blinkText 1s infinite;
+}
+@keyframes blinkText {
+  0% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 1px 0px 30px rgb(255, 255, 255);
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+.Issued {
+  color: rgb(255, 255, 255);
+  animation: blinkText 1s infinite;
+}
+@keyframes blinkText {
+  0% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 1px 0px 30px rgb(255, 255, 255);
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+.Rejected {
+  color: rgb(255, 255, 255);
+  animation: blinkText 1s infinite;
+}
+@keyframes blinkText {
+  0% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 1px 0px 30px rgb(255, 255, 255);
+  }
+  100% {
+    opacity: 0.1;
+  }
 }
 @media screen and (max-width: 850px) {
   .admin-dashboard-graph-wrapper {

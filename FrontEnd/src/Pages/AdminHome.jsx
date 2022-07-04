@@ -30,28 +30,31 @@ function AdminHome() {
               <p className="card-topic">Total Pending Requests</p>
               <p className="card-detail">1000</p>
               <div className="card-detail-box1">
-                <MoreHorizOutlinedIcon />
+                <h4 className="pending">Pending</h4>
+                {/* <MoreHorizOutlinedIcon /> */}
               </div>
             </div>
             <div className="card2-wrapper">
               <p className="card-topic">Total Issued Certificates</p>
               <p className="card-detail">1000</p>
               <div className="card-detail-box2 ">
-                <DoneOutlinedIcon />
+                <h4 className="Issued">Issued</h4>
+                {/* <DoneOutlinedIcon /> */}
               </div>
             </div>
             <div className="card3-wrapper">
               <p className="card-topic">Total Rejected Certificates</p>
               <p className="card-detail">1000</p>
               <div className="card-detail-box3">
-                <ClearOutlinedIcon />
+                <h4 className="Rejected">Rejected</h4>
+                {/* <ClearOutlinedIcon /> */}
               </div>
             </div>
           </div>
           <p className="body-topic">Overview</p>
           <div className="admin-dashboard-graph-wrapper">
             <div className="garph-wrapper1">
-              <BarChart/>
+              <BarChart />
             </div>
             {/* <div className="garph-wrapper2">
               <h1>hi2</h1>

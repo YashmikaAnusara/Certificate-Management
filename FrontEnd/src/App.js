@@ -9,7 +9,7 @@ import IssuedCertificateDetails from "./Components/IssusedCertificateDetails";
 import RejectCertificateDetails from "./Components/RejectCertificateDetails";
 import CertificateTemplates from "./Pages/CertificateTemplates";
 import Certificateview from "./Pages/Certificateview";
-import RequestForm from "./Pages/Requsetpage";
+import RequestForm from "./Pages/Requsetform";
 
 function App() {
   return (

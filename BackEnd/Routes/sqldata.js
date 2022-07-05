@@ -9,6 +9,7 @@ const pool = mysql.createPool({
   port: 3306,
 });
 
+// requset the form api
 router.route("/requset").post((req, res) => {
   const reqdata = req.body;
   pool.getConnection((err,connection) => {
@@ -23,6 +24,24 @@ router.route("/requset").post((req, res) => {
       });
     } catch (e) {
       console.log("this is a try catch error");
+    }
+  });
+});
+
+//get the all request
+router.route("/test").get((req, res) => {
+  pool.getConnection((err, connection) => {
+    try {
+      connection.query("SELECT * from test", (error, rows) => {
+        connection.release();
+        if (error) {
+          console.log(err);
+        } else {
+          res.json(rows);
+        }
+      });
+    } catch (e) {
+      console.log(e);
     }
   });
 });

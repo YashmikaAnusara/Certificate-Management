@@ -25,7 +25,7 @@ function IssuedCertificate() {
                     {/* ------------------------------------------------------ */}
                     <div className='Issued-request-status-wrapper clearfix'>
                         <div><input type="search" placeholder='Search...' className='certificate-request-search' /> </div>
-                        <div className='Issued-request-status'> <FiberManualRecordIcon fontSize='small' style={{ color: "green" }} /><p style={{ marginLeft: "5px", fontSize: "14px", color: "black" }}>Approved</p> </div>
+                        <div className='Issued-request-status'><div className='approved'> <FiberManualRecordIcon fontSize='small' style={{ color: "green" }} /></div><p style={{ marginLeft: "5px", fontSize: "14px", color: "black" }}>Approved</p> </div>
                     </div>
                     <div className='Issued-request-table-wrapper'>
                         <div className='Issued-request-table-header'>

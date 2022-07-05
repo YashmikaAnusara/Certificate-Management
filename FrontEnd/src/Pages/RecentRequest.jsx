@@ -26,7 +26,7 @@ function CertificateRequest() {
                     {/* ------------------------------------------------------ */}
                     <div className='certificate-request-status-wrapper clearfix'>
                         <div><input type="search" placeholder='Search...' className='certificate-request-search'/> </div>
-                        <div className='certificate-request-status'> <FiberManualRecordIcon fontSize='small' style={{color:"rgb(239, 129, 10)"}}/><p style={{marginLeft:"5px",fontSize:"14px",color: "black"}}>Pending</p> </div>
+                        <div className='certificate-request-status'><div className='pending'> <FiberManualRecordIcon fontSize='small' style={{color:"rgb(239, 129, 10)"}}/></div><p style={{marginLeft:"5px",fontSize:"14px",color: "black"}}>Pending</p> </div>
                     </div>
                     <div className='pending-request-table-wrapper'>
                         <div className='pending-request-table-header'>

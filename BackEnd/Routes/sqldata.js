@@ -12,7 +12,7 @@ const pool = mysql.createPool({
 // requset the form api
 router.route("/requset").post((req, res) => {
   const reqdata = req.body;
-  pool.getConnection((err,connection) => {
+  pool.getConnection((err, connection) => {
     try {
       connection.query("INSERT INTO request SET ?", reqdata, (error) => {
         connection.release();
@@ -32,7 +32,7 @@ router.route("/requset").post((req, res) => {
 router.route("/test").get((req, res) => {
   pool.getConnection((err, connection) => {
     try {
-      connection.query("SELECT * from test", (error, rows) => {
+      connection.query("SELECT COUNT(id) from request", (error, rows) => {
         connection.release();
         if (error) {
           console.log(err);

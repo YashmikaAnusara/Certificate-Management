@@ -204,7 +204,39 @@
   background-color: rgb(255, 255, 255);
   border-radius: 18px;
 }
-.pending {
+.pendingadmin {
+  color: rgb(255, 255, 255);
+  animation: blinkText 1.5s infinite;
+}
+@keyframes blinkText {
+  0% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 1px 0px 30px rgb(255, 255, 255);
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+/* .Issuedadmin {
+  color: rgb(255, 255, 255);
+  animation: blinkText 2s infinite;
+}
+@keyframes blinkText {
+  0% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 1px 0px 30px rgb(255, 255, 255);
+  }
+  100% {
+    opacity: 0.1;
+  }
+} */
+/* .Rejectedadmin {
   color: rgb(255, 255, 255);
   animation: blinkText 1s infinite;
 }
@@ -219,39 +251,7 @@
   100% {
     opacity: 0.1;
   }
-}
-.Issued {
-  color: rgb(255, 255, 255);
-  animation: blinkText 1s infinite;
-}
-@keyframes blinkText {
-  0% {
-    opacity: 0.1;
-  }
-  50% {
-    opacity: 1;
-    text-shadow: 1px 0px 30px rgb(255, 255, 255);
-  }
-  100% {
-    opacity: 0.1;
-  }
-}
-.Rejected {
-  color: rgb(255, 255, 255);
-  animation: blinkText 1s infinite;
-}
-@keyframes blinkText {
-  0% {
-    opacity: 0.1;
-  }
-  50% {
-    opacity: 1;
-    text-shadow: 1px 0px 30px rgb(255, 255, 255);
-  }
-  100% {
-    opacity: 0.1;
-  }
-}
+} */
 @media screen and (max-width: 850px) {
   .admin-dashboard-graph-wrapper {
     width: 100%;

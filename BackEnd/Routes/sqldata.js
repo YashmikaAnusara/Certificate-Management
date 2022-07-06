@@ -181,6 +181,71 @@ router.route("/rejected").get((req, res) => {
   });
 });
 
+//get the all pending request for chart
+router.route("/pending/count").get((req, res) => {
+  pool.getConnection((err, connection) => {
+    try {
+      connection.query(
+        "SELECT COUNT(s_month) as pendingcount from request;",
+        (error, rows) => {
+          let data=rows[0]
+          connection.release();
+          if (error) {
+            console.log(err);
+          } else {
+            res.json(data);
+          }
+        }
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  });
+});
+
+//get the all Issued request for chart
+router.route("/issued/count").get((req, res) => {
+  pool.getConnection((err, connection) => {
+    try {
+      connection.query(
+        "SELECT COUNT(s_month) as issuedcount from issued;",
+        (error, rows) => {
+          let data = rows[0];
+          connection.release();
+          if (error) {
+            console.log(err);
+          } else {
+            res.json(data);
+          }
+        }
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  });
+});
+
+//get the all rejected request for chart
+router.route("/rejected/count").get((req, res) => {
+  pool.getConnection((err, connection) => {
+    try {
+      connection.query(
+        "SELECT COUNT(s_month) as rejectedcount from rejected;",
+        (error, rows) => {
+          let data = rows[0];
+          connection.release();
+          if (error) {
+            console.log(err);
+          } else {
+            res.json(data);
+          }
+        }
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  });
+});
 
 //Admin Login API
 router.route("/login/:user/:pass").get((req, res) => {

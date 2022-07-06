@@ -1,49 +1,49 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {useParams,useNavigate} from "react-router-dom";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import "../CSS/AdminHome.css";
 import AdminNavBar from "../Components/AdminNavBar";
 import MobNavBar from "../Components/MobNavBar";
 import AccountMenu from "../Components/Profile";
-import FileDownload from "js-file-download";
-import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Port from "../port";
 import Loader from "../Components/Loader";
 function Certificateview() {
   const params = useParams();
-  const navigate = useNavigate();
+  const navigate=useNavigate()
   const [isOpen, setIsOpen] = useState(false);
-  const [data, setData] = useState();
+  const [details, setDetails] = useState({});
+  const [downloadBtn, setDownloadBtn] = useState(false);
+
   const id = params.id;
-  const backBtnHandler = () => {
-    navigate(-1);
-  };
+  const nic = params.nic;
+  const tmpName=params.tempid;
 
   useEffect(() => {
+    axios
+      .get(`http://${Port}:8070/request/details/${id}/${nic}`)
+      .then((res) => {
+        setDetails(res.data);
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }, [nic, id]);
+
+  const viewHandler = () => {
     axios({
       url: `http://${Port}:8070/request/certificate/${id}`,
       method: "GET",
       responseType: "blob",
     })
       .then((res) => {
-        setData(res.data);
+        const file = new Blob([res.data], { type: "application/pdf" });
+        const fileURL = URL.createObjectURL(file);
+        window.open(fileURL);
       })
       .catch((err) => {
         alert(err);
       });
-  }, [id]);
-
-  const viewHandler = () => {
-    const file = new Blob([data], { type: "application/pdf" });
-    const fileURL = URL.createObjectURL(file);
-    window.open(fileURL);
-  };
-
-  const downloadBtnHandler = () => {
-    FileDownload(data, `${id}.pdf`);
   };
 
   const sendhandler = () => {
@@ -51,12 +51,10 @@ function Certificateview() {
       "Are you sure want to send this certificate?"
     );
     if (confirmBox === true) {
-
       setIsOpen(true);
-      axios.post(``)
-        .then((res) => {
-
-        })
+      axios
+        .post(``)
+        .then((res) => {})
         .catch((err) => {
           alert(err);
         });
@@ -65,20 +63,43 @@ function Certificateview() {
 
   const cancelHandler = () => {
     const confirmBox = window.confirm(
-        "Are you sure want to cancel this request?"
-      );
-      if (confirmBox === true) {
-        setIsOpen(true);
-        
-        axios.post(``)
-          .then((res) => {
+      "Are you sure want to cancel this request?"
+    );
+    if (confirmBox === true) {
+      setIsOpen(true);
+      axios
+      .delete(`http://${Port}:8070/request/delete/certificate/${id}`)
+      .then((res) => {
+        if(res.data===true)
+        setTimeout(()=>{
+          setIsOpen(false);
+          navigate('/pending/request')
 
-          })
-          .catch((err) => {
-            alert(err);
-          });
-      }
+        },2000)
+      })
+      .catch((err) => {
+        alert(err);
+      });
+    }
   };
+
+  const certificateGenarateHandler = () => {
+    setIsOpen(true);
+    axios
+        .get(`http://${Port}:8070/request/genarate/certificate/${id}/${tmpName}`)
+        .then((res) => {
+          if(res.data===true){
+            setIsOpen(false);
+            setDownloadBtn(true)
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        });
+
+
+  };
+
   return (
     <div className="container">
       <Loader open={isOpen} />
@@ -94,16 +115,23 @@ function Certificateview() {
         </div>
         <div className="body-container">
           {/* ------------------------------------------------------ */}
-          <ArrowBackIcon onClick={backBtnHandler} className="back-btn" />
-          <RemoveRedEyeIcon onClick={viewHandler} className="download-btn" />
-          <FileDownloadOutlinedIcon
-            onClick={downloadBtnHandler}
-            className="download-btn"
-          />
-          <p className="download-btn">
-            Check the certificate befor send it...{" "}
-          </p>
-          <br />
+          <br/>
+          {downloadBtn ? (
+            <div>
+              <RemoveRedEyeIcon
+                onClick={viewHandler}
+                className="download-btn"
+              />
+              <p className="download-btn">
+                Check the certificate befor send it...{" "}
+              </p>
+            </div>
+          ) : (
+            <p className="download-btn" style={{color:"blue"}}>
+                Click "Genarate" Button to get a certificate...
+            </p>
+          )}
+
           <br />
           <br />
           <br />
@@ -119,13 +147,27 @@ function Certificateview() {
                 <p className="student-question">Assignment Submission Date</p>
               </div>
               <div className="student-answer-wrapper">
-                <p className="student-answer">Registration No</p>
-                <p className="student-answer">Student Name</p>
-                <p className="student-answer">NIC</p>
-                <p className="student-answer">Email Address</p>
-                <p className="student-answer">Contact No</p>
-                <p className="student-answer">Occupation</p>
-                <p className="student-answer">Assignment Submission Date</p>
+                <p className="student-answer">
+                  {details.nic ? details.nic : "-"}
+                </p>
+                <p className="student-answer">
+                  {details.name ? details.name : "-"}
+                </p>
+                <p className="student-answer">
+                  {details.nic ? details.nic : "-"}
+                </p>
+                <p className="student-answer">
+                  {details.email ? details.email : "-"}
+                </p>
+                <p className="student-answer">
+                  {details.p_number ? details.p_number : "-"}
+                </p>
+                <p className="student-answer">
+                  {details.occupation ? details.occupation : "-"}
+                </p>
+                <p className="student-answer">
+                  {details.a_submission_d ? details.a_submission_d : "-"}
+                </p>
               </div>
             </div>
           </div>
@@ -134,14 +176,24 @@ function Certificateview() {
           <hr />
           <br />
           <br />
-          <center>
-            <button className="approve-btn" onClick={sendhandler}>
-              Send
+          {downloadBtn ? (
+            <div>
+              <center>
+                <button className="approve-btn" onClick={sendhandler}>
+                  Send
+                </button>
+                <button className="reject-btn" onClick={cancelHandler}>
+                  Cancel
+                </button>
+              </center>
+            </div>
+          ) : (
+            <center> 
+            <button className="check-btn" onClick={certificateGenarateHandler}>
+              Genarate
             </button>
-            <button className="reject-btn" onClick={cancelHandler}>
-              Cancel
-            </button>
-          </center>
+            </center>
+          )}
 
           {/* ------------------------------------------------------ */}
         </div>

@@ -264,7 +264,7 @@ const ClassDetails = () => {
                 id="name_lecturer"
                 label="Name of the Lecturer :"
                 variant="outlined"
-                required
+                // required
                 {...field}
               />
             )}
@@ -282,7 +282,7 @@ const ClassDetails = () => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                required
+                // required
                 {...field}
               />
             )}
@@ -300,7 +300,7 @@ const ClassDetails = () => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                required
+                // required
                 {...field}
               />
             )}
@@ -556,6 +556,50 @@ const RatetheCADDCenter = () => {
           <div className="radiobutton_sub">
             <Controller
               control={control}
+              name="b_inquired"
+              render={({ field }) => (
+                <FormControl>
+                  <FormLabel id="demo-radio-buttons-group-label">
+                    Name of the branch inquired at? :
+                  </FormLabel>
+                  <RadioGroup
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    name="radio-buttons-group"
+                    {...field}
+                  >
+                    <FormControlLabel
+                      value="Malabe"
+                      control={<Radio />}
+                      label="Malabe"
+                    />
+                    <FormControlLabel
+                      value="Jaffna"
+                      control={<Radio />}
+                      label="Jaffna"
+                    />
+                    <FormControlLabel
+                      value="Kandy"
+                      control={<Radio />}
+                      label="Kandy"
+                    />
+                    <FormControlLabel
+                      value="Kurunegala"
+                      control={<Radio />}
+                      label="Kurunegala"
+                    />
+                    <FormControlLabel
+                      value="Other"
+                      control={<Radio />}
+                      label="Other"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              )}
+            />
+          </div>
+          <div className="radiobutton_sub">
+            <Controller
+              control={control}
               name="c_person"
               render={({ field }) => (
                 <FormControl>
@@ -612,7 +656,7 @@ const FeedbackPaymentDetails = () => {
                   label="Feekback/Suggestion :"
                   variant="outlined"
                   fullWidth
-                  required
+                  // required
                   {...field}
                 />
               </div>
@@ -633,7 +677,7 @@ const FeedbackPaymentDetails = () => {
                     shrink: true,
                   }}
                   fullWidth
-                  required
+                  // required
                   {...field}
                 />
               </div>
@@ -662,6 +706,33 @@ function getStepContent(step) {
 }
 
 export default function RequsetForm() {
+  const currentdate = new Date();
+  const requestmonth = new Date();
+
+  var newdate =
+    currentdate.getFullYear() +
+    "-" +
+    (currentdate.getMonth() + 1) +
+    "-" +
+    currentdate.getDate();
+
+  const month = requestmonth.getMonth();
+
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
   const methods = useForm({
     defaultValues: {
       ms_email_id: "",
@@ -686,9 +757,12 @@ export default function RequsetForm() {
       l_t_proficiency: "",
       s_coordination: "",
       c_fee_payment: "",
+      b_inquired: "",
       c_person: "",
       feedbak: "",
       bank_slip: "",
+      s_date: newdate,
+      s_month: months[month],
     },
   });
   const [w_ms_email_id, setw_ms_email_id] = useState(false);
@@ -711,6 +785,7 @@ export default function RequsetForm() {
   const [w_l_t_proficiency, setw_l_t_proficiency] = useState(false);
   const [w_s_coordination, setw_s_coordination] = useState(false);
   const [w_c_fee_payment, setw_c_fee_payment] = useState(false);
+  const [w_b_inquired, setw_b_inquired] = useState(false);
   const [w_c_person, setw_c_person] = useState(false);
   const [w_feedbak, setw_feedbak] = useState(false);
   const [w_bank_slip, setw_bank_slip] = useState(false);
@@ -795,7 +870,7 @@ export default function RequsetForm() {
       } else if (data.name_lecturer === "") {
         setw_name_lecturer(true);
         setActiveStep(activeStep);
-      } else if ((data.s_date_course = "")) {
+      } else if (data.s_date_course === "") {
         setw_s_date_course(true);
         setActiveStep(activeStep);
       } else if (data.e_date_course === "") {
@@ -808,17 +883,17 @@ export default function RequsetForm() {
       if (data.c_o_a_submission === "") {
         setw_c_o_a_submission(true);
         setActiveStep(activeStep);
-      } else if ((data.tvec_certificate = "")) {
+      } else if (data.tvec_certificate === "") {
         setw_tvec_certificate(true);
         setActiveStep(activeStep);
       } else if (data.k_a_cadd_center === "") {
         setw_k_a_cadd_center(true);
         setActiveStep(activeStep);
       } else if (data.r_cadd_center === "") {
-        setw_r_cadd_center(false);
+        setw_r_cadd_center(true);
         setActiveStep(activeStep);
       } else if (data.r_l_experience === "") {
-        setw_r_l_experience(false);
+        setw_r_l_experience(true);
         setActiveStep(activeStep);
       } else if (data.l_t_proficiency === "") {
         setw_l_t_proficiency(true);
@@ -828,6 +903,9 @@ export default function RequsetForm() {
         setActiveStep(activeStep);
       } else if (data.c_fee_payment === "") {
         setw_c_fee_payment(true);
+        setActiveStep(activeStep);
+      } else if (data.b_inquired === "") {
+        setw_b_inquired(true);
         setActiveStep(activeStep);
       } else if (data.c_person === "") {
         setw_c_person(true);
@@ -885,6 +963,7 @@ export default function RequsetForm() {
     setw_l_t_proficiency(false);
     setw_s_coordination(false);
     setw_c_fee_payment(false);
+    setw_b_inquired(false);
     setw_c_person(false);
     setw_feedbak(false);
     setw_bank_slip(false);
@@ -1136,6 +1215,16 @@ export default function RequsetForm() {
       >
         <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
           Select the completed the course fee payment
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={w_b_inquired}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert onClose={handleClose} severity="warning" sx={{ width: "100%" }}>
+          Select the branch
         </Alert>
       </Snackbar>
       <Snackbar

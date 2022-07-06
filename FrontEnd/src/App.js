@@ -12,36 +12,20 @@ import Certificateview from "./Pages/Certificateview";
 import SelectTemplatale from "./Pages/SelectTemplate";
 import CertificateRejectMessage from "./Pages/CertificateRejectMessage";
 import RequestForm from "./Pages/Requsetform";
+import LoginPage from "./Pages/Loginpage";
 
 function App() {
   return (
     <div>
       <Router>
         <Routes>
-          <Route 
-            path="/dashboard" 
-            element={<AdminHome />} 
-          />
-          <Route 
-            path="/recent/request" 
-            element={<RecentRequest />} 
-          />
-          <Route 
-            path="/pending/request" 
-            element={<PendingRequest />} 
-          />
-          <Route 
-            path="/issue/request" 
-            element={<IssuedCertificate />} 
-          />
-          <Route 
-            path="/reject/request" 
-            element={<RejectedRequest />} 
-          />
-          <Route 
-            path="/requests/details" 
-            element={<RequestDetails />} 
-          />
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/dashboard" element={<AdminHome />} />
+          <Route path="/recent/request" element={<RecentRequest />} />
+          <Route path="/pending/request" element={<PendingRequest />} />
+          <Route path="/issue/request" element={<IssuedCertificate />} />
+          <Route path="/reject/request" element={<RejectedRequest />} />
+          <Route path="/requests/details" element={<RequestDetails />} />
           <Route
             path="/issued/certificate/details"
             element={<IssuedCertificateDetails />}
@@ -58,19 +42,12 @@ function App() {
             path="/certificate/details/confirm/:id"
             element={<Certificateview />}
           />
-          <Route 
-            path="/requestform" 
-            element={<RequestForm />} 
+          <Route path="/requestform" element={<RequestForm />} />
+          <Route path="/select/certificate" element={<SelectTemplatale />} />
+          <Route
+            path="/request/certificate/reject"
+            element={<CertificateRejectMessage />}
           />
-          <Route 
-            path="/select/certificate" 
-            element={<SelectTemplatale />} 
-          />
-          <Route 
-            path="/request/certificate/reject" 
-            element={<CertificateRejectMessage />} 
-          />
-
         </Routes>
       </Router>
     </div>

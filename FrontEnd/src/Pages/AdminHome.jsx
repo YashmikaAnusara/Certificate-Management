@@ -4,6 +4,7 @@ import AdminNavBar from "../Components/AdminNavBar";
 import MobNavBar from "../Components/MobNavBar";
 import AccountMenu from "../Components/Profile";
 import BarChart from "../Components/BarChart";
+import BarChart2 from "../Components/BarChart2";
 
 function AdminHome() {
   return (
@@ -52,9 +53,9 @@ function AdminHome() {
             <div className="garph-wrapper1">
               <BarChart />
             </div>
-            {/* <div className="garph-wrapper2">
-              <h1>hi2</h1>
-            </div> */}
+            <div className="garph-wrapper2">
+              <BarChart2/>
+            </div>
           </div>
           {/* ------------------------------------------------------ */}
         </div>

@@ -706,6 +706,33 @@ function getStepContent(step) {
 }
 
 export default function RequsetForm() {
+  const currentdate = new Date();
+  const requestmonth = new Date();
+
+  var newdate =
+    currentdate.getFullYear() +
+    "-" +
+    (currentdate.getMonth() + 1) +
+    "-" +
+    currentdate.getDate();
+
+  const month = requestmonth.getMonth();
+
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
   const methods = useForm({
     defaultValues: {
       ms_email_id: "",
@@ -734,6 +761,8 @@ export default function RequsetForm() {
       c_person: "",
       feedbak: "",
       bank_slip: "",
+      s_date: newdate,
+      s_month: months[month],
     },
   });
   const [w_ms_email_id, setw_ms_email_id] = useState(false);
@@ -841,7 +870,7 @@ export default function RequsetForm() {
       } else if (data.name_lecturer === "") {
         setw_name_lecturer(true);
         setActiveStep(activeStep);
-      } else if ((data.s_date_course === "")) {
+      } else if (data.s_date_course === "") {
         setw_s_date_course(true);
         setActiveStep(activeStep);
       } else if (data.e_date_course === "") {
@@ -854,7 +883,7 @@ export default function RequsetForm() {
       if (data.c_o_a_submission === "") {
         setw_c_o_a_submission(true);
         setActiveStep(activeStep);
-      } else if ((data.tvec_certificate === "")) {
+      } else if (data.tvec_certificate === "") {
         setw_tvec_certificate(true);
         setActiveStep(activeStep);
       } else if (data.k_a_cadd_center === "") {
@@ -934,7 +963,7 @@ export default function RequsetForm() {
     setw_l_t_proficiency(false);
     setw_s_coordination(false);
     setw_c_fee_payment(false);
-    setw_b_inquired(false)
+    setw_b_inquired(false);
     setw_c_person(false);
     setw_feedbak(false);
     setw_bank_slip(false);

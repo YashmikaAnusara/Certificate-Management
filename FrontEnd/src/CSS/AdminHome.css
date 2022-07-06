@@ -114,7 +114,7 @@
   border-radius: 5px;
   border: 1px solid rgb(194, 194, 194);
   padding: 15px;
-  border-radius: 15px
+  border-radius: 15px;
 }
 
 .card2-wrapper {
@@ -123,7 +123,7 @@
   border-radius: 5px;
   border: 1px solid rgb(194, 194, 194);
   padding: 15px;
-  border-radius: 15px
+  border-radius: 15px;
 }
 
 .card3-wrapper {
@@ -132,7 +132,7 @@
   border-radius: 5px;
   border: 1px solid rgb(194, 194, 194);
   padding: 15px;
-  border-radius: 15px
+  border-radius: 15px;
 }
 .card-topic {
   font-size: 14px;
@@ -193,14 +193,16 @@
   height: 350px;
 }
 .garph-wrapper1 {
-  width: 100%;
+  width: 50%;
   background-color: rgb(255, 255, 255);
   padding: 1%;
   border-radius: 18px;
+  margin-right: 10px;
 }
 .garph-wrapper2 {
   width: 50%;
   background-color: rgb(255, 255, 255);
+  border-radius: 18px;
 }
 .pending {
   color: rgb(255, 255, 255);

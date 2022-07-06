@@ -22,13 +22,20 @@ function CertificateTemplates() {
   };
 
   useEffect(() => {
+    setIsOpen(true)
     axios
       .get(`http://${Port}:8070/request/templates`)
       .then((res) => {
-        setDetails(res.data);
+        if(res.data){
+          setIsOpen(false)
+          setDetails(res.data);
+        }
       })
       .catch((err) => {
-        console.log(err);
+        if(err){
+          setIsOpen(false)
+          alert(err);
+        }
       });
   }, []);
 
@@ -70,7 +77,7 @@ function CertificateTemplates() {
             <p className="certificate-temp-dis2">My Template</p>
             <div>
               {details.map((detail, index) => (
-                <Templates name={detail} key={index} />
+                <Templates name={detail} key={index} setIsOpen={setIsOpen}/>
               ))}
             </div>
           </div>
@@ -136,28 +143,42 @@ function Templates(props) {
       "Are you sure want to remove this template?"
     );
     if (confirmBox === true) {
+      props.setIsOpen(true)
       axios
         .delete(`http://${Port}:8070/request/delete/template/${props.name}`)
         .then((res) => {
-          alert(res.data);
-          window.location.reload(false);
+          if(res.data){
+            props.setIsOpen(false)
+            alert(res.data);
+            window.location.reload(false);
+          }
         })
         .catch((err) => {
-          console.log(err);
+          if(err){
+            props.setIsOpen(false)
+            alert(err);
+          }
         });
     }
   };
   const tpmViewHandler = () => {
+    props.setIsOpen(true)
     axios({
       url: `http://${Port}:8070/request/template/${props.name}`,
       method: "GET",
       responseType: "blob",
     })
       .then((res) => {
-        FileDownload(res.data, `${props.name}`);
+        if(res.data){
+          props.setIsOpen(false)
+          FileDownload(res.data, `${props.name}`);
+        }
       })
       .catch((err) => {
-        alert(err);
+        if(err){
+          props.setIsOpen(false)
+          alert(err);
+        }
       });
   };
   return (

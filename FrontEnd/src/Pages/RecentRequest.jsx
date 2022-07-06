@@ -8,28 +8,39 @@ import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Port from "../port";
-
+import Loader from '../Components/Loader'
 function CertificateRequest() {
   const [details, setDetails] = useState([]);
   const [found, setFound] = useState("");
-
+  const [isOpen,setIsopen]=useState(false)
   useEffect(() => {
+    setIsopen(true)
     axios
       .get(`http://${Port}:8070/request/recent/details`)
       .then((res) => {
-        setDetails(res.data);
+        if(res.data){
+          setIsopen(false)
+          setDetails(res.data);
+        }
       })
       .catch((err) => {
-        alert(err);
+        if(err){
+          setIsopen(false)
+          alert(err);
+        }
       });
   }, []);
 
   const requests = details.filter((data) => {
-    data.nic.toLowerCase().includes(found.toLowerCase()) ||
-    data.name.toLowerCase().includes(found.toLowerCase())
-  });
     return (
+      data.nic.toLowerCase().includes(found.toLowerCase()) ||
+      data.name.toLowerCase().includes(found.toLowerCase())
+    );
+  });
+
+  return (
     <div className="container">
+       <Loader open={isOpen}/>
       <div className="mob-navbar-wrapper">
         <MobNavBar />
       </div>
@@ -44,10 +55,28 @@ function CertificateRequest() {
           {/* ------------------------------------------------------ */}
           <div className="certificate-request-status-wrapper clearfix">
             <div>
-            <div className='certificate-request-status-wrapper clearfix'>
-                        <div><input type="search" placeholder='Search...' className='certificate-request-search'/> </div>
-                        <div className='certificate-request-status'><div className='pending'> <FiberManualRecordIcon fontSize='small' style={{color:"rgb(239, 129, 10)"}}/></div><p style={{marginLeft:"5px",fontSize:"14px",color: "black"}}>Pending</p> </div>
-            </div>{" "}
+              <input
+                type="search"
+                placeholder="Search..."
+                className="certificate-request-search"
+                onChange={(event) => {
+                  setFound(event.target.value);
+                }}
+              />{" "}
+            </div>
+            <div className="certificate-request-status">
+            <div className="pending">
+                     
+                     <FiberManualRecordIcon
+                       fontSize="small"
+                       style={{ color: "rgb(239, 129, 10)" }}
+                     />
+                   </div>
+              <p
+                style={{ marginLeft: "5px", fontSize: "14px", color: "black" }}
+              >
+                Pending
+              </p>{" "}
             </div>
           </div>
           <div className="pending-request-table-wrapper">
@@ -83,6 +112,7 @@ function CertificateRequest() {
               </div>
             ))}
           </div>
+          
           {/* ------------------------------------------------------ */}
         </div>
       </div>

@@ -24,14 +24,20 @@ function CertificateRejectMessage() {
   const date=  today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 
   useEffect(() => {
+    setIsOpen(true)
     axios
       .get(`http://${Port}:8070/request/details/${id}/${nic}`)
       .then((res) => {
-        setDetails(res.data);
-        
+        if(res.data){
+          setIsOpen(false)
+          setDetails(res.data);
+        }
       })
       .catch((err) => {
-        alert(err);
+        if(err){
+          setIsOpen(false)
+          alert(err);
+        }
       });
   }, [id, nic]);
 

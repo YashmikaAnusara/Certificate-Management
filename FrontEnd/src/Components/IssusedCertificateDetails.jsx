@@ -10,7 +10,7 @@ import axios from "axios";
 import FileDownload from "js-file-download";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Port from '../port'
-
+import Loader from "./Loader";
 
 function IssuedCertificateDetails() {
     const params=useParams()
@@ -19,20 +19,29 @@ function IssuedCertificateDetails() {
   const [details,setDetails]=useState({})
   const id = params.id
   const nic=params.nic
+  const [isOpen,setIsOpen]=useState(false)
+
   const backBtnHandler = () => {
     navigate(-1);
   };
   useEffect(() => {
+    setIsOpen(true)
     axios({
       url: `http://${Port}:8070/request/certificate/${id}`,
       method: "GET",
       responseType: "blob",
     })
       .then((res) => {
-        setData(res.data);
+        if(res.data){
+          setIsOpen(false)
+          setData(res.data);
+        }
       })
       .catch((err) => {
-        alert(err);
+        if(err){
+          setIsOpen(false)
+          alert(err);
+        }
       });
     
     axios.get(`http://${Port}:8070/request/issued/details/${id}/${nic}`)
@@ -57,6 +66,7 @@ function IssuedCertificateDetails() {
   };
   return (
     <div className="container">
+      <Loader open={isOpen}/>
       <div className="mob-navbar-wrapper">
         <MonNavBar />
       </div>

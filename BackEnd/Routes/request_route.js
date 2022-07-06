@@ -65,10 +65,10 @@ router.route("/recent/details").get((req, res) => {
           res.send(err);
         } else { 
           res.json(rows);
-        }
+        } 
       });
     } catch (e) {
-      console.log(e);
+      res.send(e);
     }
   });
 
@@ -79,15 +79,15 @@ router.route("/details").get((req, res) => {
   pool.getConnection((err, connection) => {
     try {
       connection.query("SELECT * from request", (error, rows) => {
-        connection.release();
+        connection.release(); 
         if (error) { 
           res.send(err);
-        } else { 
-          res.json(rows);
+        } else {  
+          res.json(rows);  
         }
       });
-    } catch (e) {
-      console.log(e);
+    } catch (e) { 
+      res.send(e);
     }
   });
 });
@@ -101,7 +101,7 @@ router.route("/details/:id/:nic").get((req, res) => {
   pool.getConnection((err, connection) => {
     try {
       connection.query(
-        `SELECT * from request WHERE id=${id} AND nic=${nic}`,
+        `SELECT * from request WHERE id="${id}" AND nic="${nic}"`,
         (error, rows) => {
           let value = rows[0];
           connection.release(); 
@@ -113,7 +113,7 @@ router.route("/details/:id/:nic").get((req, res) => {
         }
       );
     } catch (e) {
-      console.log(e);
+      res.send(e);
     }
   });
 });
@@ -125,7 +125,7 @@ router.route("/details/check/:id/:nic").get((req, res) => {
   pool.getConnection((err, connection) => {
     try {
       connection.query( 
-        `SELECT * from issued WHERE nic=${nic}`,
+        `SELECT * from issued WHERE nic="${nic}"`,
         (error, rows) => {
           connection.release(); 
           if (error) { 
@@ -136,7 +136,7 @@ router.route("/details/check/:id/:nic").get((req, res) => {
         }
       );
     } catch (e) {
-      console.log(e);
+      res.send(e);
     }
   });
 }); 
@@ -149,7 +149,7 @@ router.route("/issued/details/:id/:nic").get((req, res) => {
   pool.getConnection((err, connection) => {
     try {
       connection.query(
-        `SELECT * from issued WHERE id=${id} AND nic=${nic}`,
+        `SELECT * from issued WHERE id="${id}" AND nic="${nic}"`,
         (error, rows) => {
           let value = rows[0];
           connection.release();  
@@ -161,7 +161,7 @@ router.route("/issued/details/:id/:nic").get((req, res) => {
         }
       );
     } catch (e) {
-      console.log(e);
+      res.send(e);
     }
   });
 });
@@ -181,14 +181,14 @@ router.route("/reject/:id/:nic").post((req, res) => {
         }  
       });   
     } catch (e) { 
-      console.log(e); 
+      res.send(e); 
     }
   });
 
   function deleteData(){
     pool.getConnection((err, connection) => {
       try {
-        connection.query(`DELETE FROM request WHERE id =${id} `, (error, rows) => {
+        connection.query(`DELETE FROM request WHERE id ="${id}" `, (error, rows) => {
           connection.release();
           if (error) {
             res.send(err);
@@ -197,7 +197,7 @@ router.route("/reject/:id/:nic").post((req, res) => {
           }  
         });   
       } catch (e) { 
-        console.log(e); 
+        res.send(e); 
       }
     });
   }
@@ -216,7 +216,7 @@ router.route("/reject/certificates/details").get((req, res) => {
         }
       });
     } catch (e) {
-      console.log(e);
+      res.send(e);
     }
   });
 });
@@ -229,7 +229,7 @@ router.route("/reject/details/:id/:nic").get((req, res) => {
   pool.getConnection((err, connection) => {
     try {
       connection.query(
-        `SELECT * from rejected WHERE id=${id} AND nic=${nic}`,
+        `SELECT * from rejected WHERE id="${id}" AND nic="${nic}"`,
         (error, rows) => {
           let value = rows[0];
           connection.release(); 
@@ -241,7 +241,7 @@ router.route("/reject/details/:id/:nic").get((req, res) => {
         }
       );
     } catch (e) {
-      console.log(e);
+      res.send(e);
     }
   });
 });
@@ -259,7 +259,7 @@ router.route("/issued/certificates/details").get((req, res) => {
         }
       });
     } catch (e) {
-      console.log(e);
+      res.send(e);
     }
   });
 });
@@ -441,8 +441,8 @@ router.route("/templates").get((req,res) => {
       console.log(err);
     } else {
       res.json(data);
-    }
-  });
+    } 
+  }); 
 });
 
 //delete the templates
@@ -454,7 +454,7 @@ router.route("/delete/template/:name").delete((req, res) => {
     } else {
       res.send("Done");
     }
-  });
+  }); 
 });
 
 //cancel the certificate
@@ -483,5 +483,5 @@ router.route("/template/:id").get((req, res) => {
     }
   });
 });
-
+ 
 module.exports = router;

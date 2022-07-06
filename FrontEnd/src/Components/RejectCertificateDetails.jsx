@@ -7,6 +7,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate,useParams } from 'react-router-dom'
 import Port from '../port'
 import axios from 'axios'
+import Loader from './Loader'
 
 function RejectCertificateDetails() {
     const params=useParams()
@@ -14,22 +15,32 @@ function RejectCertificateDetails() {
     const id=params.id;
     const nic=params.nic
     const[details,setDetails]=useState({})
+    const [isOpen,setIsOpen]=useState(false)
+
     const backBtnHandler = () => {
         navigate(-1)
     }
     useEffect(() => {
+        setIsOpen(true)
         axios
           .get(`http://${Port}:8070/request/reject/details/${id}/${nic}`)
           .then((res) => {
-            setDetails(res.data);
+            if(res.data){
+                setIsOpen(false)
+                setDetails(res.data);
+            }
           })
           .catch((err) => {
-            alert(err);
+            if(err){
+                setIsOpen(false)
+                alert(err);
+            }
           });
       }, [id, nic]);
 
     return (
         <div className='container'>
+            <Loader open={isOpen}/>
             <div className='mob-navbar-wrapper'>
                 <MonNavBar />
             </div>

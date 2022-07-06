@@ -14,14 +14,22 @@ function CertificateTemplates() {
   const navigate = useNavigate()
   const [isOpen,setOpen]=useState(false)
   const [details, setDetails] = useState([]);
+  
   useEffect(() => {
+    setOpen(true)
     axios
       .get(`http://${Port}:8070/request/templates`)
       .then((res) => {
-        setDetails(res.data);
+        if(res.data){
+          setOpen(false)
+          setDetails(res.data);
+        }
       })
       .catch((err) => {
-        console.log(err);
+        if(err){
+          setOpen(false)
+          alert(err);
+        }
       });
   }, []);
   const backBtnHandler = () => {
@@ -77,9 +85,7 @@ function Templates(props) {
 
   }
   return (
-
     <div className="certificate-temp-wrapper clearfix" onClick={selectTemplate}>
-       
       <div className="pdf-icon-wrapper">
         <img src={PDFIcon} alt="pdf" className="pdf-icon" />
       </div>

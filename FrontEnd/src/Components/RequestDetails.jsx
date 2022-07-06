@@ -26,13 +26,20 @@ function RequestDetails() {
   const [isOpen, setOpen] = useState(false);
 
   useEffect(() => {
+    setOpen(true);
     axios
       .get(`http://${Port}:8070/request/details/${id}/${nic}`)
       .then((res) => {
-        setDetails(res.data);
+        if(res.data){
+          setOpen(false);
+          setDetails(res.data);
+        }
       })
       .catch((err) => {
-        alert(err);
+        if(err){
+          setOpen(false);
+          alert(err);
+        }
       });
   }, [id, nic]);
 

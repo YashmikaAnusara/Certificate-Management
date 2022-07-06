@@ -7,19 +7,29 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Port from '../port'
-
+import Loader from '../Components/Loader'
 function RejectedRequest() {
     const[details,setDetails]=useState([])
     const [found,setFound] = useState("");
+    const [isOpen,setIsopen]=useState(false)
+
     useEffect(()=>{
+        setIsopen(true)
+
         axios.get(`http://${Port}:8070/request/reject/certificates/details`)
         .then((res)=>{
-            setDetails(res.data)
+            if(res.data){
+                setIsopen(false)
+                setDetails(res.data);
+              }
         })
         .catch((err)=>{
-            alert(err)
+            if(err){
+                setIsopen(false)
+                alert(err);
+            }
         })
-    })
+    },[])
 
     const requests = details.filter((data) => {
         return (
@@ -31,6 +41,7 @@ function RejectedRequest() {
 
     return (
         <div className='container'>
+             <Loader open={isOpen}/>
             <div className='mob-navbar-wrapper'>
                 <MobNavBar />
             </div>
@@ -44,8 +55,9 @@ function RejectedRequest() {
                 <div className='body-container'>
                     {/* ------------------------------------------------------ */}
                     <div className='rejected-request-status-wrapper clearfix'>
-
-                        <div><input type="search" placeholder='Search...' className='certificate-request-search' /> </div>
+                        <div><input type="search" placeholder='Search...' className='certificate-request-search' onChange={(event) => {
+                  setFound(event.target.value);
+                }}/> </div>
                         <div className='rejected-request-status'><div className='rejected'> <FiberManualRecordIcon fontSize='small' style={{ color: "red" }} /></div><p style={{ marginLeft: "5px", fontSize: "14px", color: "black" }}>Rejected</p> </div>
                     </div>
                     <div className='rejected-request-table-wrapper'>

@@ -1,18 +1,46 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import '../CSS/RequestDetails.css'
 import MonNavBar from './MobNavBar'
 import AdminNavBar from './AdminNavBar'
 import AccountMenu from './Profile'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,useParams } from 'react-router-dom'
+import Port from '../port'
+import axios from 'axios'
+import Loader from './Loader'
 
 function RejectCertificateDetails() {
+    const params=useParams()
     const navigate = useNavigate()
+    const id=params.id;
+    const nic=params.nic
+    const[details,setDetails]=useState({})
+    const [isOpen,setIsOpen]=useState(false)
+
     const backBtnHandler = () => {
         navigate(-1)
     }
+    useEffect(() => {
+        setIsOpen(true)
+        axios
+          .get(`http://${Port}:8070/request/reject/details/${id}/${nic}`)
+          .then((res) => {
+            if(res.data){
+                setIsOpen(false)
+                setDetails(res.data);
+            }
+          })
+          .catch((err) => {
+            if(err){
+                setIsOpen(false)
+                alert(err);
+            }
+          });
+      }, [id, nic]);
+
     return (
         <div className='container'>
+            <Loader open={isOpen}/>
             <div className='mob-navbar-wrapper'>
                 <MonNavBar />
             </div>
@@ -32,8 +60,8 @@ function RejectCertificateDetails() {
                             <p>102065042364BB</p>
                         </div>
                         <div className='student-request-timedate'>
-                            <p>Request Date: <b>2022.06.21</b></p>
-                            <p>Rejected Date: <b>2022.06.21</b></p>
+                            <p>Request Date: <b>{details.s_date ? details.s_date : "-"}</b></p>
+                            <p>Rejected Date: <b>{details.r_date ? details.r_date : "-"}</b></p>
                         </div>
                     </div>
                     <div className='student-request-details-body-wrapper'>
@@ -48,13 +76,13 @@ function RejectCertificateDetails() {
                                 <p className='student-question'>Assignment Submission Date</p>
                             </div>
                             <div className='student-answer-wrapper'>
-                                <p className='student-answer'>Registration No</p>
-                                <p className='student-answer'>Student Name</p>
-                                <p className='student-answer'>NIC</p>
-                                <p className='student-answer'>Email Address</p>
-                                <p className='student-answer'>Contact No</p>
-                                <p className='student-answer'>Occupation</p>
-                                <p className='student-answer'>Assignment Submission Date</p>
+                                <p className='student-answer'>{details.s_date ? details.s_date : "-"}</p>
+                                <p className='student-answer'>{details.name ? details.name : "-"}</p>
+                                <p className='student-answer'>{details.nic ? details.nic : "-"}</p>
+                                <p className='student-answer'>{details.email ? details.email : "-"}</p>
+                                <p className='student-answer'>{details.p_number ? details.p_number : "-"}</p>
+                                <p className='student-answer'>{details.occupation ? details.occupation : "-"}</p>
+                                <p className='student-answer'>{details.a_submission_d ? details.a_submission_d : "-"}</p>
                             </div>
                         </div>
                         <hr />
@@ -68,12 +96,12 @@ function RejectCertificateDetails() {
                                 <p className='student-question'>End date of the course</p>
                             </div>
                             <div className='student-answer-wrapper'>
-                                <p className='student-answer'>Class ID</p>
-                                <p className='student-answer'>Name of Certificate applying for </p>
-                                <p className='student-answer'>Name of the Course Attended</p>
-                                <p className='student-answer'>Lecturer Name</p>
-                                <p className='student-answer'>Start date of the course</p>
-                                <p className='student-answer'>End date of the course</p>
+                                <p className='student-answer'>{details.class_id ? details.class_id : "-"}</p>
+                                <p className='student-answer'>{details.name_cerificate ? details.name_cerificate : "-"} </p>
+                                <p className='student-answer'>{details.name_c_attended ? details.name_c_attended : "-"}</p>
+                                <p className='student-answer'>{details.name_lecturer ? details.name_lecturer : "-"}</p>
+                                <p className='student-answer'>{details.s_date_course ? details.s_date_course : "-"}</p>
+                                <p className='student-answer'>{details.e_date_course ? details.e_date_course : "-"}</p>
                             </div>
                         </div>
                         <hr />
@@ -91,22 +119,22 @@ function RejectCertificateDetails() {
                                 <p className='student-question'>Name of the contact person</p>
                             </div>
                             <div className='student-answer-wrapper'>
-                                <p className='student-answer'>Yes</p>
-                                <p className='student-answer'>Yes</p>
-                                <p className='student-answer'>Yes</p>
-                                <p className='student-answer'>Yes</p>
-                                <p className='student-answer'>Yes</p>
-                                <p className='student-answer'>Yes</p>
-                                <p className='student-answer'>Yes</p>
-                                <p className='student-answer'>Yes</p>
-                                <p className='student-answer'>Yes</p>
-                                <p className='student-answer'>Yes</p>
+                                <p className='student-answer'>{details.c_o_a_submission ? details.c_o_a_submission : "-"}</p>
+                                <p className='student-answer'>{details.tvec_certificate ? details.tvec_certificate : "-"}</p>
+                                <p className='student-answer'>{details.k_a_cadd_center ? details.k_a_cadd_center : "-"}</p>
+                                <p className='student-answer'>{details.r_cadd_center ? details.r_cadd_center : "-"}</p>
+                                <p className='student-answer'>{details.r_l_experience ? details.r_l_experience : "-"}</p>
+                                <p className='student-answer'>{details.l_t_proficiency ? details.l_t_proficiency : "-"}</p>
+                                <p className='student-answer'>{details.s_coordination ? details.s_coordination : "-"}</p>
+                                <p className='student-answer'>{details.c_fee_payment ? details.c_fee_payment : "-"}</p>
+                                <p className='student-answer'>""</p>
+                                <p className='student-answer'>{details.c_person ? details.c_person : "-"}</p>
                             </div>
                         </div>
                         <hr />
                         <div className='reject-reason-body'>
                            <p style={{fontSize:"14px",fontWeight:"500",marginBottom:"15px"}}>Reason for Reject the Certificate</p>
-                           <p style={{fontSize:"14px"}}>Reason for Regect the Certificate</p>
+                           <p style={{fontSize:"14px"}}>{details.message ? details.message : "-"}</p>
                         </div>
 
                     </div>

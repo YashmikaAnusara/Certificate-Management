@@ -86,6 +86,7 @@ router.route("/pending").get((req, res) => {
               { name: "Feb", "Pending Requset": Feb },
               { name: "Mar", "Pending Requset": March },
               { name: "Apr", "Pending Requset": April },
+              { name: "May", "Pending Requset": May },
               { name: "June", "Pending Requset": June },
               { name: "July", "Pending Requset": July },
               { name: "Aug", "Pending Requset": Aug },
@@ -181,34 +182,12 @@ router.route("/rejected").get((req, res) => {
   });
 });
 
-//get the all pending request for chart
+//get the all pending request count
 router.route("/pending/count").get((req, res) => {
   pool.getConnection((err, connection) => {
     try {
       connection.query(
-        "SELECT COUNT(s_month) as pendingcount from request;",
-        (error, rows) => {
-          let data=rows[0]
-          connection.release();
-          if (error) {
-            console.log(err);
-          } else {
-            res.json(data);
-          }
-        }
-      );
-    } catch (e) {
-      console.log(e);
-    }
-  });
-});
-
-//get the all Issued request for chart
-router.route("/issued/count").get((req, res) => {
-  pool.getConnection((err, connection) => {
-    try {
-      connection.query(
-        "SELECT COUNT(s_month) as issuedcount from issued;",
+        "SELECT COUNT(name) as pendingcount from request;",
         (error, rows) => {
           let data = rows[0];
           connection.release();
@@ -225,12 +204,34 @@ router.route("/issued/count").get((req, res) => {
   });
 });
 
-//get the all rejected request for chart
+//get the all Issued request count
+router.route("/issued/count").get((req, res) => {
+  pool.getConnection((err, connection) => {
+    try {
+      connection.query(
+        "SELECT COUNT(name) as issuedcount from issued;",
+        (error, rows) => {
+          let data = rows[0];
+          connection.release();
+          if (error) {
+            console.log(err);
+          } else {
+            res.json(data);
+          }
+        }
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  });
+});
+
+//get the all rejected request count
 router.route("/rejected/count").get((req, res) => {
   pool.getConnection((err, connection) => {
     try {
       connection.query(
-        "SELECT COUNT(s_month) as rejectedcount from rejected;",
+        "SELECT COUNT(name) as rejectedcount from rejected;",
         (error, rows) => {
           let data = rows[0];
           connection.release();

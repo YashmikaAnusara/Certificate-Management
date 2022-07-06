@@ -39,15 +39,15 @@ function App() {
             element={<RejectedRequest />} 
           />
           <Route 
-            path="/requests/details" 
+            path="/requests/detail/:id/:nic" 
             element={<RequestDetails />} 
           />
           <Route
-            path="/issued/certificate/details"
+            path="/issue/request/:id/:nic"
             element={<IssuedCertificateDetails />}
           />
           <Route
-            path="/rejected/certificate/details"
+            path="/reject/request/:id/:nic"
             element={<RejectCertificateDetails />}
           />
           <Route
@@ -55,7 +55,7 @@ function App() {
             element={<CertificateTemplates />}
           />
           <Route
-            path="/certificate/details/confirm/:id"
+            path="/requests/detail/:id/:nic/certificate/:tempid"
             element={<Certificateview />}
           />
           <Route 
@@ -63,11 +63,11 @@ function App() {
             element={<RequestForm />} 
           />
           <Route 
-            path="/select/certificate" 
+            path="/requests/detail/:id/:nic/certificate" 
             element={<SelectTemplatale />} 
           />
           <Route 
-            path="/request/certificate/reject" 
+            path="/requests/detail/:id/:nic/reject" 
             element={<CertificateRejectMessage />} 
           />
 

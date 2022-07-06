@@ -5,23 +5,31 @@ import AdminNavBar from "../Components/AdminNavBar";
 import MobNavBar from "../Components/MobNavBar";
 import AccountMenu from "../Components/Profile";
 import axios from "axios";
-import PDFIcon from "../Assets/pdf.png";
+import PDFIcon from "../Assets/doc.png";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,useParams } from 'react-router-dom'
  import Loader from "../Components/Loader";
 
 function CertificateTemplates() {
   const navigate = useNavigate()
   const [isOpen,setOpen]=useState(false)
   const [details, setDetails] = useState([]);
+  
   useEffect(() => {
+    setOpen(true)
     axios
       .get(`http://${Port}:8070/request/templates`)
       .then((res) => {
-        setDetails(res.data);
+        if(res.data){
+          setOpen(false)
+          setDetails(res.data);
+        }
       })
       .catch((err) => {
-        console.log(err);
+        if(err){
+          setOpen(false)
+          alert(err);
+        }
       });
   }, []);
   const backBtnHandler = () => {
@@ -63,20 +71,21 @@ function CertificateTemplates() {
 export default CertificateTemplates;
 
 function Templates(props) {
-  
+  const params=useParams()
   const navigate = useNavigate()
+  const id=params.id;
+  const nic=params.nic
+
   const selectTemplate=()=>{
     props.setOpen(true)
     setTimeout(()=>{
       props.setOpen(false)
-      navigate("/certificate/details/confirm/:id");
+      navigate(`/requests/detail/${id}/${nic}/certificate/${props.name}`);
     },2000)
 
   }
   return (
-
     <div className="certificate-temp-wrapper clearfix" onClick={selectTemplate}>
-       
       <div className="pdf-icon-wrapper">
         <img src={PDFIcon} alt="pdf" className="pdf-icon" />
       </div>

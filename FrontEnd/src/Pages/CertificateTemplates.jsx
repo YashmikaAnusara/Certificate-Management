@@ -9,29 +9,39 @@ import DoDisturbIcon from "@mui/icons-material/DoDisturb";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
-import PDFIcon from "../Assets/pdf.png";
+import DOCXIcon from "../Assets/doc.png";
 import FileDownload from "js-file-download";
+import Loader from '../Components/Loader'
 
 function CertificateTemplates() {
   const [active, setActive] = useState(false);
   const [details, setDetails] = useState([]);
+  const[isOpen,setIsOpen]=useState(false)
   const tempAddhandler = () => {
     setActive(!active);
   };
 
   useEffect(() => {
+    setIsOpen(true)
     axios
       .get(`http://${Port}:8070/request/templates`)
       .then((res) => {
-        setDetails(res.data);
+        if(res.data){
+          setIsOpen(false)
+          setDetails(res.data);
+        }
       })
       .catch((err) => {
-        console.log(err);
+        if(err){
+          setIsOpen(false)
+          alert(err);
+        }
       });
   }, []);
 
   return (
     <div className="container">
+      <Loader open={isOpen}/>
       <div className="mob-navbar-wrapper">
         <MobNavBar />
       </div>
@@ -60,14 +70,14 @@ function CertificateTemplates() {
                 style={{ color: "red" }}
               />
             )}
-            {active ? <TemplateAdd /> : null}
+            {active ? <TemplateAdd setIsOpen={setIsOpen}/> : null}
           </div>
           <hr />
           <div className="certificate-temp-body-wrapper clearfix">
             <p className="certificate-temp-dis2">My Template</p>
             <div>
               {details.map((detail, index) => (
-                <Templates name={detail} key={index} />
+                <Templates name={detail} key={index} setIsOpen={setIsOpen}/>
               ))}
             </div>
           </div>
@@ -80,22 +90,27 @@ function CertificateTemplates() {
 
 export default CertificateTemplates;
 
-function TemplateAdd() {
+function TemplateAdd(props) {
   const [file, setFile] = useState("");
+  const filename=file.name
 
   const fileUploadHandler = () => {
     const data = new FormData();
     data.append("template", file);
     if (!file) {
       alert("Please select a file!");
-    } else if (!file) {
-      alert("Please select a file!");
+    } else if ((filename.split('.').pop())!=='docx') {
+      alert("Please select a 'docx' format file!");
     } else {
+      props.setIsOpen(true)
       axios
         .post(`http://${Port}:8070/template/save`, data)
         .then(() => {
-          alert("Template added successful!");
-          window.location.reload(false);
+          setTimeout(()=>{
+            props.setIsOpen(false)
+            alert("Template added successful!");
+            window.location.reload(false);
+          },2000)
         })
         .catch((err) => {
           console.log(err);
@@ -128,28 +143,42 @@ function Templates(props) {
       "Are you sure want to remove this template?"
     );
     if (confirmBox === true) {
+      props.setIsOpen(true)
       axios
         .delete(`http://${Port}:8070/request/delete/template/${props.name}`)
         .then((res) => {
-          alert(res.data);
-          window.location.reload(false);
+          if(res.data){
+            props.setIsOpen(false)
+            alert(res.data);
+            window.location.reload(false);
+          }
         })
         .catch((err) => {
-          console.log(err);
+          if(err){
+            props.setIsOpen(false)
+            alert(err);
+          }
         });
     }
   };
   const tpmViewHandler = () => {
+    props.setIsOpen(true)
     axios({
       url: `http://${Port}:8070/request/template/${props.name}`,
       method: "GET",
       responseType: "blob",
     })
       .then((res) => {
-        FileDownload(res.data, `${props.name}`);
+        if(res.data){
+          props.setIsOpen(false)
+          FileDownload(res.data, `${props.name}`);
+        }
       })
       .catch((err) => {
-        alert(err);
+        if(err){
+          props.setIsOpen(false)
+          alert(err);
+        }
       });
   };
   return (
@@ -158,7 +187,7 @@ function Templates(props) {
         <DeleteIcon fontSize="small" onClick={tempDeleteHandler} />
       </div>
       <div className="pdf-icon-wrapper" onClick={tpmViewHandler}>
-        <img src={PDFIcon} alt="pdf" className="pdf-icon" />
+        <img src={DOCXIcon} alt="pdf" className="pdf-icon" />
       </div>
       <div className="name-wrapper">{props.name}</div>
     </div>

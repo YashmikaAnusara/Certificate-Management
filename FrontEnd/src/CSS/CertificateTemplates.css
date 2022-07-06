@@ -43,7 +43,7 @@
     width:150px;
     height: 180px;
     float: left;
-    background-color: rgb(247, 247, 247);
+    background-color: rgb(255, 255, 255);
     margin-top: 20px;
     margin-right:10px ;
     border: 1px solid rgb(213, 213, 213);
@@ -65,9 +65,10 @@
 }
 .pdf-icon-wrapper{
     margin-top: 30px;
+    margin-left:10px;
 }
 .pdf-icon{
-    width:100%;
+    width:85%;
 }
 .name-wrapper{
     text-align: center;

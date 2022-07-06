@@ -46,8 +46,10 @@ function PendingRequest() {
                 <div className='body-container'>
                     {/* ------------------------------------------------------ */}
                     <div className='pending-request-status-wrapper clearfix'>
-                        <div><input type="search" placeholder='Search...' className='pending-request-search' onChange={(event)=>{setFound(event.target.value)}}/> </div>
-                        <div className='pending-request-status'> <FiberManualRecordIcon fontSize='small' style={{ color: "rgb(239, 129, 10)" }} /><p style={{ marginLeft: "5px", fontSize: "14px", color: "black" }}>Pending</p> </div>
+ 
+                        <div><input type="search" placeholder='Search...' className='pending-request-search' /> </div>
+                        <div className='pending-request-status'><div className='pending'> <FiberManualRecordIcon  fontSize='small' style={{ color: "rgb(239, 129, 10)" }} /></div><p style={{ marginLeft: "5px", fontSize: "14px", color: "black" }}>Pending</p> </div>
+ 
                     </div>
                     <div className='pending-request-table-wrapper'>
                         <div className='pending-request-table-header'>

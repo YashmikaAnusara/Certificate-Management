@@ -44,8 +44,9 @@ function RejectedRequest() {
                 <div className='body-container'>
                     {/* ------------------------------------------------------ */}
                     <div className='rejected-request-status-wrapper clearfix'>
-                        <div><input type="search" placeholder='Search...' className='certificate-request-search' onChange={(event)=>{setFound(event.target.value)}} /> </div>
-                        <div className='rejected-request-status'> <FiberManualRecordIcon fontSize='small' style={{ color: "red" }} /><p style={{ marginLeft: "5px", fontSize: "14px", color: "black" }}>Rejected</p> </div>
+
+                        <div><input type="search" placeholder='Search...' className='certificate-request-search' /> </div>
+                        <div className='rejected-request-status'><div className='rejected'> <FiberManualRecordIcon fontSize='small' style={{ color: "red" }} /></div><p style={{ marginLeft: "5px", fontSize: "14px", color: "black" }}>Rejected</p> </div>
                     </div>
                     <div className='rejected-request-table-wrapper'>
                         <div className='rejected-request-table-header'>

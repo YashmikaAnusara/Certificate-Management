@@ -24,22 +24,44 @@ function IssuedCertificate() {
   }, []);
 
   const requests = details.filter((data) => {
-    return (
       data.nic.toLowerCase().includes(found.toLowerCase()) ||
       data.name.toLowerCase().includes(found.toLowerCase())
-    );
+    
   });
   return (
-    <div className="container">
-      <div className="mob-navbar-wrapper">
-        <MobNavBar />
-      </div>
-      <div className="navbar-wrapper">
-        <AdminNavBar />
-      </div>
-      <div className="body-wrapper">
-        <div className="body-header">
-          <AccountMenu />
+        <div className='container'>
+            <div className='mob-navbar-wrapper'>
+                <MobNavBar />
+            </div>
+            <div className='navbar-wrapper'>
+                <AdminNavBar />
+            </div>
+            <div className='body-wrapper'>
+                <div className='body-header'>
+                    <AccountMenu />
+                </div>
+                <div className='body-container'>
+                    {/* ------------------------------------------------------ */}
+                    <div className='Issued-request-status-wrapper clearfix'>
+                        <div><input type="search" placeholder='Search...' className='certificate-request-search' /> </div>
+                        <div className='Issued-request-status'><div className='approved'> <FiberManualRecordIcon fontSize='small' style={{ color: "green" }} /></div><p style={{ marginLeft: "5px", fontSize: "14px", color: "black" }}>Approved</p> </div>
+                    </div>
+                    <div className='Issued-request-table-wrapper'>
+                        <div className='Issued-request-table-header'>
+                            <div id='Issued-request-body-col1'><center> Status</center></div>
+                            <div id='Issued-request-body-col2'><center> Reg No</center></div>
+                            <div id='Issued-request-body-col3'><center> Name</center></div>
+                            <div id='Issued-request-body-col4'><center> Submited Date</center></div>
+                            <div id='Issued-request-body-col5'><center> Approved Date</center></div>
+                        </div>
+                        <IssuedRequestTable />
+                        <IssuedRequestTable />
+                        <IssuedRequestTable />
+
+                    </div>
+                    {/* ------------------------------------------------------ */}
+                </div>
+            </div>
         </div>
         <div className="body-container">
           {/* ------------------------------------------------------ */}
@@ -100,8 +122,7 @@ function IssuedCertificate() {
           </div>
           {/* ------------------------------------------------------ */}
         </div>
-      </div>
-    </div>
+     
   );
 }
 export default IssuedCertificate;

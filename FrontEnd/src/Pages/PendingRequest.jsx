@@ -13,7 +13,7 @@ import Loader from '../Components/Loader'
 function PendingRequest() {
   const [details, setDetails] = useState([]);
   const [found, setFound] = useState("");
-  const [isOpen,setIsopen]=useState(false)
+  const [isOpen,setIsopen]=useState(false);
   useEffect(() => {
     setIsopen(true)
     axios
@@ -31,7 +31,7 @@ function PendingRequest() {
         }
       });
       
-  }, []);
+  },[]);
 
 
   const requests = details.filter((data) => {
@@ -60,7 +60,7 @@ function PendingRequest() {
             <div>
               <input
                 type="search"
-                placeholder="Search..."
+                placeholder="Search NIC..."
                 className="pending-request-search"
                 onChange={(event) => {
                   setFound(event.target.value);
@@ -97,7 +97,7 @@ function PendingRequest() {
                 <center> Name</center>
               </div>
               <div id="pending-request-body-col4">
-                <center> Submited Date</center>
+                <center> Contact</center>
               </div>
               <div id="pending-request-body-col5">
                 <center> Action</center>
@@ -109,7 +109,7 @@ function PendingRequest() {
                   ID={request.id}
                   NIC={request.nic}
                   Name={request.name}
-                  date={request.s_date}
+                  contact={request.p_number}
                 />
               </div>
             ))}
@@ -153,7 +153,7 @@ function PendingRequestTable(props) {
         <center> {props.Name}</center>
       </div>
       <div className="pending-request-body-col4" onClick={detailsHandler}>
-        <center> {props.date}</center>
+        <center> {props.contact}</center>
       </div>
       <div className="pending-request-body-col5">
         <center>

@@ -34,7 +34,7 @@ function CertificateRequest() {
   const requests = details.filter((data) => {
     return (
       data.nic.toLowerCase().includes(found.toLowerCase()) ||
-      data.name.toLowerCase().includes(found.toLowerCase())
+      data.name.toLowerCase().includes(found.toLowerCase())      
     );
   });
 
@@ -57,7 +57,7 @@ function CertificateRequest() {
             <div>
               <input
                 type="search"
-                placeholder="Search..."
+                placeholder="Search NIC..."
                 className="certificate-request-search"
                 onChange={(event) => {
                   setFound(event.target.value);
@@ -94,7 +94,7 @@ function CertificateRequest() {
                 <center> Name</center>
               </div>
               <div id="pending-request-body-col4">
-                <center> Submited Date</center>
+                <center> Contact</center>
               </div>
               <div id="pending-request-body-col5">
                 <center> Action</center>
@@ -107,7 +107,7 @@ function CertificateRequest() {
                   ID={request.id}
                   NIC={request.nic}
                   Name={request.name}
-                  date={request.s_date}
+                  contact={request.p_number}
                 />
               </div>
             ))}
@@ -152,7 +152,7 @@ function PendingRequestTable(props) {
         <center> {props.Name}</center>
       </div>
       <div className="pending-request-body-col4" onClick={detailsHandler}>
-        <center> {props.date}</center>
+        <center> {props.contact}</center>
       </div>
       <div className="pending-request-body-col5">
         <center>

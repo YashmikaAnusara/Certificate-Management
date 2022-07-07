@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {useParams,useNavigate} from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../CSS/AdminHome.css";
 import AdminNavBar from "../Components/AdminNavBar";
@@ -10,32 +10,52 @@ import Port from "../port";
 import Loader from "../Components/Loader";
 function Certificateview() {
   const params = useParams();
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [details, setDetails] = useState({});
   const [downloadBtn, setDownloadBtn] = useState(false);
 
   const id = params.id;
   const nic = params.nic;
-  const tmpName=params.tempid;
+  const tmpName = params.tempid;
+
+  const data = details;
 
   useEffect(() => {
-    setIsOpen(true)
+    setIsOpen(true);
     axios
       .get(`http://${Port}:8070/request/details/${id}/${nic}`)
       .then((res) => {
-        if(res.data){
-          setIsOpen(false)
+        if (res.data) {
+          setIsOpen(false);
           setDetails(res.data);
         }
       })
       .catch((err) => {
-        if(err){
-          setIsOpen(false)
+        if (err) {
+          setIsOpen(false);
           alert(err);
         }
       });
   }, [nic, id]);
+
+  const certificateGenarateHandler = () => {
+    setIsOpen(true);
+    axios
+      .post(
+        `http://${Port}:8070/request/genarate/certificate/${id}/${tmpName}`,
+        data
+      )
+      .then((res) => {
+        if (res.data === true) {
+          setIsOpen(false);
+          setDownloadBtn(true);
+        }
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  };
 
   const viewHandler = () => {
     axios({
@@ -59,9 +79,56 @@ function Certificateview() {
     );
     if (confirmBox === true) {
       setIsOpen(true);
-      axios
-        .post(``)
-        .then((res) => {})
+      const today = new Date();
+      const date =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
+
+      data.a_date = date;
+
+      const send = new Promise((resolve, reject) => {
+        axios
+          .get(`http://${Port}:8070/request/send/${id}/${data.email}`)
+          .then((res) => {
+            resolve(res.data);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
+
+      send
+        .then((res) => {
+          if (res) {
+            const insertIssues = new Promise((resolve, reject) => {
+              axios
+                .post(`http://${Port}:8070/request/save/issued/details`, data)
+                .then((res) => {
+                  resolve(res);
+                })
+                .catch((err) => {
+                  reject(err);
+                });
+            });
+            insertIssues.then((response) => {
+              if (response) {
+                axios
+                  .delete(`http://${Port}:8070/request/remove/details/${id}`)
+                  .then(() => {
+                    setIsOpen(false);
+                    alert("Done!");
+                    navigate("/issue/request");
+                  })
+                  .catch((err) => {
+                    alert(err);
+                  });
+              }
+            });
+          }
+        })
         .catch((err) => {
           alert(err);
         });
@@ -75,36 +142,18 @@ function Certificateview() {
     if (confirmBox === true) {
       setIsOpen(true);
       axios
-      .delete(`http://${Port}:8070/request/delete/certificate/${id}`)
-      .then((res) => {
-        if(res.data===true)
-        setTimeout(()=>{
-          setIsOpen(false);
-          navigate('/pending/request')
-
-        },2000)
-      })
-      .catch((err) => {
-        alert(err);
-      });
-    }
-  };
-
-  const certificateGenarateHandler = () => {
-    setIsOpen(true);
-    axios
-        .get(`http://${Port}:8070/request/genarate/certificate/${id}/${tmpName}`)
+        .delete(`http://${Port}:8070/request/delete/certificate/${id}`)
         .then((res) => {
-          if(res.data===true){
-            setIsOpen(false);
-            setDownloadBtn(true)
-          }
+          if (res.data === true)
+            setTimeout(() => {
+              setIsOpen(false);
+              navigate("/pending/request");
+            }, 2000);
         })
         .catch((err) => {
-          console.log(err)
+          alert(err);
         });
-
-
+    }
   };
 
   return (
@@ -122,7 +171,7 @@ function Certificateview() {
         </div>
         <div className="body-container">
           {/* ------------------------------------------------------ */}
-          <br/>
+          <br />
           {downloadBtn ? (
             <div>
               <RemoveRedEyeIcon
@@ -134,8 +183,8 @@ function Certificateview() {
               </p>
             </div>
           ) : (
-            <p className="download-btn" style={{color:"blue"}}>
-                Click "Genarate" Button to get a certificate...
+            <p className="download-btn" style={{ color: "blue" }}>
+              Click "Genarate" Button to get a certificate...
             </p>
           )}
 
@@ -145,7 +194,6 @@ function Certificateview() {
           <div className="student-request-details-body-wrapper">
             <div className="student-details-body-wrapper">
               <div className="student-questions-wrapper">
-                <p className="student-question">Registration No</p>
                 <p className="student-question">Student Name</p>
                 <p className="student-question">NIC</p>
                 <p className="student-question">Email Address</p>
@@ -154,9 +202,6 @@ function Certificateview() {
                 <p className="student-question">Assignment Submission Date</p>
               </div>
               <div className="student-answer-wrapper">
-                <p className="student-answer">
-                  {details.nic ? details.nic : "-"}
-                </p>
                 <p className="student-answer">
                   {details.name ? details.name : "-"}
                 </p>
@@ -195,10 +240,13 @@ function Certificateview() {
               </center>
             </div>
           ) : (
-            <center> 
-            <button className="check-btn" onClick={certificateGenarateHandler}>
-              Genarate
-            </button>
+            <center>
+              <button
+                className="check-btn"
+                onClick={certificateGenarateHandler}
+              >
+                Genarate
+              </button>
             </center>
           )}
 

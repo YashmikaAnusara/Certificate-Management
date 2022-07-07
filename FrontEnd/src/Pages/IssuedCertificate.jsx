@@ -110,6 +110,7 @@ function IssuedCertificate() {
                   name={request.name}
                   s_date={request.s_date}
                   r_date={request.r_date}
+                  a_date={request.a_date}
                   id={request.id}
                 />
               </div>
@@ -147,7 +148,7 @@ function IssuedRequestTable(props) {
         <center> {props.s_date}</center>
       </div>
       <div className="Issued-request-body-col5">
-        <center> -</center>
+        <center> {props.a_date}</center>
       </div>
     </div>
   );

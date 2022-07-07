@@ -67,7 +67,6 @@ function RejectCertificateDetails() {
                     <div className='student-request-details-body-wrapper'>
                         <div className='student-details-body-wrapper'>
                             <div className='student-questions-wrapper'>
-                                <p className='student-question'>Registration No</p>
                                 <p className='student-question'>Student Name</p>
                                 <p className='student-question'>NIC</p>
                                 <p className='student-question'>Email Address</p>
@@ -76,7 +75,6 @@ function RejectCertificateDetails() {
                                 <p className='student-question'>Assignment Submission Date</p>
                             </div>
                             <div className='student-answer-wrapper'>
-                                <p className='student-answer'>{details.s_date ? details.s_date : "-"}</p>
                                 <p className='student-answer'>{details.name ? details.name : "-"}</p>
                                 <p className='student-answer'>{details.nic ? details.nic : "-"}</p>
                                 <p className='student-answer'>{details.email ? details.email : "-"}</p>
@@ -127,7 +125,7 @@ function RejectCertificateDetails() {
                                 <p className='student-answer'>{details.l_t_proficiency ? details.l_t_proficiency : "-"}</p>
                                 <p className='student-answer'>{details.s_coordination ? details.s_coordination : "-"}</p>
                                 <p className='student-answer'>{details.c_fee_payment ? details.c_fee_payment : "-"}</p>
-                                <p className='student-answer'>""</p>
+                                <p className='student-answer'>{details.b_inquired ? details.b_inquired : "-"}</p>
                                 <p className='student-answer'>{details.c_person ? details.c_person : "-"}</p>
                             </div>
                         </div>

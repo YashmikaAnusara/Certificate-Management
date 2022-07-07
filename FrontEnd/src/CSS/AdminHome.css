@@ -114,7 +114,7 @@
   border-radius: 5px;
   border: 1px solid rgb(194, 194, 194);
   padding: 15px;
-  border-radius: 15px
+  border-radius: 15px;
 }
 
 .card2-wrapper {
@@ -123,7 +123,7 @@
   border-radius: 5px;
   border: 1px solid rgb(194, 194, 194);
   padding: 15px;
-  border-radius: 15px
+  border-radius: 15px;
 }
 
 .card3-wrapper {
@@ -132,7 +132,7 @@
   border-radius: 5px;
   border: 1px solid rgb(194, 194, 194);
   padding: 15px;
-  border-radius: 15px
+  border-radius: 15px;
 }
 .card-topic {
   font-size: 14px;
@@ -193,16 +193,50 @@
   height: 350px;
 }
 .garph-wrapper1 {
-  width: 100%;
+  width: 50%;
   background-color: rgb(255, 255, 255);
   padding: 1%;
   border-radius: 18px;
+  margin-right: 10px;
 }
 .garph-wrapper2 {
   width: 50%;
   background-color: rgb(255, 255, 255);
+  border-radius: 18px;
 }
-.pending {
+.pendingadmin {
+  color: rgb(255, 255, 255);
+  animation: blinkText 1.5s infinite;
+}
+@keyframes blinkText {
+  0% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 1px 0px 30px rgb(255, 255, 255);
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+/* .Issuedadmin {
+  color: rgb(255, 255, 255);
+  animation: blinkText 2s infinite;
+}
+@keyframes blinkText {
+  0% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 1px 0px 30px rgb(255, 255, 255);
+  }
+  100% {
+    opacity: 0.1;
+  }
+} */
+/* .Rejectedadmin {
   color: rgb(255, 255, 255);
   animation: blinkText 1s infinite;
 }
@@ -217,39 +251,7 @@
   100% {
     opacity: 0.1;
   }
-}
-.Issued {
-  color: rgb(255, 255, 255);
-  animation: blinkText 1s infinite;
-}
-@keyframes blinkText {
-  0% {
-    opacity: 0.1;
-  }
-  50% {
-    opacity: 1;
-    text-shadow: 1px 0px 30px rgb(255, 255, 255);
-  }
-  100% {
-    opacity: 0.1;
-  }
-}
-.Rejected {
-  color: rgb(255, 255, 255);
-  animation: blinkText 1s infinite;
-}
-@keyframes blinkText {
-  0% {
-    opacity: 0.1;
-  }
-  50% {
-    opacity: 1;
-    text-shadow: 1px 0px 30px rgb(255, 255, 255);
-  }
-  100% {
-    opacity: 0.1;
-  }
-}
+} */
 @media screen and (max-width: 850px) {
   .admin-dashboard-graph-wrapper {
     width: 100%;

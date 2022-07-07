@@ -10,12 +10,12 @@ import {
 } from "recharts";
 import axios from "axios";
 
-export default function BarChart() {
+export default function BarChart2() {
   const [Barchart, setBarchart] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8070/student/pending`)
+      .get(`http://localhost:8070/student/test`)
       .then((res) => {
         console.log(res.data);
         setBarchart(res.data);
@@ -42,10 +42,10 @@ export default function BarChart() {
         <Tooltip />
         <Area
           type="monotone"
-          dataKey="Pending Requset"
+          dataKey="Pending"
           stackId="1"
-          stroke="#f4bc44"
-          fill="#f4bc44"
+          stroke="#ff5864"
+          fill="#ff5864"
         />
       </AreaChart>
     </ResponsiveContainer>

@@ -11,11 +11,16 @@ const mysql = require("mysql");
 // });
 
 const pool = mysql.createPool({
-  connectionLimit: 10,
   host: "localhost",
   user: "root",
   password: "",
-  database: "certificate_management_system",
+  database: "c_m_system",
+  // port: 8082,
+});
+
+pool.getConnection(function (err) {
+  if (err) throw err;
+  console.log("Connected!");
 });
 
 //student requset the form api
@@ -113,12 +118,12 @@ router.route("/pending").get((req, res) => {
   });
 });
 
-//get the all rejected  request for chart
-router.route("/rejected").get((req, res) => {
+//get the all issued  request for chart
+router.route("/issued").get((req, res) => {
   pool.getConnection((err, connection) => {
     try {
       connection.query(
-        "SELECT s_month, COUNT(s_month) as rejected from request GROUP BY s_month;",
+        "SELECT s_month, COUNT(s_month) as issued from issued GROUP BY s_month;",
         (error, rows) => {
           let c = 0;
           var Jan = 0;
@@ -139,45 +144,45 @@ router.route("/rejected").get((req, res) => {
           } else {
             while (c < rows.length) {
               if (rows[c].s_month == "Jan") {
-                Jan = rows[c].request;
+                Jan = rows[c].issued;
               } else if (rows[c].s_month == "Feb") {
-                Feb = rows[c].request;
+                Feb = rows[c].issued;
               } else if (rows[c].s_month == "March") {
-                March = rows[c].request;
+                March = rows[c].issued;
               } else if (rows[c].s_month == "April") {
-                April = rows[c].request;
+                April = rows[c].issued;
               } else if (rows[c].s_month == "May") {
-                May = rows[c].request;
+                May = rows[c].issued;
               } else if (rows[c].s_month == "June") {
-                June = rows[c].request;
+                June = rows[c].issued;
               } else if (rows[c].s_month == "July") {
-                July = rows[c].request;
+                July = rows[c].issued;
               } else if (rows[c].s_month == "Aug") {
-                Aug = rows[c].request;
+                Aug = rows[c].issued;
               } else if (rows[c].s_month == "Sep") {
-                Sep = rows[c].request;
+                Sep = rows[c].issued;
               } else if (rows[c].s_month == "Oct") {
-                Oct = rows[c].request;
+                Oct = rows[c].issued;
               } else if (rows[c].s_month == "Nov") {
-                Nov = rows[c].request;
+                Nov = rows[c].issued;
               } else if (rows[c].s_month == "Dec") {
-                Dec = rows[c].request;
+                Dec = rows[c].issued;
               }
               c++;
             }
             const data = [
-              { name: "Jan", "Pending Requset": Jan },
-              { name: "Feb", "Pending Requset": Feb },
-              { name: "Mar", "Pending Requset": March },
-              { name: "Apr", "Pending Requset": April },
-              { name: "June", "Pending Requset": June },
-              { name: "July", "Pending Requset": July },
-              { name: "Aug", "Pending Requset": Aug },
-              { name: "Sep", "Pending Requset": Sep },
-              { name: "Oct", "Pending Requset": Oct },
-              { name: "Sep", "Pending Requset": Sep },
-              { name: "Nov", "Pending Requset": Nov },
-              { name: "Dec", "Pending Requset": Dec },
+              { name: "Jan", "Issued Requset": Jan },
+              { name: "Feb", "Issued Requset": Feb },
+              { name: "Mar", "Issued Requset": March },
+              { name: "Apr", "Issued Requset": April },
+              { name: "June", "Issued Requset": June },
+              { name: "July", "Issued Requset": July },
+              { name: "Aug", "Issued Requset": Aug },
+              { name: "Sep", "Issued Requset": Sep },
+              { name: "Oct", "Issued Requset": Oct },
+              { name: "Sep", "Issued Requset": Sep },
+              { name: "Nov", "Issued Requset": Nov },
+              { name: "Dec", "Issued Requset": Dec },
             ];
             res.json(data);
           }
@@ -189,18 +194,72 @@ router.route("/rejected").get((req, res) => {
   });
 });
 
-//get the all pending request for chart
-router.route("/pending/count").get((req, res) => {
+//get the all rejected  request for chart
+router.route("/rejected").get((req, res) => {
   pool.getConnection((err, connection) => {
     try {
       connection.query(
-        "SELECT COUNT(s_month) as pendingcount from request;",
+        "SELECT s_month, COUNT(s_month) as rejected from rejected GROUP BY s_month;",
         (error, rows) => {
-          let data=rows[0]
+          let c = 0;
+          var Jan = 0;
+          var Feb = 0;
+          var March = 0;
+          var April = 0;
+          var May = 0;
+          var June = 0;
+          var July = 0;
+          var Aug = 0;
+          var Sep = 0;
+          var Oct = 0;
+          var Nov = 0;
+          var Dec = 0;
           connection.release();
           if (error) {
             console.log(err);
           } else {
+            while (c < rows.length) {
+              if (rows[c].s_month == "Jan") {
+                Jan = rows[c].rejected;
+              } else if (rows[c].s_month == "Feb") {
+                Feb = rows[c].rejected;
+              } else if (rows[c].s_month == "March") {
+                March = rows[c].rejected;
+              } else if (rows[c].s_month == "April") {
+                April = rows[c].rejected;
+              } else if (rows[c].s_month == "May") {
+                May = rows[c].rejected;
+              } else if (rows[c].s_month == "June") {
+                June = rows[c].rejected;
+              } else if (rows[c].s_month == "July") {
+                July = rows[c].rejected;
+              } else if (rows[c].s_month == "Aug") {
+                Aug = rows[c].rejected;
+              } else if (rows[c].s_month == "Sep") {
+                Sep = rows[c].rejected;
+              } else if (rows[c].s_month == "Oct") {
+                Oct = rows[c].rejected;
+              } else if (rows[c].s_month == "Nov") {
+                Nov = rows[c].rejected;
+              } else if (rows[c].s_month == "Dec") {
+                Dec = rows[c].rejected;
+              }
+              c++;
+            }
+            const data = [
+              { name: "Jan", "Rejected Requset": Jan },
+              { name: "Feb", "Rejected Requset": Feb },
+              { name: "Mar", "Rejected Requset": March },
+              { name: "Apr", "Rejected Requset": April },
+              { name: "June", "Rejected Requset": June },
+              { name: "July", "Rejected Requset": July },
+              { name: "Aug", "Rejected Requset": Aug },
+              { name: "Sep", "Rejected Requset": Sep },
+              { name: "Oct", "Rejected Requset": Oct },
+              { name: "Sep", "Rejected Requset": Sep },
+              { name: "Nov", "Rejected Requset": Nov },
+              { name: "Dec", "Rejected Requset": Dec },
+            ];
             res.json(data);
           }
         }
@@ -211,12 +270,12 @@ router.route("/pending/count").get((req, res) => {
   });
 });
 
-//get the all Issued request for chart
-router.route("/issued/count").get((req, res) => {
+//get the all pending request count
+router.route("/pending/count").get((req, res) => {
   pool.getConnection((err, connection) => {
     try {
       connection.query(
-        "SELECT COUNT(s_month) as issuedcount from issued;",
+        "SELECT COUNT(name) as pendingcount from request;",
         (error, rows) => {
           let data = rows[0];
           connection.release();
@@ -233,12 +292,34 @@ router.route("/issued/count").get((req, res) => {
   });
 });
 
-//get the all rejected request for chart
+//get the all Issued request count
+router.route("/issued/count").get((req, res) => {
+  pool.getConnection((err, connection) => {
+    try {
+      connection.query(
+        "SELECT COUNT(name) as issuedcount from issued;",
+        (error, rows) => {
+          let data = rows[0];
+          connection.release();
+          if (error) {
+            console.log(err);
+          } else {
+            res.json(data);
+          }
+        }
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  });
+});
+
+//get the all rejected request count
 router.route("/rejected/count").get((req, res) => {
   pool.getConnection((err, connection) => {
     try {
       connection.query(
-        "SELECT COUNT(s_month) as rejectedcount from rejected;",
+        "SELECT COUNT(name) as rejectedcount from rejected;",
         (error, rows) => {
           let data = rows[0];
           connection.release();
@@ -274,7 +355,7 @@ router.route("/login/:user/:pass").get((req, res) => {
           }
         }
       );
-    } catch (e) { 
+    } catch (e) {
       console.log("this is a try catch error");
     }
   });

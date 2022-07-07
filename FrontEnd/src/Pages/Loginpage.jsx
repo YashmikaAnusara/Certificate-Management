@@ -7,6 +7,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import axios from "axios";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import Port from "../port";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -23,7 +24,7 @@ export default function LoginPage() {
   const handleClick = () => {
     setLoading(true);
     axios
-      .get(`http://localhost:8070/student/login/${username}/${password}`)
+      .get(`http://${Port}:8070/student/login/${username}/${password}`)
       .then((res) => {
           if (res.data.position === "admin") {
           localStorage.setItem("admin_username", res.data.username);
@@ -57,10 +58,9 @@ export default function LoginPage() {
     <div className="LoginBody">
       <div className="LoginCon">
         <div className="LoginText">
-          <h1>Hi, Wellcome</h1>
-        </div>
-        <div className="LoginText">
-          <h1>CADD Center</h1>
+          <h1>
+            Hi, Wellcome<br/><div className="typing anim-typewriter">CADD Cente</div>
+          </h1>
         </div>
         <Box
           component="form"

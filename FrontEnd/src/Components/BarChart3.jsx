@@ -11,12 +11,12 @@ import {
 import Port from "../port";
 import axios from "axios";
 
-export default function BarChart() {
+export default function BarChart3() {
   const [Barchart, setBarchart] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`http://${Port}:8070/student/pending`)
+      .get(`http://${Port}:8070/student/issued`)
       .then((res) => {
         console.log(res.data);
         setBarchart(res.data);
@@ -29,8 +29,6 @@ export default function BarChart() {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <AreaChart
-        width={500}
-        height={400}
         data={Barchart}
         margin={{
           top: 10,
@@ -45,9 +43,10 @@ export default function BarChart() {
         <Tooltip />
         <Area
           type="monotone"
-          dataKey="Pending Requset"
-          stroke="#f4bc44"
-          fill="#f4bc44"
+          dataKey="Issued Requset"
+          stackId="1"
+          stroke="#1cd407"
+          fill="#1cd407"
         />
       </AreaChart>
     </ResponsiveContainer>

@@ -13,6 +13,7 @@ import TextField from "@mui/material/TextField";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import Typography from "@mui/material/Typography";
+import Port from "../port";
 import axios from "axios";
 import {
   useForm,
@@ -925,8 +926,7 @@ export default function RequsetForm() {
       }
     }
     if (activeStep === steps.length - 1) {
-      axios.post(`http://localhost:8070/student/requset`, data).then((res) => {
-        console.log("asd"+data.a_submission_d,"sd"+ data.s_date,)
+      axios.post(`http://${Port}:8070/student/requset`, data).then((res) => {
         console.log("Data Added");
         setActiveStep(activeStep + 1);
         sets_datasend(true);

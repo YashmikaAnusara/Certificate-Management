@@ -8,6 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import Port from "../port";
 import axios from "axios";
 
 export default function BarChart2() {
@@ -15,7 +16,7 @@ export default function BarChart2() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8070/student/test`)
+      .get(`http://${Port}:8070/student/rejected`)
       .then((res) => {
         console.log(res.data);
         setBarchart(res.data);
@@ -42,7 +43,7 @@ export default function BarChart2() {
         <Tooltip />
         <Area
           type="monotone"
-          dataKey="Pending"
+          dataKey="Rejected Requset"
           stackId="1"
           stroke="#ff5864"
           fill="#ff5864"

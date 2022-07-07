@@ -1,5 +1,5 @@
-import React,{useEffect,useState} from "react";
-import { useNavigate,useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import AdminNavBar from "../Components/AdminNavBar";
 import MobNavBar from "../Components/MobNavBar";
 import AccountMenu from "../Components/Profile";
@@ -7,44 +7,44 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "../CSS/RequestDetails.css";
 import axios from "axios";
 import Port from "../port";
-import Loader from '../Components/Loader'
+import Loader from "../Components/Loader";
 function CertificateRejectMessage() {
   const navigate = useNavigate();
-  const params=useParams()
-  const[message,setMessage]=useState()
-  let id=params.id;
-  let nic=params.nic
+  const params = useParams();
+  const [message, setMessage] = useState();
+  let id = params.id;
+  let nic = params.nic;
   const [details, setDetails] = useState({});
-  const [isOpen,setIsOpen]=useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   const backBtnHandler = () => {
     navigate(-1);
   };
   const today = new Date();
-  const date=  today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  const date =
+    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
 
   useEffect(() => {
-    setIsOpen(true)
+    setIsOpen(true);
     axios
       .get(`http://${Port}:8070/request/details/${id}/${nic}`)
       .then((res) => {
-        if(res.data){
-          setIsOpen(false)
+        if (res.data) {
+          setIsOpen(false);
           setDetails(res.data);
         }
       })
       .catch((err) => {
-        if(err){
-          setIsOpen(false)
+        if (err) {
+          setIsOpen(false);
           alert(err);
         }
       });
   }, [id, nic]);
 
-  const data={
-    id:details.id,
-    ms_email_id:details.ms_email_id,
-    a_submission_d:details.a_submission_d,
+  const data = {
+    ms_email_id: details.ms_email_id,
+    a_submission_d: details.a_submission_d,
     name: details.name,
     email: details.email,
     p_number: details.p_number,
@@ -65,30 +65,47 @@ function CertificateRejectMessage() {
     l_t_proficiency: parseInt(details.l_t_proficiency),
     s_coordination: parseInt(details.s_coordination),
     c_fee_payment: details.c_fee_payment,
+    b_inquired:details.b_inquired,
     c_person: details.c_person,
     feedbak: details.feedbak,
     s_date: details.s_date,
+    s_month:details.s_month,
     r_date: date,
-    message: message
-  }
+    r_month:details.s_month,
+    message: message,
+  };
 
-  const submitHandler = () => {
-    setIsOpen(true)
-    axios
-      .post(`http://${Port}:8070/request/reject/${id}/${nic}`,data)
+  const submitHandler = (e) => {
+    e.preventDefault();
+    setIsOpen(true);
+    const indertDatafunc = new Promise((resolve, reject) => {
+        axios
+          .post(`http://${Port}:8070/request/reject/${id}/${nic}`, data)
+          .then((res) => {
+            resolve(res);
+          })
+          .catch((err) => {
+            reject(err)
+          });
+    });
+    indertDatafunc
       .then((res) => {
-        if(res.data){
-          setTimeout(()=>{
-            setIsOpen(false)
-            alert("Done!")
-            navigate('/reject/request')
-          },2000)
+        if(res){
+          axios
+          .delete(`http://${Port}:8070/request/remove/details/${id}`, data)
+          .then(() => {
+            setIsOpen(false);
+            alert("Done!");
+            navigate("/reject/request");
+          })
+          .catch((err) => {
+            alert(err);
+          });
         }
       })
       .catch((err) => {
         alert(err);
       });
-     
   };
 
   return (
@@ -120,7 +137,6 @@ function CertificateRejectMessage() {
           <div className="student-request-details-body-wrapper">
             <div className="student-details-body-wrapper">
               <div className="student-questions-wrapper">
-                <p className="student-question">Registration No</p>
                 <p className="student-question">Student Name</p>
                 <p className="student-question">NIC</p>
                 <p className="student-question">Email Address</p>
@@ -129,9 +145,6 @@ function CertificateRejectMessage() {
                 <p className="student-question">Assignment Submission Date</p>
               </div>
               <div className="student-answer-wrapper">
-              <p className="student-answer">
-                  {details.nic ? details.nic : "-"}
-                </p>
                 <p className="student-answer">
                   {details.name ? details.name : "-"}
                 </p>
@@ -154,20 +167,22 @@ function CertificateRejectMessage() {
             </div>
             <hr />
             <div className="student-request-details-body-wrapper">
-              <center>
-                <textarea
-                  rows="5"
-                  className="message-area"
-                  placeholder="Enter your reason..."
-                  onChange={(event)=>{setMessage(event.target.value)}}
-                  
-                />
-              </center>
-              <center>
-                <button className="approve-btn" onClick={submitHandler}>
-                  Submit
-                </button>
-              </center>
+              <form onSubmit={submitHandler}>
+                <center>
+                  <textarea
+                    rows="5"
+                    className="message-area"
+                    placeholder="Enter your reason..."
+                    onChange={(event) => {
+                      setMessage(event.target.value);
+                    }}
+                    required
+                  />
+                </center>
+                <center>
+                  <input type="submit" className="approve-btn" value="Submit" />
+                </center>
+              </form>
             </div>
           </div>
           {/* ------------------------------------------------------ */}

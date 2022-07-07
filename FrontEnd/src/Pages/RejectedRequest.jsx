@@ -70,7 +70,7 @@ function RejectedRequest() {
                         </div>
                             {requests.map((request,index)=>(
                                 <div key={index}>
-                                    <RejectedRequestTable nic={request.nic} name={request.name} s_date={request.s_date} r_date={request.r_date} id={request.Id}/>
+                                    <RejectedRequestTable nic={request.nic} name={request.name} s_date={request.s_date} r_date={request.r_date} id={request.id}/>
                                 </div> 
                             ))}
                     </div>

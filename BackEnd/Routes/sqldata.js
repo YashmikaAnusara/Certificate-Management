@@ -2,6 +2,14 @@ const router = require("express").Router();
 const { json } = require("body-parser");
 const mysql = require("mysql");
 
+// const pool = mysql.createPool({
+//   host: "sql6.freesqldatabase.com",
+//   user: "sql6503083",
+//   password: "XIGq1irXCi",
+//   database: "sql6503083",
+//   port: 3306,
+// });
+
 const pool = mysql.createPool({
   host: "localhost",
   user: "root",

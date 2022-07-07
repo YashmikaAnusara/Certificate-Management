@@ -2,43 +2,39 @@ const router = require("express").Router();
 const mysql = require("mysql");
 const path = require("path");
 const fs = require("fs");
-
 const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
-
 const PizZip = require("pizzip");
 const Docxtemplater = require("docxtemplater");
-
 const { PDFNet } = require("@pdftron/pdfnet-node");
 
-// const pool = mysql.createPool({
-//   connectionLimit: 10,
-//   host: "localhost",
-//   user: "root",
-//   password: "",
-//   database: "certificate_management_system",
-// });
-
 const pool = mysql.createPool({
-  host: "sql6.freesqldatabase.com",
-  user: "sql6503083",
-  password: "XIGq1irXCi",
-  database: "sql6503083",
-  port: 3306,
+  connectionLimit: 10,
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "certificate_management_system",
 });
 
-const CLIENT_ID =
-  "27515838946-9m4bur80vck08emcdbqucn1b3m4d6c8f.apps.googleusercontent.com";
+// const pool = mysql.createPool({
+//   host: "sql6.freesqldatabase.com",
+//   user: "sql6503083",
+//   password: "XIGq1irXCi",
+//   database: "sql6503083", 
+//   port: 3306,
+// });
+
+const CLIENT_ID ="27515838946-9m4bur80vck08emcdbqucn1b3m4d6c8f.apps.googleusercontent.com";
 const CLIENT_SECRET = "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";
 const REDIRECT_URI = "https://developers.google.com/oauthplayground";
-const REFRESH_TOKEN =
-  "1//0494pCEWaYD0vCgYIARAAGAQSNwF-L9IrRe9Vwe1uOdQG0Gl2LOgzRRjNgWwlX-2NHPqClFgIk53agDDj7X_9kfnuj1JUt7pflH8";
+const REFRESH_TOKEN ="1//0494pCEWaYD0vCgYIARAAGAQSNwF-L9IrRe9Vwe1uOdQG0Gl2LOgzRRjNgWwlX-2NHPqClFgIk53agDDj7X_9kfnuj1JUt7pflH8";
 
 const oAuth2Client = new google.auth.OAuth2(
   CLIENT_ID,
   CLIENT_SECRET,
   REDIRECT_URI
 );
+
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
 //get all student's recent requests
@@ -59,7 +55,7 @@ router.route("/recent/details").get((req, res) => {
 
   pool.getConnection((err, connection) => {
     try {
-      connection.query(`SELECT * from request WHERE s_date<=?`,yesterdayDate, (error, rows) => {
+      connection.query(`SELECT * from request WHERE s_date>=?`,yesterdayDate, (error, rows) => {
         connection.release();
         if (error) { 
           res.send(err);
@@ -141,6 +137,25 @@ router.route("/details/check/:id/:nic").get((req, res) => {
   });
 }); 
 
+//save issued certificate details 
+router.route("/save/issued/details").post((req, res) => {
+  const data = req.body;
+  pool.getConnection((err, connection) => {
+    try { 
+      connection.query("INSERT INTO issued SET ?",data, (error, rows) => {
+        connection.release();
+        if (error) {
+          res.send(err);
+        } else {
+          res.send(rows) 
+        }  
+      });   
+    } catch (e) { 
+      res.send(e); 
+    }
+  });
+});
+
 //get specific issued certificate detail
 router.route("/issued/details/:id/:nic").get((req, res) => {
   const id = req.params.id;
@@ -166,9 +181,9 @@ router.route("/issued/details/:id/:nic").get((req, res) => {
   });
 });
 
+
 //save rejected certificate requests 
 router.route("/reject/:id/:nic").post((req, res) => {
-  const id = req.params.id;
   const data = req.body;
   pool.getConnection((err, connection) => {
     try {
@@ -177,30 +192,32 @@ router.route("/reject/:id/:nic").post((req, res) => {
         if (error) {
           res.send(err);
         } else {
-            deleteData()
+          res.send(rows) 
         }  
       });   
     } catch (e) { 
       res.send(e); 
     }
   });
+});
 
-  function deleteData(){
+//delete data from the request table
+router.route("/remove/details/:id").delete((req, res) => {
+  const id = req.params.id;
     pool.getConnection((err, connection) => {
       try {
-        connection.query(`DELETE FROM request WHERE id ="${id}" `, (error, rows) => {
+        connection.query(`DELETE FROM request WHERE id=${id} `, (error, rows) => {
           connection.release();
           if (error) {
             res.send(err);
-          } else {
-            res.json(rows);
+          } else { 
+            res.send(rows);
           }  
         });   
       } catch (e) { 
         res.send(e); 
       }
     });
-  }
 });
 
 //get rejected certificate 
@@ -229,7 +246,7 @@ router.route("/reject/details/:id/:nic").get((req, res) => {
   pool.getConnection((err, connection) => {
     try {
       connection.query(
-        `SELECT * from rejected WHERE id="${id}" AND nic="${nic}"`,
+        `SELECT * from rejected WHERE id=${id} AND nic="${nic}"`,
         (error, rows) => {
           let value = rows[0];
           connection.release(); 
@@ -246,7 +263,7 @@ router.route("/reject/details/:id/:nic").get((req, res) => {
   });
 });
 
-//get rejected certificate 
+//get issued certificate 
 router.route("/issued/certificates/details").get((req, res) => {
   pool.getConnection((err, connection) => {
     try {
@@ -281,9 +298,10 @@ router.route("/certificate/:id").get((req, res) => {
 });
 
 //genarate a certificates
-router.route("/genarate/certificate/:id/:tmpid").get(async (req, res) => {
+router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
   const id = req.params.id;
   const tmp = req.params.tmpid;
+  const data=req.body;
 
   //genarate certificate as a docx file
   const DOCXpromise = new Promise((resolve, reject) => {
@@ -300,12 +318,12 @@ router.route("/genarate/certificate/:id/:tmpid").get(async (req, res) => {
       });
       // Render the document (Replace)
       doc.render({
-        first_name: "Thivanka ",
-        last_name: "Saparamadu",
-        in: " CAAD CENTER",
-        at: "Malabe",
-        during: "2020-2022",
-        id: "IT20022488",
+        first_name: data.name,
+        last_name:"...",
+        in: "CAAD CENTER",
+        at: data.b_inquired,
+        during:"From-"+data.s_date_course+" "+"To-"+data.e_date_course,
+        id:data.ms_email_id,
       });
       const buf = doc.getZip().generate({
         type: "nodebuffer",
@@ -327,7 +345,6 @@ router.route("/genarate/certificate/:id/:tmpid").get(async (req, res) => {
       resolve();
     }, 3000);
   });
-
 //convert docx file into pdf
   DOCXpromise
   .then((data) => {
@@ -355,19 +372,18 @@ router.route("/genarate/certificate/:id/:tmpid").get(async (req, res) => {
           }
         });
       })
-      .catch((err) => {
+      .catch((err) => { 
         res.statusCode = 500;
         res.end(err);
       });
   });
-
 //delete created docx files
-  PDFpromise.then((detail) => {
+  PDFpromise.then((detail) => { 
     fs.unlink(
       path.resolve(__dirname, `../Certificate/${id}.docx`),
       function (err) {
         if (err) {
-          res.send(err);
+          res.send(err); 
         } else {
           res.send(true);
         }
@@ -385,6 +401,7 @@ router.route("/genarate/certificate/:id/:tmpid").get(async (req, res) => {
 
 });
 
+
 //send email through the email
 router.route("/send/:id/:email").get((req, res) => {
 
@@ -400,7 +417,7 @@ router.route("/send/:id/:email").get((req, res) => {
         service: "gmail",
         auth: {
           type: "OAuth2",
-          user: "autocarepvt1@gmail.com",
+          user: "autocarepvt1@gmail.com", 
           clientId: CLIENT_ID,
           clientSecret: CLIENT_SECRET,
           refreshToken: REFRESH_TOKEN,
@@ -474,8 +491,8 @@ router.route("/template/:id").get((req, res) => {
   const id = req.params.id;
 
   const Path = path.resolve(__dirname, `../Templates/${id}`);
-  fs.readFile(Path, function (err, data) {
-    if (err) {
+  fs.readFile(Path, function(err, data) {
+    if (err) { 
       res.json("Not Found");
     } else {
       res.writeHead(200, { ContentType: "application/pdf" });
@@ -483,5 +500,6 @@ router.route("/template/:id").get((req, res) => {
     }
   });
 });
+
  
 module.exports = router;

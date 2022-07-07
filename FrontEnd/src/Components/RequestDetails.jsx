@@ -107,14 +107,13 @@ function RequestDetails() {
             </div>
             <div className="student-request-timedate">
               <p>
-                Request Date: <b>{details.s_date ? details.s_date : "-"}</b>
+                Request Date: <b>{details.s_date ? details.s_date: "-"}</b>
               </p>
             </div>
           </div>
           <div className="student-request-details-body-wrapper">
             <div className="student-details-body-wrapper">
               <div className="student-questions-wrapper">
-                <p className="student-question">Registration No</p>
                 <p className="student-question">Student Name</p>
                 <p className="student-question">NIC</p>
                 <p className="student-question">Email Address</p>
@@ -123,9 +122,6 @@ function RequestDetails() {
                 <p className="student-question">Assignment Submission Date</p>
               </div>
               <div className="student-answer-wrapper">
-                <p className="student-answer">
-                  {details.nic ? details.nic : "-"}
-                </p>
                 <p className="student-answer">
                   {details.name ? details.name : "-"}
                 </p>
@@ -208,6 +204,8 @@ function RequestDetails() {
                   Name of the branch inquired at?
                 </p>
                 <p className="student-question">Name of the contact person</p>
+                <br/>
+                <p className="student-question">FeedBack</p>
               </div>
               <div className="student-answer-wrapper">
                 <p className="student-answer">
@@ -240,6 +238,10 @@ function RequestDetails() {
                 <p className="student-answer">
                   {details.c_person ? details.c_person : "-"}
                 </p>
+                <br/>
+                <p className="student-answer">
+                  {details.feedbak ? details.feedbak : "-"}
+                </p>
               </div>
             </div>
             <hr />
@@ -249,7 +251,7 @@ function RequestDetails() {
               <div className="status-wrapper">
                 <HelpOutlineIcon style={{ color: "blue" }} />{" "}
                 <p className="status-dis" style={{ color: "blue" }}>
-                  Click the check button to see the status!
+                  Click the "Check" button to see the status!
                 </p>
               </div>
             ) : status ? (
@@ -263,7 +265,7 @@ function RequestDetails() {
               <div className="status-wrapper">
                 <DoNotDisturbAltIcon style={{ color: "red" }} />{" "}
                 <p className="status-dis" style={{ color: "red" }}>
-                  This certificate is alredy issued! <b>NIC:{details.nic}</b>
+                  One of the certificates is alredy issued! <b>NIC:{details.nic}</b>
                 </p>
               </div>
             )}

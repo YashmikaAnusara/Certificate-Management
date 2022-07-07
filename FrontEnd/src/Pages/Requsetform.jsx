@@ -926,6 +926,7 @@ export default function RequsetForm() {
     }
     if (activeStep === steps.length - 1) {
       axios.post(`http://localhost:8070/student/requset`, data).then((res) => {
+        console.log("asd"+data.a_submission_d,"sd"+ data.s_date,)
         console.log("Data Added");
         setActiveStep(activeStep + 1);
         sets_datasend(true);

@@ -5,7 +5,9 @@ import MobNavBar from "../Components/MobNavBar";
 import AccountMenu from "../Components/Profile";
 import BarChart from "../Components/BarChart";
 import BarChart2 from "../Components/BarChart2";
+import BarChart3 from "../Components/BarChart3";
 import axios from "axios";
+import Port from "../port";
 
 function AdminHome() {
   const [pending, setpending] = useState();
@@ -14,7 +16,7 @@ function AdminHome() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8070/student/pending/count`)
+      .get(`http://${Port}:8070/student/pending/count`)
       .then((res) => {
         // console.log(res.data.pendingcount);
         setpending(res.data.pendingcount);
@@ -26,7 +28,7 @@ function AdminHome() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8070/student/issued/count`)
+      .get(`http://${Port}:8070/student/issued/count`)
       .then((res) => {
         // console.log(res.data.pendingcount);
         setissued(res.data.issuedcount);
@@ -38,7 +40,7 @@ function AdminHome() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8070/student/rejected/count`)
+      .get(`http://${Port}:8070/student/rejected/count`)
       .then((res) => {
         // console.log(res.data.pendingcount);
         setrejected(res.data.rejectedcount);
@@ -96,6 +98,9 @@ function AdminHome() {
               <BarChart />
             </div>
             <div className="garph-wrapper2">
+              <BarChart3 />
+            </div>
+            <div className="garph-wrapper3">
               <BarChart2 />
             </div>
           </div>

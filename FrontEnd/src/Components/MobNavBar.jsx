@@ -6,6 +6,7 @@ import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import MarkUnreadChatAltOutlinedIcon from '@mui/icons-material/MarkUnreadChatAltOutlined';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import DoDisturbAltOutlinedIcon from '@mui/icons-material/DoDisturbAltOutlined';
+import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 import { NavLink } from 'react-router-dom'
 
 
@@ -34,6 +35,7 @@ function MonNavBar() {
                 <NavLink to="/pending/request" className='navbar-link'><div className='mob-nav-body-links' ><MoreHorizOutlinedIcon /><p>Pending Request</p></div></NavLink>
                 <NavLink to="/issue/request" className='navbar-link'><div className='mob-nav-body-links' ><CheckCircleOutlineOutlinedIcon /><p>Issued Certificate</p></div></NavLink>
                 <NavLink to="/reject/request" className='navbar-link'><div className='mob-nav-body-links' ><DoDisturbAltOutlinedIcon /><p>Rejected Certificate</p></div></NavLink>
+                <NavLink to="/certificate/templates" className='navbar-link'><div className='mob-nav-body-links' ><AddPhotoAlternateOutlinedIcon /><p>Templates</p></div></NavLink>
             </div>}
 
         </div>

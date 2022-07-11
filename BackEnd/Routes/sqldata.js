@@ -3,11 +3,11 @@ const { json } = require("body-parser");
 const mysql = require("mysql");
 
 // const pool = mysql.createPool({
-//   host: "sql6.freesqldatabase.com",
-//   user: "sql6503083",
-//   password: "XIGq1irXCi",
-//   database: "sql6503083",
-//   port: 3306,
+//   connectionLimit: 10,
+//   host: "localhost",
+//   user: "root",
+//   password: "1212@Knuwara",
+//   database: "c_m_system",
 // });
 
 const pool = mysql.createPool({

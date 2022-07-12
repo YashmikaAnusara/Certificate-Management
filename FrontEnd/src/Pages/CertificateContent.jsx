@@ -9,6 +9,20 @@ import axios from "axios";
 import Port from "../port";
 
 export default function CertificateContent() {
+  const [c_content, setc_content] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://${Port}:8070/student/coursecontent`)
+      .then((res) => {
+        setc_content(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div className="container">
       <div className="mob-navbar-wrapper">
@@ -27,34 +41,24 @@ export default function CertificateContent() {
               <Button variant="contained">Add the Certificate Content</Button>
             </div>
           </NavLink>
-          <div className="course">
-            <div className="preview">
-              <h6 className="contend">Course Name</h6>
-              <h2 className="toipc">3DS Max</h2>
-              <div className="subtopic">
-                <h6 className="contend">Course Duration</h6>
-                <h2 className="toipc">48 Hrs.</h2>
+          {c_content.map((data, index) => (
+            <div className="course" key={index}>
+              <div className="preview">
+                <h6 className="contend">Course Name</h6>
+                <h2 className="toipc">{data.c_name}</h2>
+                <div className="subtopic">
+                  <h6 className="contend">Course Duration</h6>
+                  <h2 className="toipc">{data.c_duration}</h2>
+                </div>
+              </div>
+              <div className="info">
+                <h6 className="contend">Course content</h6>
+                <p className="p-trunc">{data.c_content}</p>
+                <button className="btn">Update</button>
+                <button className="btn2">Delete</button>
               </div>
             </div>
-            <div className="info">
-              <h6 className="contend">Course content</h6>
-              <p className="p-trunc">
-                3ds max for Engineers & Architects. Introduction to 3ds
-                max–Interface. Primitives-Keyboard Creation. Selection Methods.
-                Coordinate Systems. Parametric & Free Form Deformers, Poly
-                Editing Tools, Poly Modelling, Patch Modelling. Importing DWG
-                File. 2D shapes-Spline Editing. AEC objects, Compound Objects.
-                2D Modifiers. Loft, Shape Merge. X-ref, Merging Max Files.
-                Walkthrough. Utility Tools. Materials Editor & Tools,
-                Architectural Materials, Application of Maps, Compound
-                Materials. Standard Lights, Photometric Lights. Particle
-                Systems. Environment Effects. Reactors. Advanced Rendering.
-                Video Post. Composite Video–Export File Formats.
-              </p>
-              <button className="btn">Update</button>
-              <button className="btn2">Delete</button>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

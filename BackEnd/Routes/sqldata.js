@@ -361,7 +361,7 @@ router.route("/login/:user/:pass").get((req, res) => {
   });
 });
 
-//course content the form api
+//post course content the form api
 router.route("/coursecontent").post((req, res) => {
   const reqdata = req.body;
   pool.getConnection((err, connection) => {
@@ -380,4 +380,21 @@ router.route("/coursecontent").post((req, res) => {
   });
 });
 
+//get course content the form api
+router.route("/coursecontent").get((req, res) => {
+  pool.getConnection((err, connection) => {
+    try {
+      connection.query("SELECT * from c_content", (error,rows) => {
+        connection.release();
+        if (error) {
+          console.log("this is an error");
+        } else {
+          res.json(rows);
+        }
+      });
+    } catch (e) {
+      console.log("this is a try catch error");
+    }
+  });
+});
 module.exports = router;

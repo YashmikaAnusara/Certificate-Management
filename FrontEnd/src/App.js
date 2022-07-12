@@ -14,6 +14,7 @@ import CertificateRejectMessage from "./Pages/CertificateRejectMessage";
 import RequestForm from "./Pages/Requsetform";
 import LoginPage from "./Pages/Loginpage";
 import CertificateContent from "./Pages/CertificateContent";
+import AddCertificateContent from "./Pages/AddCertificateContent";
 
 function App() {
   return (
@@ -56,6 +57,10 @@ function App() {
             element={<CertificateRejectMessage />}
           />
           <Route path="/certificatecontent" element={<CertificateContent />} />
+          <Route
+            path="/addcertificatecontent"
+            element={<AddCertificateContent />}
+          />
         </Routes>
       </Router>
     </div>

@@ -7,10 +7,10 @@
   overflow: hidden;
   width: 100%;
   margin-top: 1%;
-  /* position: absolute;
-    top: 50%;
-    left: 50%; */
-  /* transform: translate(-50%,-50%); */
+  /* position: absolute; */
+    /* top: 50%;
+    left: 50%;  */
+   /* transform: translate(-50%,-50%); */
 }
 .course .contend {
   opacity: 0.6;
@@ -41,14 +41,15 @@
   text-align: justify;
 }
 .btn {
-  background-color: #13aa52;
+  background-color: #13aa52e0;
   border: 1px solid #13aa52;
   border-radius: 4px;
-  box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px 0;
   box-sizing: border-box;
   color: #fff;
   cursor: pointer;
-  font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont,
+    sans-serif;
   font-size: 16px;
   font-weight: 400;
   outline: none;
@@ -62,19 +63,20 @@
   touch-action: manipulation;
   float: right;
 }
-.btn:hover{
-  box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+.btn:hover {
+  box-shadow: rgba(0, 0, 0, 0.15) 0 3px 9px 0;
   transform: translateY(-2px);
 }
 .btn2 {
-  background-color: #e42525;
+  background-color: #e42525cf;
   border: 1px solid #e42525;
   border-radius: 4px;
-  box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px 0;
   box-sizing: border-box;
   color: #fff;
   cursor: pointer;
-  font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont,
+    sans-serif;
   font-size: 16px;
   font-weight: 400;
   outline: none;
@@ -89,33 +91,45 @@
   float: right;
   margin-right: 2%;
 }
-.btn2:hover{
-  box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+.btn2:hover {
+  box-shadow: rgba(0, 0, 0, 0.15) 0 3px 9px 0;
   transform: translateY(-2px);
 }
-.subtopic{
+.subtopic {
   margin-top: 20%;
 }
+.button{
+  float: right;
+  margin-bottom: 1%;
+}
 @media screen and (max-width: 850px) {
-    .course{
-        flex-direction: column;
-        width: 100%;
-    }
-    .preview{
-        width: 100%;
-    }
-    .preview h2{
-        margin: 10px 0 0 ;
-    }
-    .info h2{
-        margin-top: 20px;
-    }
-    .info p{
-        margin-bottom: 2%;
-    }
-    .btn{
-        padding: 10px 15px;
-        float: right;
-        font-size: 14px;
-    }
+  .course {
+    flex-direction: column;
+    width: 100%;
+  }
+  .preview {
+    width: 100%;
+  }
+  .preview .toipc {
+    margin: 10px 0 0;
+  }
+  .subtopic {
+    margin-top: 5%;
+  }
+  .info .toipc {
+    margin-top: 20px;
+  }
+  .info .p-trunc {
+    margin-bottom: 2%;
+  }
+  .btn {
+    padding: 10px 15px;
+    float: right;
+    font-size: 14px;
+  }
+  .btn2 {
+    padding: 10px 15px;
+    float: right;
+    font-size: 14px;
+  }
 }

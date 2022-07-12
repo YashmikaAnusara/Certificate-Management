@@ -361,4 +361,23 @@ router.route("/login/:user/:pass").get((req, res) => {
   });
 });
 
+//course content the form api
+router.route("/coursecontent").post((req, res) => {
+  const reqdata = req.body;
+  pool.getConnection((err, connection) => {
+    try {
+      connection.query("INSERT INTO c_content SET ?", reqdata, (error) => {
+        connection.release();
+        if (error) {
+          console.log("this is an error");
+        } else {
+          res.json("Data Added");
+        }
+      });
+    } catch (e) {
+      console.log("this is a try catch error");
+    }
+  });
+});
+
 module.exports = router;

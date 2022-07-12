@@ -7,6 +7,8 @@ import Box from "@mui/material/Box";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
 import axios from "axios";
 import Port from "../port";
 
@@ -15,11 +17,37 @@ export default function AddCertificateContent() {
   const [c_duration, setc_duration] = useState("");
   const [c_content, setc_content] = useState("");
 
+  const vertical = "top";
+  const horizontal = "right";
+
+  const [wc_name, setwc_name] = useState(false);
+  const [wc_duration, setwc_duration] = useState(false);
+  const [wc_content, setwc_content] = useState(false);
+  const [wdata, setwdata] = useState(false);
+
   const submithandle = () => {
     const data = { c_name, c_duration, c_content };
-    axios.post(`http://${Port}:8070/student/coursecontent`,data).then((res) => {
-      console.log("Data Added");
-    });
+    if (data.c_name === "") {
+      setwc_name(true);
+    } else if (data.c_duration === "") {
+      setwc_duration(true);
+    } else if (data.c_content === "") {
+      setwc_content(true);
+    } else {
+      axios
+        .post(`http://${Port}:8070/student/coursecontent`, data)
+        .then((res) => {
+          console.log("Data Added");
+          setwdata(true);
+        });
+    }
+  };
+
+  const handleClose = (event, reason) => {
+    setwdata(false);
+    setwc_name(false);
+    setwc_duration(false);
+    setwc_content(false);
   };
   return (
     <div>
@@ -101,6 +129,66 @@ export default function AddCertificateContent() {
           </div>
         </div>
       </div>
+      <Snackbar
+        open={wdata}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert
+          variant="filled"
+          onClose={handleClose}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Data Sent Successfully
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={wc_name}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert
+          variant="filled"
+          onClose={handleClose}
+          severity="warning"
+          sx={{ width: "100%" }}
+        >
+          Enter the Course Name
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={wc_duration}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert
+          variant="filled"
+          onClose={handleClose}
+          severity="warning"
+          sx={{ width: "100%" }}
+        >
+          Enter the Course Duration
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={wc_content}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert
+          variant="filled"
+          onClose={handleClose}
+          severity="warning"
+          sx={{ width: "100%" }}
+        >
+          Enter the Course Content
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

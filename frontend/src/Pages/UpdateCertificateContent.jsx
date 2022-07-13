@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import "../CSS/AddCertificateContent.css";
 import AdminNavBar from "../Components/AdminNavBar";
 import MobNavBar from "../Components/MobNavBar";
@@ -12,10 +13,12 @@ import Snackbar from "@mui/material/Snackbar";
 import axios from "axios";
 import Port from "../port";
 
-export default function AddCertificateContent() {
+export default function UpdateCertificateContent() {
   const [c_name, setc_name] = useState("");
   const [c_duration, setc_duration] = useState("");
   const [c_content, setc_content] = useState("");
+
+  let { id } = useParams();
 
   const vertical = "top";
   const horizontal = "right";
@@ -24,6 +27,20 @@ export default function AddCertificateContent() {
   const [wc_duration, setwc_duration] = useState(false);
   const [wc_content, setwc_content] = useState(false);
   const [wdata, setwdata] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(`http://${Port}:8070/student/coursecontent/${id}`)
+      .then((res) => {
+        setc_name(res.data.c_name);
+        setc_duration(res.data.c_duration);
+        setc_content(res.data.c_content);
+        // console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [id]);
 
   const submithandle = () => {
     const data = { c_name, c_duration, c_content };
@@ -35,10 +52,13 @@ export default function AddCertificateContent() {
       setwc_content(true);
     } else {
       axios
-        .post(`http://${Port}:8070/student/coursecontent`, data)
+        .put(`http://${Port}:8070/student/coursecontent/${id}`, data)
         .then((res) => {
           console.log("Data Added");
           setwdata(true);
+        })
+        .catch((err) => {
+          console.log(err);
         });
     }
   };
@@ -63,7 +83,7 @@ export default function AddCertificateContent() {
             <AccountMenu />
           </div>
           <div className="body-container">
-            <h2 className="text">Add the Certificate Content</h2>
+            <h2 className="text">Update the Certificate Content</h2>
             <div className="form">
               <Box
                 component="form"
@@ -123,7 +143,7 @@ export default function AddCertificateContent() {
                   endIcon={<SendIcon />}
                   onClick={submithandle}
                 >
-                  Send
+                  Update
                 </Button>
               </div>
             </div>
@@ -142,7 +162,7 @@ export default function AddCertificateContent() {
           severity="success"
           sx={{ width: "100%" }}
         >
-          Data Sent Successfully
+          Data Updated Successfully
         </Alert>
       </Snackbar>
       <Snackbar

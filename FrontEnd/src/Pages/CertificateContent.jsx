@@ -4,12 +4,13 @@ import AdminNavBar from "../Components/AdminNavBar";
 import MobNavBar from "../Components/MobNavBar";
 import AccountMenu from "../Components/Profile";
 import Button from "@mui/material/Button";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Port from "../port";
 
 export default function CertificateContent() {
   const [c_content, setc_content] = useState([]);
+  const nav = useNavigate();
 
   useEffect(() => {
     axios
@@ -23,6 +24,26 @@ export default function CertificateContent() {
       });
   }, []);
 
+  const updatehandler = (id) => {
+    nav(`/updatecertificatecontent/${id}`);
+  };
+
+  const deletehandler = (id) => {
+    if (
+      window.confirm("Do You Want Delete This Certificate Content?") === true
+    ) {
+      axios
+        .delete(`http://${Port}:8070/student/coursecontent/${id}`)
+        .then((res) => {
+          console.log("Data Delete");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log("Fuck");
+    }
+  };
   return (
     <div className="container">
       <div className="mob-navbar-wrapper">
@@ -42,20 +63,34 @@ export default function CertificateContent() {
             </div>
           </NavLink>
           {c_content.map((data, index) => (
-            <div className="course" key={index}>
-              <div className="preview">
-                <h6 className="contend">Course Name</h6>
-                <h2 className="toipc">{data.c_name}</h2>
-                <div className="subtopic">
-                  <h6 className="contend">Course Duration</h6>
-                  <h2 className="toipc">{data.c_duration}</h2>
+            <div key={index}>
+              <div className="course">
+                <div className="preview">
+                  <h6 className="contend">Course Name</h6>
+                  <h2 className="toipc">{data.c_name}</h2>
+                  <div className="subtopic">
+                    <h6 className="contend">Course Duration</h6>
+                    <h2 className="toipc">{data.c_duration}</h2>
+                  </div>
                 </div>
-              </div>
-              <div className="info">
-                <h6 className="contend">Course content</h6>
-                <p className="p-trunc">{data.c_content}</p>
-                <button className="btn">Update</button>
-                <button className="btn2">Delete</button>
+                <div className="info">
+                  <h6 className="contend">Course content</h6>
+                  <p className="p-trunc">{data.c_content}</p>
+                  <div className="btnpos">
+                    <button
+                      className="btn"
+                      onClick={() => updatehandler(data.id)}
+                    >
+                      Update
+                    </button>
+                    <button
+                      className="btn2"
+                      onClick={() => deletehandler(data.id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           ))}

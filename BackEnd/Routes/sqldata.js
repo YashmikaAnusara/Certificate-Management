@@ -384,7 +384,7 @@ router.route("/coursecontent").post((req, res) => {
 router.route("/coursecontent").get((req, res) => {
   pool.getConnection((err, connection) => {
     try {
-      connection.query("SELECT * from c_content", (error,rows) => {
+      connection.query("SELECT * from c_content", (error, rows) => {
         connection.release();
         if (error) {
           console.log("this is an error");
@@ -397,4 +397,77 @@ router.route("/coursecontent").get((req, res) => {
     }
   });
 });
+
+//delete course content the form api
+router.route("/coursecontent/:id").delete((req, res) => {
+  const id = req.params.id;
+  pool.getConnection((err, connection) => {
+    try {
+      connection.query(
+        `DELETE FROM c_content WHERE id=${id}`,
+        (error, rows) => {
+          connection.release();
+          if (error) {
+            console.log("this is an error");
+          } else {
+            res.json(rows);
+          }
+        }
+      );
+    } catch (e) {
+      console.log("this is a try catch error");
+    }
+  });
+});
+
+//get one course content the form api
+router.route("/coursecontent/:id").get((req, res) => {
+  const id = req.params.id;
+  pool.getConnection((err, connection) => {
+    try {
+      connection.query(
+        `SELECT * from c_content WHERE id=${id}`,
+        (error, rows) => {
+          let data =rows[0]
+          connection.release();
+          if (error) {
+            console.log("this is an error");
+          } else {
+            res.json(data);
+          }
+        }
+      );
+    } catch (e) {
+      console.log("this is a try catch error");
+    }
+  });
+});
+
+//update course content the form api
+router.route("/coursecontent/:id").put((req, res) => {
+  const id = req.params.id;
+
+  const c_name = req.body.c_name;
+  const c_duration = req.body.c_duration;
+  const c_content = req.body.c_content;
+
+  pool.getConnection((err, connection) => {
+    try {
+      connection.query(
+        `UPDATE c_content SET c_name="${c_name}",c_duration="${c_duration}",c_content="${c_content}" WHERE id=${id}`,
+        (error, rows) => {
+          connection.release();
+          if (error) {
+            console.log("this is an error");
+          } else {
+            res.json(rows);
+          }
+        }
+      );
+    } catch (e) {
+      console.log("this is a try catch error");
+    }
+  });
+});
+
 module.exports = router;

@@ -10,6 +10,7 @@ import Port from "../port";
 
 export default function CertificateContent() {
   const [c_content, setc_content] = useState([]);
+  const [found, setFound] = useState("");
   const nav = useNavigate();
 
   useEffect(() => {
@@ -44,6 +45,14 @@ export default function CertificateContent() {
       console.log("Fuck");
     }
   };
+
+  const requset = c_content.filter((data) => {
+    return (
+      data.c_name.toLowerCase().includes(found.toLowerCase()) ||
+      data.c_duration.toLowerCase().includes(found.toLowerCase())
+    );
+  });
+  
   return (
     <div className="container">
       <div className="mob-navbar-wrapper">
@@ -57,12 +66,21 @@ export default function CertificateContent() {
           <AccountMenu />
         </div>
         <div className="body-container">
-          <NavLink to="/addcertificatecontent" className="navbar-link">
-            <div className="button">
+          <div className="button">
+            <input
+              type="search"
+              placeholder="Course Name or Course Duration Search..."
+              className="certificate-content-search"
+              onChange={(event) => {
+                setFound(event.target.value);
+              }}
+            />
+            <NavLink to="/addcertificatecontent" className="navbar-link">
               <Button variant="contained">Add the Certificate Content</Button>
-            </div>
-          </NavLink>
-          {c_content.map((data, index) => (
+            </NavLink>
+          </div>
+
+          {requset.map((data, index) => (
             <div key={index}>
               <div className="course">
                 <div className="preview">

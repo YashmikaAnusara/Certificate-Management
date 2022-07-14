@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { json } = require("body-parser");
 const mysql = require("mysql");
+const { v4: uuidv4 } = require("uuid");
 
 // const pool = mysql.createPool({
 //   connectionLimit: 10,
@@ -26,9 +27,72 @@ pool.getConnection(function (err) {
 //student requset the form api
 router.route("/requset").post((req, res) => {
   const reqdata = req.body;
+
+  const ms_email_id = req.body.ms_email_id;
+  const uuid = uuidv4();
+  const a_submission_d = req.body.a_submission_d;
+  const name = req.body.name;
+  const email = req.body.email;
+  const p_number = req.body.p_number;
+  const nic = req.body.nic;
+  const organization = req.body.organization;
+  const occupation = req.body.occupation;
+  const class_id = req.body.class_id;
+  const name_cerificate = req.body.name_cerificate;
+  const name_c_attended = req.body.name_c_attended;
+  const name_lecturer = req.body.name_lecturer;
+  const s_date_course = req.body.s_date_course;
+  const e_date_course = req.body.e_date_course;
+  const c_o_a_submission = req.body.c_o_a_submission;
+  const tvec_certificate = req.body.tvec_certificate;
+  const k_a_cadd_center = req.body.k_a_cadd_center;
+  const r_cadd_center = req.body.r_cadd_center;
+  const r_l_experience = req.body.r_l_experience;
+  const l_t_proficiency = req.body.l_t_proficiency;
+  const s_coordination = req.body.s_coordination;
+  const c_fee_payment = req.body.c_fee_payment;
+  const b_inquired = req.body.b_inquired;
+  const c_person = req.body.c_person;
+  const feedbak = req.body.feedbak;
+  const bank_slip = req.body.bank_slip;
+  const s_date = req.body.s_date;
+  const s_month = req.body.s_month;
+
+  const addinquiry = {
+    ms_email_id,
+    uuid,
+    a_submission_d,
+    name,
+    email,
+    p_number,
+    nic,
+    organization,
+    occupation,
+    class_id,
+    name_cerificate,
+    name_c_attended,
+    name_lecturer,
+    s_date_course,
+    e_date_course,
+    c_o_a_submission,
+    tvec_certificate,
+    k_a_cadd_center,
+    r_cadd_center,
+    r_l_experience,
+    l_t_proficiency,
+    s_coordination,
+    c_fee_payment,
+    b_inquired,
+    c_person,
+    feedbak,
+    bank_slip,
+    s_date,
+    s_month,
+  };
+
   pool.getConnection((err, connection) => {
     try {
-      connection.query("INSERT INTO request SET ?", reqdata, (error) => {
+      connection.query("INSERT INTO request SET ?", addinquiry, (error) => {
         connection.release();
         if (error) {
           console.log("this is an error");
@@ -428,7 +492,7 @@ router.route("/coursecontent/:id").get((req, res) => {
       connection.query(
         `SELECT * from c_content WHERE id=${id}`,
         (error, rows) => {
-          let data =rows[0]
+          let data = rows[0];
           connection.release();
           if (error) {
             console.log("this is an error");

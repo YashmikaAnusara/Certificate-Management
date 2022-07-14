@@ -62,6 +62,7 @@
   -webkit-user-select: none;
   touch-action: manipulation;
   float: right;
+  margin-top: 6%;
 }
 .btn:hover {
   box-shadow: rgba(0, 0, 0, 0.15) 0 3px 9px 0;
@@ -90,6 +91,7 @@
   touch-action: manipulation;
   float: right;
   margin-right: 2%;
+  margin-top: 6%;
 }
 .btn2:hover {
   box-shadow: rgba(0, 0, 0, 0.15) 0 3px 9px 0;

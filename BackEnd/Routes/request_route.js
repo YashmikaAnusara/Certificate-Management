@@ -62,6 +62,24 @@ router.route("/recent/details").get((req, res) => {
 
 });
 
+//get course content
+router.route("/course/content").get((req, res) => {
+  pool.getConnection((err, connection) => {
+    try {
+      connection.query("SELECT * from c_content", (error, rows) => {
+        connection.release(); 
+        if (error) { 
+          res.send(err);
+        } else {  
+          res.json(rows);  
+        }
+      });
+    } catch (e) { 
+      res.send(e);
+    }
+  });
+});
+
 //get all student requests
 router.route("/details").get((req, res) => {
   pool.getConnection((err, connection) => {
@@ -88,7 +106,7 @@ router.route("/details/:id/:nic").get((req, res) => {
   pool.getConnection((err, connection) => {
     try {
       connection.query(
-        `SELECT * from request WHERE id="${id}" AND nic="${nic}"`,
+        `SELECT * from request WHERE uuid="${id}" AND nic="${nic}"`,
         (error, rows) => {
           let value = rows[0];
           connection.release(); 
@@ -106,13 +124,14 @@ router.route("/details/:id/:nic").get((req, res) => {
 });
 
 //check the request in issued table, is it issued or not
-router.route("/details/check/:id/:nic").get((req, res) => {
+router.route("/details/check/:course/:nic").get((req, res) => {
   const nic = req.params.nic;
+  const course = req.params.course;
 
   pool.getConnection((err, connection) => {
     try {
       connection.query( 
-        `SELECT * from issued WHERE nic="${nic}"`,
+        `SELECT * from issued WHERE nic="${nic}" AND name_cerificate="${course}"`,
         (error, rows) => {
           connection.release(); 
           if (error) { 

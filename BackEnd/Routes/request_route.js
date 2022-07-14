@@ -16,14 +16,6 @@ const pool = mysql.createPool({
   database: "c_m_system",
 });
 
-// const pool = mysql.createPool({
-//   host: "sql6.freesqldatabase.com",
-//   user: "sql6503083",
-//   password: "XIGq1irXCi",
-//   database: "sql6503083", 
-//   port: 3306,
-// });
-
 const CLIENT_ID ="27515838946-9m4bur80vck08emcdbqucn1b3m4d6c8f.apps.googleusercontent.com";
 const CLIENT_SECRET = "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";
 const REDIRECT_URI = "https://developers.google.com/oauthplayground";
@@ -87,7 +79,6 @@ router.route("/details").get((req, res) => {
     }
   });
 });
-
 
 //get specific request detail
 router.route("/details/:id/:nic").get((req, res) => {

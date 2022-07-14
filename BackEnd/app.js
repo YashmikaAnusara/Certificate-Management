@@ -24,7 +24,7 @@ const mailservice = nodemailer.createTransport({
 });
 
 const sender = {
-  from: "noreplycert@caddcentre.lk",
+  from: "Certificate Management <noreplycert@caddcentre.lk>",
   to: "noreplycert@caddcentre.lk",
   subject: "this is the sample message in outlook",
   text: "Test Done in is mail",

@@ -21,6 +21,7 @@ import {
   FormProvider,
   useFormContext,
 } from "react-hook-form";
+
 import "../CSS/Requsetpage.css";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -672,13 +673,14 @@ const FeedbackPaymentDetails = () => {
                 <TextField
                   id="bank_slip"
                   type="file"
+                  accept="image/*"
                   label="Upload bank slip :"
                   variant="outlined"
                   InputLabelProps={{
                     shrink: true,
                   }}
                   fullWidth
-                  // required
+                  required
                   {...field}
                 />
               </div>

@@ -13,6 +13,9 @@ import SelectTemplatale from "./Pages/SelectTemplate";
 import CertificateRejectMessage from "./Pages/CertificateRejectMessage";
 import RequestForm from "./Pages/Requsetform";
 import LoginPage from "./Pages/Loginpage";
+import CertificateContent from "./Pages/CertificateContent";
+import AddCertificateContent from "./Pages/AddCertificateContent";
+import UpdateCertificateContent from "./Pages/UpdateCertificateContent";
 
 function App() {
   return (
@@ -45,10 +48,7 @@ function App() {
             path="/requests/detail/:id/:nic/certificate/:tempid"
             element={<Certificateview />}
           />
-          <Route 
-            path="/requestform" 
-            element={<RequestForm />} 
-          />
+          <Route path="/requestform" element={<RequestForm />} />
           <Route
             path="/requests/detail/:id/:nic/certificate"
             element={<SelectTemplatale />}
@@ -56,6 +56,15 @@ function App() {
           <Route
             path="/requests/detail/:id/:nic/reject"
             element={<CertificateRejectMessage />}
+          />
+          <Route path="/certificatecontent" element={<CertificateContent />} />
+          <Route
+            path="/addcertificatecontent"
+            element={<AddCertificateContent />}
+          />
+          <Route
+            path="/updatecertificatecontent/:id"
+            element={<UpdateCertificateContent />}
           />
         </Routes>
       </Router>

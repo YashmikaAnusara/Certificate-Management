@@ -5,10 +5,12 @@ import AdminNavBar from "../Components/AdminNavBar";
 import MobNavBar from "../Components/MobNavBar";
 import AccountMenu from "../Components/Profile";
 import Box from "@mui/material/Box";
+import { useNavigate } from "react-router-dom";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Alert from "@mui/material/Alert";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Snackbar from "@mui/material/Snackbar";
 import axios from "axios";
 import Port from "../port";
@@ -17,7 +19,8 @@ export default function UpdateCertificateContent() {
   const [c_name, setc_name] = useState("");
   const [c_duration, setc_duration] = useState("");
   const [c_content, setc_content] = useState("");
-
+  const navigate = useNavigate();
+  
   let { id } = useParams();
 
   const vertical = "top";
@@ -41,6 +44,10 @@ export default function UpdateCertificateContent() {
         console.log(err);
       });
   }, [id]);
+
+  const backBtnHandler = () => {
+    navigate(-1);
+  };
 
   const submithandle = () => {
     const data = { c_name, c_duration, c_content };
@@ -83,6 +90,7 @@ export default function UpdateCertificateContent() {
             <AccountMenu />
           </div>
           <div className="body-container">
+            <ArrowBackIcon onClick={backBtnHandler} className="back-btn" />
             <h2 className="text">Update the Certificate Content</h2>
             <div className="form">
               <Box

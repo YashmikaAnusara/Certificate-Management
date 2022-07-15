@@ -4,8 +4,10 @@ import AdminNavBar from "../Components/AdminNavBar";
 import MobNavBar from "../Components/MobNavBar";
 import AccountMenu from "../Components/Profile";
 import Box from "@mui/material/Box";
+import { useNavigate } from "react-router-dom";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import TextField from "@mui/material/TextField";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
@@ -16,7 +18,8 @@ export default function AddCertificateContent() {
   const [c_name, setc_name] = useState("");
   const [c_duration, setc_duration] = useState("");
   const [c_content, setc_content] = useState("");
-
+  const navigate = useNavigate();
+  
   const vertical = "top";
   const horizontal = "right";
 
@@ -43,6 +46,10 @@ export default function AddCertificateContent() {
     }
   };
 
+  const backBtnHandler = () => {
+    navigate(-1);
+  };
+
   const handleClose = (event, reason) => {
     setwdata(false);
     setwc_name(false);
@@ -63,6 +70,7 @@ export default function AddCertificateContent() {
             <AccountMenu />
           </div>
           <div className="body-container">
+            <ArrowBackIcon onClick={backBtnHandler} className="back-btn" />
             <h2 className="text">Add the Certificate Content</h2>
             <div className="form">
               <Box

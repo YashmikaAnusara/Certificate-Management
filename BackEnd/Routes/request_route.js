@@ -16,10 +16,12 @@ const pool = mysql.createPool({
   database: "c_m_system",
 });
 
-const CLIENT_ID ="27515838946-9m4bur80vck08emcdbqucn1b3m4d6c8f.apps.googleusercontent.com";
+const CLIENT_ID =
+  "27515838946-9m4bur80vck08emcdbqucn1b3m4d6c8f.apps.googleusercontent.com";
 const CLIENT_SECRET = "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";
 const REDIRECT_URI = "https://developers.google.com/oauthplayground";
-const REFRESH_TOKEN ="1//0494pCEWaYD0vCgYIARAAGAQSNwF-L9IrRe9Vwe1uOdQG0Gl2LOgzRRjNgWwlX-2NHPqClFgIk53agDDj7X_9kfnuj1JUt7pflH8";
+const REFRESH_TOKEN =
+  "1//0494pCEWaYD0vCgYIARAAGAQSNwF-L9IrRe9Vwe1uOdQG0Gl2LOgzRRjNgWwlX-2NHPqClFgIk53agDDj7X_9kfnuj1JUt7pflH8";
 
 const oAuth2Client = new google.auth.OAuth2(
   CLIENT_ID,
@@ -34,47 +36,73 @@ router.route("/recent/details").get((req, res) => {
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
   function padTo2Digits(num) {
-    return num.toString().padStart(2, '0');
+    return num.toString().padStart(2, "0");
   }
   function formatDate(date) {
     return [
       date.getFullYear(),
       padTo2Digits(date.getMonth() + 1),
       padTo2Digits(date.getDate()),
-    ].join('-');
+    ].join("-");
   }
-  const yesterdayDate=formatDate(yesterday); 
+  const yesterdayDate = formatDate(yesterday);
 
   pool.getConnection((err, connection) => {
     try {
-      connection.query(`SELECT * from request WHERE s_date>=?`,yesterdayDate, (error, rows) => {
+      connection.query(
+        `SELECT * from request WHERE s_date>=?`,
+        yesterdayDate,
+        (error, rows) => {
+          connection.release();
+          if (error) {
+            res.send(err);
+          } else {
+            res.json(rows);
+          }
+        }
+      );
+    } catch (e) {
+      res.send(e);
+    }
+  });
+});
+
+//get course contents
+router.route("/course/content").get((req, res) => {
+  pool.getConnection((err, connection) => {
+    try {
+      connection.query("SELECT * from c_content", (error, rows) => {
         connection.release();
-        if (error) { 
+        if (error) {
           res.send(err);
-        } else { 
+        } else {
           res.json(rows);
-        } 
+        }
       });
     } catch (e) {
       res.send(e);
     }
   });
-
 });
 
-//get course content
-router.route("/course/content").get((req, res) => {
+//get a specific course content
+router.route("/course/content/:name").get((req, res) => {
+  const name = req.params.name;
   pool.getConnection((err, connection) => {
     try {
-      connection.query("SELECT * from c_content", (error, rows) => {
-        connection.release(); 
-        if (error) { 
-          res.send(err);
-        } else {  
-          res.json(rows);  
+      connection.query(
+        `SELECT * from c_content WHERE c_name="${name}"`,
+        (error, rows) => {
+          let value = rows[0];
+          connection.release();
+          if (error) {
+            res.send(err);
+          } else {
+            res.json(value);
+          }
         }
-      });
-    } catch (e) { 
+      );
+    } catch (e) {
       res.send(e);
     }
   });
@@ -85,14 +113,14 @@ router.route("/details").get((req, res) => {
   pool.getConnection((err, connection) => {
     try {
       connection.query("SELECT * from request", (error, rows) => {
-        connection.release(); 
-        if (error) { 
+        connection.release();
+        if (error) {
           res.send(err);
-        } else {  
-          res.json(rows);  
+        } else {
+          res.json(rows);
         }
       });
-    } catch (e) { 
+    } catch (e) {
       res.send(e);
     }
   });
@@ -109,8 +137,8 @@ router.route("/details/:id/:nic").get((req, res) => {
         `SELECT * from request WHERE uuid="${id}" AND nic="${nic}"`,
         (error, rows) => {
           let value = rows[0];
-          connection.release(); 
-          if (error) { 
+          connection.release();
+          if (error) {
             res.send(err);
           } else {
             res.json(value);
@@ -130,11 +158,11 @@ router.route("/details/check/:course/:nic").get((req, res) => {
 
   pool.getConnection((err, connection) => {
     try {
-      connection.query( 
+      connection.query(
         `SELECT * from issued WHERE nic="${nic}" AND name_cerificate="${course}"`,
         (error, rows) => {
-          connection.release(); 
-          if (error) { 
+          connection.release();
+          if (error) {
             res.send(err);
           } else {
             res.json(rows.length);
@@ -145,23 +173,23 @@ router.route("/details/check/:course/:nic").get((req, res) => {
       res.send(e);
     }
   });
-}); 
+});
 
-//save issued certificate details 
+//save issued certificate details
 router.route("/save/issued/details").post((req, res) => {
   const data = req.body;
   pool.getConnection((err, connection) => {
-    try { 
-      connection.query("INSERT INTO issued SET ?",data, (error, rows) => {
+    try {
+      connection.query("INSERT INTO issued SET ?", data, (error, rows) => {
         connection.release();
         if (error) {
           res.send(err);
         } else {
-          res.send(rows) 
-        }  
-      });   
-    } catch (e) { 
-      res.send(e); 
+          res.send(rows);
+        }
+      });
+    } catch (e) {
+      res.send(e);
     }
   });
 });
@@ -174,15 +202,15 @@ router.route("/issued/details/:id/:nic").get((req, res) => {
   pool.getConnection((err, connection) => {
     try {
       connection.query(
-        `SELECT * from issued WHERE id="${id}" AND nic="${nic}"`,
+        `SELECT * from issued WHERE uuid="${id}" AND nic="${nic}"`,
         (error, rows) => {
           let value = rows[0];
-          connection.release();  
-          if (error) { 
+          connection.release();
+          if (error) {
             res.send(err);
           } else {
             res.json(value);
-          } 
+          }
         }
       );
     } catch (e) {
@@ -191,22 +219,21 @@ router.route("/issued/details/:id/:nic").get((req, res) => {
   });
 });
 
-
-//save rejected certificate requests 
+//save rejected certificate requests
 router.route("/reject/:id/:nic").post((req, res) => {
   const data = req.body;
   pool.getConnection((err, connection) => {
     try {
-      connection.query("INSERT INTO rejected SET ?",data, (error, rows) => {
+      connection.query("INSERT INTO rejected SET ?", data, (error, rows) => {
         connection.release();
         if (error) {
           res.send(err);
         } else {
-          res.send(rows) 
-        }  
-      });   
-    } catch (e) { 
-      res.send(e); 
+          res.send(rows);
+        }
+      });
+    } catch (e) {
+      res.send(e);
     }
   });
 });
@@ -214,23 +241,26 @@ router.route("/reject/:id/:nic").post((req, res) => {
 //delete data from the request table
 router.route("/remove/details/:id").delete((req, res) => {
   const id = req.params.id;
-    pool.getConnection((err, connection) => {
-      try {
-        connection.query(`DELETE FROM request WHERE id=${id} `, (error, rows) => {
+  pool.getConnection((err, connection) => {
+    try {
+      connection.query(
+        `DELETE FROM request WHERE uuid="${id}" `,
+        (error, rows) => {
           connection.release();
           if (error) {
             res.send(err);
-          } else { 
+          } else {
             res.send(rows);
-          }  
-        });   
-      } catch (e) { 
-        res.send(e); 
-      }
-    });
+          }
+        }
+      );
+    } catch (e) {
+      res.send(e);
+    }
+  });
 });
 
-//get rejected certificate 
+//get rejected certificate
 router.route("/reject/certificates/details").get((req, res) => {
   pool.getConnection((err, connection) => {
     try {
@@ -259,8 +289,8 @@ router.route("/reject/details/:id/:nic").get((req, res) => {
         `SELECT * from rejected WHERE id=${id} AND nic="${nic}"`,
         (error, rows) => {
           let value = rows[0];
-          connection.release(); 
-          if (error) { 
+          connection.release();
+          if (error) {
             res.send(err);
           } else {
             res.json(value);
@@ -273,7 +303,7 @@ router.route("/reject/details/:id/:nic").get((req, res) => {
   });
 });
 
-//get issued certificate 
+//get issued certificate
 router.route("/issued/certificates/details").get((req, res) => {
   pool.getConnection((err, connection) => {
     try {
@@ -290,7 +320,6 @@ router.route("/issued/certificates/details").get((req, res) => {
     }
   });
 });
-
 
 //get student certificates
 router.route("/certificate/:id").get((req, res) => {
@@ -311,7 +340,7 @@ router.route("/certificate/:id").get((req, res) => {
 router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
   const id = req.params.id;
   const tmp = req.params.tmpid;
-  const data=req.body;
+  const data = req.body;
 
   //genarate certificate as a docx file
   const DOCXpromise = new Promise((resolve, reject) => {
@@ -329,12 +358,14 @@ router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
       // Render the document (Replace)
       doc.render({
         first_name: data.name,
-        last_name:"...",
+        last_name: "...",
         in: "CAAD CENTER",
-        at: data.b_inquired,
-        during:"From-"+data.s_date_course+" "+"To-"+data.e_date_course,
-        id:data.ms_email_id,
+        at: data.branch,
+        during: "From-" + data.sDate + " " + "To-" + data.eDate,
+        id: data.msID,
+        c_content: data.courses,
       });
+
       const buf = doc.getZip().generate({
         type: "nodebuffer",
         // compression: DEFLATE adds a compression step.
@@ -355,9 +386,8 @@ router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
       resolve();
     }, 3000);
   });
-//convert docx file into pdf
-  DOCXpromise
-  .then((data) => {
+  //convert docx file into pdf
+  DOCXpromise.then((data) => {
     const PDFpromise = new Promise((resolve, reject) => {
       const inputPath = path.resolve(__dirname, `../Certificate/${id}.docx`);
       const outputPath = path.resolve(__dirname, `../Certificate/${id}.pdf`);
@@ -372,104 +402,84 @@ router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
       PDFNet.runWithCleanup(
         convert,
         "demo:1656359402941:7a7659560300000000ed7ac24c6e1376194f347f304b0916da24823107"
-      ).then(() => {
-        fs.readFile(outputPath, (err, data) => {
-          if (err) {
-            reject(err);
-          } 
-          else {
-            resolve("done");
-          }
+      )
+        .then(() => {
+          fs.readFile(outputPath, (err, data) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve("done");
+            }
+          });
+        })
+        .catch((err) => {
+          res.statusCode = 500;
+          res.end(err);
         });
-      })
-      .catch((err) => { 
-        res.statusCode = 500;
-        res.end(err);
-      });
-  });
-//delete created docx files
-  PDFpromise.then((detail) => { 
-    fs.unlink(
-      path.resolve(__dirname, `../Certificate/${id}.docx`),
-      function (err) {
-        if (err) {
-          res.send(err); 
-        } else {
-          res.send(true);
+    });
+    //delete created docx files
+    PDFpromise.then((detail) => {
+      fs.unlink(
+        path.resolve(__dirname, `../Certificate/${id}.docx`),
+        function (err) {
+          if (err) {
+            res.send(err);
+          } else {
+            res.send(true);
+          }
         }
-      }
-    );
-    })
-    .catch((err) => {
+      );
+    }).catch((err) => {
       res.send(err);
     });
-  })
-  .catch((err) => {
+  }).catch((err) => {
     res.send(err);
     res.json("faild");
   });
-
 });
-
 
 //send email through the email
 router.route("/send/:id/:email").get((req, res) => {
+  let email = req.params.email;
+  let id = req.params.id;
 
-    let email=req.params.email;
-    let id = req.params.id;
-    
-    const certificate = path.resolve(__dirname, `../Certificate/${id}.pdf`);
+  const certificate = path.resolve(__dirname, `../Certificate/${id}.pdf`);
+  const mailservice = nodemailer.createTransport({
+    service: "outlook",
+    auth: {
+      user: "noreplycert@caddcentre.lk",
+      pass: "1212@Knuwara",
+    },
+  });
+  const sender = {
+    from: "Certificate Management <noreplycert@caddcentre.lk>",
+    to: email,
+    subject: "this is the sample message in outlook",
+    text: "Test Done in is mail",
+    attachments: [{ filename: `${id}.pdf`, path: certificate }],
+  };
 
-  async function sendMail() {
-    try {
-      const accessToken = await oAuth2Client.getAccessToken();
-      const transport = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          type: "OAuth2",
-          user: "autocarepvt1@gmail.com", 
-          clientId: CLIENT_ID,
-          clientSecret: CLIENT_SECRET,
-          refreshToken: REFRESH_TOKEN,
-          accessToken: accessToken,
-        },
-      });
-      const mailOptions = {
-        from: "Testing Email <autocarepvt1@gmail.com>",
-        to: email,
-        subject: "This mail sending using google API",
-        text: "This API is working",
-        html: "<h1>This mail</h1>",
-        attachments: [
-          { filename: `${id}.pdf`, path: certificate },
-        ],
-      };
-      const result = await transport.sendMail(mailOptions);
-      return result;
-
-    } catch (err) {
-        return err;
+  mailservice.sendMail(sender, function (error, info) {
+    if (error) {
+      res.send(error);
+    } else {
+      console.log("Email has been send.." + info.response);
+      res.send(info.response);
     }
-  }
-  sendMail()
-    .then((result) => {
-        res.json(result);
-    })
-    .catch((error) => {
-        res.json(error);
-    });
+  });
+  
 });
 
 //get all templates
-router.route("/templates").get((req,res) => {
+router.route("/templates").get((req, res) => {
   const Path = path.resolve(__dirname, `../Templates`);
   fs.readdir(Path, (err, data) => {
     if (err) {
       console.log(err);
     } else {
       res.json(data);
-    } 
-  }); 
+    }
+  });
 });
 
 //delete the templates
@@ -481,19 +491,22 @@ router.route("/delete/template/:name").delete((req, res) => {
     } else {
       res.send("Done");
     }
-  }); 
+  });
 });
 
 //cancel the certificate
 router.route("/delete/certificate/:id").delete((req, res) => {
   let id = req.params.id;
-  fs.unlink(path.resolve(__dirname, `../Certificate/${id}.pdf`), function (err) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(true);
+  fs.unlink(
+    path.resolve(__dirname, `../Certificate/${id}.pdf`),
+    function (err) {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(true);
+      }
     }
-  });
+  );
 });
 
 // get relevent certificate template
@@ -501,8 +514,8 @@ router.route("/template/:id").get((req, res) => {
   const id = req.params.id;
 
   const Path = path.resolve(__dirname, `../Templates/${id}`);
-  fs.readFile(Path, function(err, data) {
-    if (err) { 
+  fs.readFile(Path, function (err, data) {
+    if (err) {
       res.json("Not Found");
     } else {
       res.writeHead(200, { ContentType: "application/pdf" });
@@ -511,5 +524,4 @@ router.route("/template/:id").get((req, res) => {
   });
 });
 
- 
 module.exports = router;

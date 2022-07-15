@@ -116,7 +116,7 @@ function RequestDetails() {
   };
 
   const approveHandler = () => {
-    navigate(`/requests/detail/${id}/${nic}/certificate`);
+    navigate(`/requests/detail/${id}/${nic}/${ctype}/certificate`);
   };
 
   const backBtnHandler = () => {

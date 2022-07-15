@@ -104,7 +104,7 @@ function CertificateRequest() {
             {requests.map((request, index) => (
               <div key={index}>
                 <PendingRequestTable
-                  ID={request.id}
+                  ID={request.uuid}
                   NIC={request.nic}
                   Name={request.name}
                   contact={request.p_number}

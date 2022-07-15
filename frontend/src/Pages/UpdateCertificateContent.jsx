@@ -20,7 +20,7 @@ export default function UpdateCertificateContent() {
   const [c_duration, setc_duration] = useState("");
   const [c_content, setc_content] = useState("");
   const navigate = useNavigate();
-  
+
   let { id } = useParams();
 
   const vertical = "top";
@@ -143,7 +143,7 @@ export default function UpdateCertificateContent() {
                   onChange={(e) => {
                     setc_content(e.target.value);
                   }}
-                  helperText="Test Note"
+                  helperText="If adding a new coruse content please make sure to start with a new line"
                 />
               </Box>
               <div className="sendbtn">

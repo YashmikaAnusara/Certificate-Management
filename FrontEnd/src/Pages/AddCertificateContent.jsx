@@ -123,7 +123,7 @@ export default function AddCertificateContent() {
                   onChange={(e) => {
                     setc_content(e.target.value);
                   }}
-                  helperText="Test Note"
+                  helperText="If adding a new coruse content please make sure to start with a new line"
                 />
               </Box>
               <div className="sendbtn">

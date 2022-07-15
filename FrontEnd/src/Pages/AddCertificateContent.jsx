@@ -109,12 +109,13 @@ export default function AddCertificateContent() {
                   label="Course Content"
                   fullWidth
                   multiline
-                  rows={4}
+                  rows={6}
                   variant="outlined"
                   value={c_content}
                   onChange={(e) => {
                     setc_content(e.target.value);
                   }}
+                  helperText="Test Note"
                 />
               </Box>
               <div className="sendbtn">

@@ -37,7 +37,8 @@ function Certificateview() {
     cName:content.c_name,
     courses:content.c_content,
     cDuration:content.c_duration,
-    test:content.test
+    test:content.test,
+    
   }
 
   const issuedData={

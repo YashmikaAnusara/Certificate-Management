@@ -357,13 +357,16 @@ router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
       });
       // Render the document (Replace)
       doc.render({
-        first_name: data.name,
-        last_name: "...",
+        certificatetitle:data.cName,
+        name: data.name,
         in: "CAAD CENTER",
         at: data.branch,
         during: "From-" + data.sDate + " " + "To-" + data.eDate,
         id: data.msID,
         c_content: data.courses,
+        duration:data.cDuration,
+        grade:"A Grade"
+
       });
 
       const buf = doc.getZip().generate({

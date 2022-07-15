@@ -75,12 +75,13 @@ function Templates(props) {
   const navigate = useNavigate()
   const id=params.id;
   const nic=params.nic
+  const type=params.type
 
   const selectTemplate=()=>{
     props.setOpen(true)
     setTimeout(()=>{
       props.setOpen(false)
-      navigate(`/requests/detail/${id}/${nic}/certificate/${props.name}`);
+      navigate(`/requests/detail/${id}/${nic}/${type}/certificate/${props.name}`);
     },2000)
 
   }

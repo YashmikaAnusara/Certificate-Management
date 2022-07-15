@@ -24,6 +24,7 @@ function IssuedCertificateDetails() {
   const backBtnHandler = () => {
     navigate(-1);
   };
+  
   useEffect(() => {
     setIsOpen(true)
     axios({
@@ -88,7 +89,7 @@ function IssuedCertificateDetails() {
 
           <div className="student-request-details-header-wrapper">
             <div className="student-request-id">
-              <p>102065042364BB</p>
+              <p>{details.uuid ? details.uuid : "-"}</p>
             </div>
             <div className="student-request-timedate">
               <p>

@@ -44,6 +44,7 @@ function CertificateRejectMessage() {
   }, [id, nic]);
 
   const data = {
+    uuid:id,
     ms_email_id: details.ms_email_id,
     a_submission_d: details.a_submission_d,
     name: details.name,
@@ -74,12 +75,13 @@ function CertificateRejectMessage() {
     r_date: date,
     r_month:details.s_month,
     message: message,
+
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
     setIsOpen(true);
-    const indertDatafunc = new Promise((resolve, reject) => {
+    const insertDatafunc = new Promise((resolve, reject) => {
         axios
           .post(`http://${Port}:8070/request/reject/${id}/${nic}`, data)
           .then((res) => {
@@ -89,7 +91,7 @@ function CertificateRejectMessage() {
             reject(err)
           });
     });
-    indertDatafunc
+    insertDatafunc
       .then((res) => {
         if(res){
           axios

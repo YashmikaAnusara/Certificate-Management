@@ -4,18 +4,27 @@ import MonNavBar from "./MobNavBar";
 import AdminNavBar from "./AdminNavBar";
 import AccountMenu from "./Profile";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import DoNotDisturbAltIcon from "@mui/icons-material/DoNotDisturbAlt";
 import Loader from "./Loader";
 import axios from "axios";
 import Port from "../port";
-import { useParams } from "react-router-dom";
+import TextField from "@mui/material/TextField";
+import Autocomplete from '@mui/material/Autocomplete';
+import CircularProgress from '@mui/material/CircularProgress';
+
+
+function sleep(delay = 0) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, delay);
+  });
+}
 
 function RequestDetails() {
   const params = useParams();
-  const id = parseInt(params.id);
+  const id = params.id;
   const nic = params.nic;
 
   const navigate = useNavigate();
@@ -24,29 +33,66 @@ function RequestDetails() {
   const [pending, setpending] = useState(true);
   const [status, setStatus] = useState(false);
   const [isOpen, setOpen] = useState(false);
+  const [ctype, setctype] = useState();
+  const[open, setOpen1] = React.useState(false);
+  const[options, setOptions]= React.useState([]);
+  const loading =open &&options.length=== 0;
+  
 
   useEffect(() => {
     setOpen(true);
     axios
       .get(`http://${Port}:8070/request/details/${id}/${nic}`)
       .then((res) => {
-        if(res.data){
+        if (res.data) {
           setOpen(false);
           setDetails(res.data);
         }
       })
       .catch((err) => {
-        if(err){
+        if (err) {
           setOpen(false);
           alert(err);
         }
       });
   }, [id, nic]);
 
+  React.useEffect(() => {
+    let active = true;
+
+    if (!loading) {
+      return undefined;
+    }
+
+    (async () => {
+      await sleep(1e3); 
+
+      if (active) {
+      fetch(`http://${Port}:8070/request/course/content`)
+      .then((response)=> response.json())
+      .then((data)=>{
+        setOptions(data);
+          })
+      }
+    })();
+
+    return () => {
+      active = false;
+    };
+  }, [loading]);
+
+  React.useEffect(() => {
+    if (!open) {
+      setOptions([]);
+    }
+  }, [open]);
+
+
+
   const checkHandler = () => {
     setOpen(true);
     axios
-      .get(`http://${Port}:8070/request/details/check/${id}/${nic}`)
+      .get(`http://${Port}:8070/request/details/check/${ctype}/${nic}`)
       .then((res) => {
         if (res.data !== 0) {
           setTimeout(() => {
@@ -70,7 +116,7 @@ function RequestDetails() {
   };
 
   const approveHandler = () => {
-      navigate(`/requests/detail/${id}/${nic}/certificate`);
+    navigate(`/requests/detail/${id}/${nic}/${ctype}/certificate`);
   };
 
   const backBtnHandler = () => {
@@ -78,9 +124,7 @@ function RequestDetails() {
   };
 
   const rejectHandler = () => {
-    
     navigate(`/requests/detail/${id}/${nic}/reject`);
-
   };
 
   return (
@@ -103,11 +147,11 @@ function RequestDetails() {
 
           <div className="student-request-details-header-wrapper">
             <div className="student-request-id">
-              <p>102065042364BB</p>
+              <p>{details.uuid ? details.uuid : "-"}</p>
             </div>
             <div className="student-request-timedate">
               <p>
-                Request Date: <b>{details.s_date ? details.s_date: "-"}</b>
+                Request Date: <b>{details.s_date ? details.s_date : "-"}</b>
               </p>
             </div>
           </div>
@@ -204,7 +248,6 @@ function RequestDetails() {
                   Name of the branch inquired at?
                 </p>
                 <p className="student-question">Name of the contact person</p>
-                <br/>
                 <p className="student-question">FeedBack</p>
               </div>
               <div className="student-answer-wrapper">
@@ -238,11 +281,50 @@ function RequestDetails() {
                 <p className="student-answer">
                   {details.c_person ? details.c_person : "-"}
                 </p>
-                <br/>
                 <p className="student-answer">
                   {details.feedbak ? details.feedbak : "-"}
                 </p>
+                <br />
               </div>
+            </div>
+            <div className="course-content-wrapper">
+              <Autocomplete
+                id="nic"
+                name="nic"
+                className="course-content-drop-down"
+                open={open}
+                onOpen={() => {
+                  setOpen1(true);
+                }}
+                onClose={() => {
+                  setOpen1(false);
+                }}
+                getOptionLabel={(option) => option.c_name}
+                onChange={(e, value) => {
+                  setctype(value.c_name);
+                }}
+                options={options}
+                loading={loading}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Enter the Customer NIC"
+                    value={ctype}
+                    variant="outlined"
+                    InputProps={{
+                      ...params.InputProps,
+                      endAdornment: (
+                        <React.Fragment>
+                          {loading ? (
+                            <CircularProgress color="inherit" size={20} />
+                          ) : null}
+                          {params.InputProps.endAdornment}
+                        </React.Fragment>
+                      ),
+                    }}
+                  />
+                )}
+              />
             </div>
             <hr />
           </div>
@@ -265,7 +347,8 @@ function RequestDetails() {
               <div className="status-wrapper">
                 <DoNotDisturbAltIcon style={{ color: "red" }} />{" "}
                 <p className="status-dis" style={{ color: "red" }}>
-                  One of the certificates is alredy issued! <b>NIC:{details.nic}</b>
+                  One of the certificates is alredy issued!{" "}
+                  <b>NIC:{details.nic}</b>
                 </p>
               </div>
             )}

@@ -57,7 +57,7 @@ function RejectCertificateDetails() {
 
                     <div className='student-request-details-header-wrapper'>
                         <div className='student-request-id'>
-                            <p>102065042364BB</p>
+                            <p>{details.uuid ? details.uuid : "-"}</p>
                         </div>
                         <div className='student-request-timedate'>
                             <p>Request Date: <b>{details.s_date ? details.s_date : "-"}</b></p>

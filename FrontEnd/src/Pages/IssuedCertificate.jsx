@@ -111,7 +111,7 @@ function IssuedCertificate() {
                   s_date={request.s_date}
                   r_date={request.r_date}
                   a_date={request.a_date}
-                  id={request.id}
+                  id={request.uuid}
                 />
               </div>
             ))}

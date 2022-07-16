@@ -40,7 +40,7 @@ export default function AddCertificateContent() {
       axios
         .post(`http://${Port}:8070/student/coursecontent`, data)
         .then((res) => {
-          console.log("Data Added");
+          // console.log("Data Added");
           setwdata(true);
           setTimeout(() => {
             navigate(-1);

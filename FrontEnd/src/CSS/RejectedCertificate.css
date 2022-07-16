@@ -86,6 +86,10 @@
 #rejected-request-body-col5 {
   width: 17%;
   font-size: 14px;
+  font-weight: bold;
+}
+#rejected-request-body-col6 {
+  width: 17%;
   font-size: 14px;
   font-weight: bold;
 }
@@ -133,6 +137,11 @@
 }
 
 .rejected-request-body-col5 {
+  width: 17%;
+  font-size: 14px;
+  color: rgb(76, 76, 76);
+}
+.rejected-request-body-col6 {
   width: 17%;
   font-size: 14px;
   color: rgb(76, 76, 76);

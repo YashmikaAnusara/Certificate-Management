@@ -89,7 +89,7 @@ function IssuedCertificateDetails() {
 
           <div className="student-request-details-header-wrapper">
             <div className="student-request-id">
-              <p>{details.uuid ? details.uuid : "-"}</p>
+              <p>Certificate ID: <b>{details.uuid ? details.uuid : "-"}</b></p>
             </div>
             <div className="student-request-timedate">
               <p>

@@ -85,6 +85,10 @@
 #Issued-request-body-col5 {
   width: 17%;
   font-size: 14px;
+  font-weight: bold;
+}
+#Issued-request-body-col6 {
+  width: 17%;
   font-size: 14px;
   font-weight: bold;
 }
@@ -132,6 +136,11 @@
 }
 
 .Issued-request-body-col5 {
+  width: 17%;
+  font-size: 14px;
+  color: rgb(76, 76, 76);
+}
+.Issued-request-body-col6 {
   width: 17%;
   font-size: 14px;
   color: rgb(76, 76, 76);

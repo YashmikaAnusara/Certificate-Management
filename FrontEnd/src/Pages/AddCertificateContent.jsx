@@ -19,7 +19,7 @@ export default function AddCertificateContent() {
   const [c_duration, setc_duration] = useState("");
   const [c_content, setc_content] = useState("");
   const navigate = useNavigate();
-  
+
   const vertical = "top";
   const horizontal = "right";
 
@@ -42,6 +42,9 @@ export default function AddCertificateContent() {
         .then((res) => {
           console.log("Data Added");
           setwdata(true);
+          setTimeout(() => {
+            navigate(-1);
+          }, 900);
         });
     }
   };
@@ -151,7 +154,7 @@ export default function AddCertificateContent() {
           severity="success"
           sx={{ width: "100%" }}
         >
-          Data Sent Successfully
+          Course Content Added Successfully
         </Alert>
       </Snackbar>
       <Snackbar

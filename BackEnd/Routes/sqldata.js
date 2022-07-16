@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { json } = require("body-parser");
 const mysql = require("mysql");
-const { v4: uuidv4 } = require("uuid");
+const ShortUniqueId = require("short-unique-id");
 
 // const pool = mysql.createPool({
 //   connectionLimit: 10,
@@ -29,7 +29,8 @@ router.route("/requset").post((req, res) => {
   const reqdata = req.body;
 
   const ms_email_id = req.body.ms_email_id;
-  const uuid = uuidv4();
+  const uuidv1 = new ShortUniqueId({ length: 7 });
+  const uuid = uuidv1();
   const a_submission_d = req.body.a_submission_d;
   const name = req.body.name;
   const email = req.body.email;

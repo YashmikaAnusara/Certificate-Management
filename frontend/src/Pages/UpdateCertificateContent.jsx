@@ -61,8 +61,11 @@ export default function UpdateCertificateContent() {
       axios
         .put(`http://${Port}:8070/student/coursecontent/${id}`, data)
         .then((res) => {
-          console.log("Data Added");
+          // console.log("Data Added");
           setwdata(true);
+          setTimeout(() => {
+            navigate(-1);
+          }, 900);
         })
         .catch((err) => {
           console.log(err);
@@ -171,7 +174,7 @@ export default function UpdateCertificateContent() {
           severity="success"
           sx={{ width: "100%" }}
         >
-          Data Updated Successfully
+          Course Content Updated Successfully
         </Alert>
       </Snackbar>
       <Snackbar

@@ -807,7 +807,7 @@ export default function RequsetForm() {
   };
 
   const handleNext = (data) => {
-    console.log(data);
+    // console.log(data);
 
     // const values = (data) => {
 
@@ -929,9 +929,12 @@ export default function RequsetForm() {
     }
     if (activeStep === steps.length - 1) {
       axios.post(`http://${Port}:8070/student/requset`, data).then((res) => {
-        console.log("Data Added");
+        // console.log("Data Added");
         setActiveStep(activeStep + 1);
         sets_datasend(true);
+        setTimeout(() => {
+          window.location.reload();
+        }, 900);
       });
     }
     // else {

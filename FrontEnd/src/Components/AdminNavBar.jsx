@@ -8,13 +8,14 @@ import DoDisturbAltOutlinedIcon from '@mui/icons-material/DoDisturbAltOutlined';
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import { NavLink } from 'react-router-dom';
-
-
+import Logo from '../Assets/cadd_logo.png'
 
 function AdminNavBar() {
   return (
     <div className="navbar-container">
-      <div className="icon-container"></div>
+      <div className="icon-container">
+        <center> <img src={Logo} alt="Logo" width="160px" /></center>
+      </div>
       <div className="links-container">
         <div className="navbar-body">
           <p className="navbar-section-header">Navigation</p>
@@ -77,6 +78,7 @@ function AdminNavBar() {
             </div>
           </NavLink>
         </div>
+        <br/>
       </div>
     </div>
   );

@@ -12,9 +12,8 @@ import Loader from "./Loader";
 import axios from "axios";
 import Port from "../port";
 import TextField from "@mui/material/TextField";
-import Autocomplete from '@mui/material/Autocomplete';
-import CircularProgress from '@mui/material/CircularProgress';
-
+import Autocomplete from "@mui/material/Autocomplete";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function sleep(delay = 0) {
   return new Promise((resolve) => {
@@ -29,15 +28,13 @@ function RequestDetails() {
 
   const navigate = useNavigate();
   const [details, setDetails] = useState({});
-  const [isChecked, setIsChecked] = useState(false);
   const [pending, setpending] = useState(true);
   const [status, setStatus] = useState(false);
   const [isOpen, setOpen] = useState(false);
-  const [ctype, setctype] = useState();
-  const[open, setOpen1] = React.useState(false);
-  const[options, setOptions]= React.useState([]);
-  const loading =open &&options.length=== 0;
-  
+  const [ctype, setctype] = useState("");
+  const [open, setOpen1] = React.useState(false);
+  const [options, setOptions] = React.useState([]);
+  const loading = open && options.length === 0;
 
   useEffect(() => {
     setOpen(true);
@@ -65,14 +62,14 @@ function RequestDetails() {
     }
 
     (async () => {
-      await sleep(1e3); 
+      await sleep(1e3);
 
       if (active) {
-      fetch(`http://${Port}:8070/request/course/content`)
-      .then((response)=> response.json())
-      .then((data)=>{
-        setOptions(data);
-          })
+        fetch(`http://${Port}:8070/request/course/content`)
+          .then((response) => response.json())
+          .then((data) => {
+            setOptions(data);
+          });
       }
     })();
 
@@ -87,32 +84,35 @@ function RequestDetails() {
     }
   }, [open]);
 
-
-
   const checkHandler = () => {
-    setOpen(true);
-    axios
-      .get(`http://${Port}:8070/request/details/check/${ctype}/${nic}`)
-      .then((res) => {
-        if (res.data !== 0) {
-          setTimeout(() => {
-            setOpen(false);
-            setpending(false);
-            setStatus(false);
-            setIsChecked(true);
-          }, 2000);
-        } else {
-          setTimeout(() => {
-            setOpen(false);
-            setpending(false);
-            setStatus(true);
-            setIsChecked(true);
-          }, 2000);
-        }
-      })
-      .catch((err) => {
-        alert(err);
-      });
+    if (ctype === "") {
+      alert("Please select the course type!");
+    } else {
+      console.log(ctype);
+      setOpen(true);
+      axios
+        .get(`http://${Port}:8070/request/details/check/${ctype}/${nic}`)
+        .then((res) => {
+          if (res.data !== 0) {
+            setTimeout(() => {
+              setOpen(false);
+              setpending(false);
+              setStatus(false);
+              
+            }, 2000);
+          } else {
+            setTimeout(() => {
+              setOpen(false);
+              setpending(false);
+              setStatus(true);
+              
+            }, 2000);
+          }
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
   };
 
   const approveHandler = () => {
@@ -147,7 +147,9 @@ function RequestDetails() {
 
           <div className="student-request-details-header-wrapper">
             <div className="student-request-id">
-              <p>{details.uuid ? details.uuid : "-"}</p>
+              <p>
+                Certificate ID: <b>{details.uuid ? details.uuid : "-"}</b>
+              </p>
             </div>
             <div className="student-request-timedate">
               <p>
@@ -308,7 +310,7 @@ function RequestDetails() {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="Enter the Customer NIC"
+                    label="Select the Course Type"
                     value={ctype}
                     variant="outlined"
                     InputProps={{
@@ -354,7 +356,11 @@ function RequestDetails() {
             )}
           </div>
           <div className="request-action-btn-wrapper">
-            {isChecked ? (
+            {pending ? (
+              <button className="check-btn" onClick={checkHandler}>
+                Check
+              </button>
+            ) : status ? (
               <button className="approve-btn" onClick={approveHandler}>
                 Continue
               </button>

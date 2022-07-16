@@ -286,7 +286,7 @@ router.route("/reject/details/:id/:nic").get((req, res) => {
   pool.getConnection((err, connection) => {
     try {
       connection.query(
-        `SELECT * from rejected WHERE id=${id} AND nic="${nic}"`,
+        `SELECT * from rejected WHERE uuid="${id}" AND nic="${nic}"`,
         (error, rows) => {
           let value = rows[0];
           connection.release();
@@ -365,7 +365,8 @@ router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
         id: data.msID,
         c_content: data.courses,
         duration:data.cDuration,
-        grade:"A Grade"
+        grade:"A Grade",
+        verified:id
 
       });
 
@@ -456,10 +457,10 @@ router.route("/send/:id/:email").get((req, res) => {
     },
   });
   const sender = {
-    from: "Certificate Management <noreplycert@caddcentre.lk>",
+    from: "CADD CENTER Management <noreplycert@caddcentre.lk>",
     to: email,
-    subject: "this is the sample message in outlook",
-    text: "Test Done in is mail",
+    subject: "CADD CERTIFICATE!",
+    // text: "This is a testing certificate!",
     attachments: [{ filename: `${id}.pdf`, path: certificate }],
   };
 

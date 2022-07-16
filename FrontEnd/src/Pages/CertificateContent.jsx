@@ -4,6 +4,8 @@ import AdminNavBar from "../Components/AdminNavBar";
 import MobNavBar from "../Components/MobNavBar";
 import AccountMenu from "../Components/Profile";
 import Button from "@mui/material/Button";
+import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Port from "../port";
@@ -11,14 +13,18 @@ import Port from "../port";
 export default function CertificateContent() {
   const [c_content, setc_content] = useState([]);
   const [found, setFound] = useState("");
+  const [c_delete, setc_delete] = useState(false);
   const nav = useNavigate();
+
+  const vertical = "top";
+  const horizontal = "right";
 
   useEffect(() => {
     axios
       .get(`http://${Port}:8070/student/coursecontent`)
       .then((res) => {
         setc_content(res.data);
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -36,14 +42,22 @@ export default function CertificateContent() {
       axios
         .delete(`http://${Port}:8070/student/coursecontent/${id}`)
         .then((res) => {
-          console.log("Data Delete");
+          // console.log("Data Delete");
+          setc_delete(true);
+          setTimeout(() => {
+            window.location.reload();
+          }, 700);
         })
         .catch((err) => {
           console.log(err);
         });
     } else {
-      console.log("Fuck");
+      console.log("Not Delete this content");
     }
+  };
+
+  const handleClose = (event, reason) => {
+    setc_delete(false);
   };
 
   const requset = c_content.filter((data) => {
@@ -52,7 +66,7 @@ export default function CertificateContent() {
       data.c_duration.toLowerCase().includes(found.toLowerCase())
     );
   });
-  
+
   return (
     <div className="container">
       <div className="mob-navbar-wrapper">
@@ -114,6 +128,21 @@ export default function CertificateContent() {
           ))}
         </div>
       </div>
+      <Snackbar
+        open={c_delete}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert
+          variant="filled"
+          onClose={handleClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Course Content Deleted
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

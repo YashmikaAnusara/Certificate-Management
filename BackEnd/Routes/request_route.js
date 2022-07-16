@@ -286,7 +286,7 @@ router.route("/reject/details/:id/:nic").get((req, res) => {
   pool.getConnection((err, connection) => {
     try {
       connection.query(
-        `SELECT * from rejected WHERE id=${id} AND nic="${nic}"`,
+        `SELECT * from rejected WHERE uuid="${id}" AND nic="${nic}"`,
         (error, rows) => {
           let value = rows[0];
           connection.release();
@@ -361,11 +361,12 @@ router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
         name: data.name,
         in: "CAAD CENTER",
         at: data.branch,
-        during: "From-" + data.sDate + " " + "To-" + data.eDate,
+        during: "From: " + data.sDate + " " + "To: " + data.eDate,
         id: data.msID,
         c_content: data.courses,
         duration:data.cDuration,
-        grade:"A Grade"
+        grade:"A Grade",
+        verified:id
 
       });
 
@@ -401,7 +402,7 @@ router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
         await PDFNet.Convert.toPdf(pdfdoc, inputPath);
         pdfdoc.save(outputPath, PDFNet.SDFDoc.SaveOptions.e_linearized);
       };
-
+ 
       PDFNet.runWithCleanup(
         convert,
         "demo:1656359402941:7a7659560300000000ed7ac24c6e1376194f347f304b0916da24823107"
@@ -420,6 +421,7 @@ router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
           res.end(err);
         });
     });
+    
     //delete created docx files
     PDFpromise.then((detail) => {
       fs.unlink(
@@ -455,10 +457,10 @@ router.route("/send/:id/:email").get((req, res) => {
     },
   });
   const sender = {
-    from: "Certificate Management <noreplycert@caddcentre.lk>",
+    from: "CADD CENTER Management <noreplycert@caddcentre.lk>",
     to: email,
-    subject: "this is the sample message in outlook",
-    text: "Test Done in is mail",
+    subject: "CADD CERTIFICATE!",
+    // text: "This is a testing certificate!",
     attachments: [{ filename: `${id}.pdf`, path: certificate }],
   };
 

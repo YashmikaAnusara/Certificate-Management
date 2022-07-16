@@ -90,6 +90,9 @@ function IssuedCertificate() {
               <div id="Issued-request-body-col1">
                 <center> Status</center>
               </div>
+              <div id="Issued-request-body-col6">
+                <center> ID</center>
+              </div>
               <div id="Issued-request-body-col2">
                 <center> NIC</center>
               </div>
@@ -97,11 +100,12 @@ function IssuedCertificate() {
                 <center> Name</center>
               </div>
               <div id="Issued-request-body-col4">
-                <center> Submited Date</center>
+                <center> Submited</center>
               </div>
               <div id="Issued-request-body-col5">
-                <center> Approved Date</center>
+                <center> Approved</center>
               </div>
+               
             </div>
             {requests.map((request, index) => (
               <div key={index}>
@@ -112,6 +116,7 @@ function IssuedCertificate() {
                   r_date={request.r_date}
                   a_date={request.a_date}
                   id={request.uuid}
+
                 />
               </div>
             ))}
@@ -137,6 +142,9 @@ function IssuedRequestTable(props) {
           {" "}
           <FiberManualRecordIcon fontSize="small" style={{ color: "green" }} />
         </center>
+      </div>
+      <div className="Issued-request-body-col6">
+        <center> {props.id}</center>
       </div>
       <div className="Issued-request-body-col2">
         <center> {props.nic}</center>

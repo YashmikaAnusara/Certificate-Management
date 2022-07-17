@@ -12,9 +12,17 @@ const pool = mysql.createPool({
   connectionLimit: 10,
   host: "localhost",
   user: "root",
-  password: "",
+  password: "1212@Knuwara",
   database: "c_m_system",
 });
+
+// const pool = mysql.createPool({
+//   connectionLimit: 10,
+//   host: "localhost",
+//   user: "root",
+//   password: "",
+//   database: "c_m_system",
+// });
 
 const CLIENT_ID =
   "27515838946-9m4bur80vck08emcdbqucn1b3m4d6c8f.apps.googleusercontent.com";
@@ -357,17 +365,16 @@ router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
       });
       // Render the document (Replace)
       doc.render({
-        certificatetitle:data.cName,
+        certificatetitle: data.cName,
         name: data.name,
         in: "CAAD CENTER",
         at: data.branch,
         during: "From: " + data.sDate + " " + "To: " + data.eDate,
         id: data.msID,
         c_content: data.courses,
-        duration:data.cDuration,
-        grade:"A Grade",
-        verified:id
-
+        duration: data.cDuration,
+        grade: "A Grade",
+        verified: id,
       });
 
       const buf = doc.getZip().generate({
@@ -402,7 +409,7 @@ router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
         await PDFNet.Convert.toPdf(pdfdoc, inputPath);
         pdfdoc.save(outputPath, PDFNet.SDFDoc.SaveOptions.e_linearized);
       };
- 
+
       PDFNet.runWithCleanup(
         convert,
         "demo:1656359402941:7a7659560300000000ed7ac24c6e1376194f347f304b0916da24823107"
@@ -421,7 +428,7 @@ router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
           res.end(err);
         });
     });
-    
+
     //delete created docx files
     PDFpromise.then((detail) => {
       fs.unlink(
@@ -472,7 +479,6 @@ router.route("/send/:id/:email").get((req, res) => {
       res.send(info.response);
     }
   });
-  
 });
 
 //get all templates

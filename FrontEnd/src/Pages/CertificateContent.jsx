@@ -16,6 +16,8 @@ export default function CertificateContent() {
   const [c_delete, setc_delete] = useState(false);
   const nav = useNavigate();
 
+  const username=localStorage.getItem('username')
+
   const vertical = "top";
   const horizontal = "right";
 
@@ -67,7 +69,7 @@ export default function CertificateContent() {
     );
   });
 
-  return (
+  return username?(
     <div className="container">
       <div className="mob-navbar-wrapper">
         <MobNavBar />
@@ -144,5 +146,5 @@ export default function CertificateContent() {
         </Alert>
       </Snackbar>
     </div>
-  );
+  ):nav("/");
 }

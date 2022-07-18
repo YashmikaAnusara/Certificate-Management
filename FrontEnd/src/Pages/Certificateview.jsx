@@ -20,6 +20,8 @@ function Certificateview() {
   const tmpName = params.tempid;
   const type = params.type;
 
+  const username=localStorage.getItem('username')
+
   const today = new Date();
   const date =
         today.getFullYear() +
@@ -212,7 +214,7 @@ function Certificateview() {
     }
   };
 
-  return (
+  return username?(
     <div className="container">
       <Loader open={isOpen} />
       <div className="mob-navbar-wrapper">
@@ -310,7 +312,7 @@ function Certificateview() {
         </div>
       </div>
     </div>
-  );
+  ):navigate("/");
 }
 
 export default Certificateview;

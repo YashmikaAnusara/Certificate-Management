@@ -367,7 +367,6 @@ router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
         duration:data.cDuration,
         grade:"A Grade",
         verified:id
-
       });
 
       const buf = doc.getZip().generate({
@@ -390,6 +389,7 @@ router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
       resolve();
     }, 3000);
   });
+
   //convert docx file into pdf
   DOCXpromise.then((data) => {
     const PDFpromise = new Promise((resolve, reject) => {
@@ -402,7 +402,6 @@ router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
         await PDFNet.Convert.toPdf(pdfdoc, inputPath);
         pdfdoc.save(outputPath, PDFNet.SDFDoc.SaveOptions.e_linearized);
       };
- 
       PDFNet.runWithCleanup(
         convert,
         "demo:1656359402941:7a7659560300000000ed7ac24c6e1376194f347f304b0916da24823107"
@@ -439,7 +438,7 @@ router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
     });
   }).catch((err) => {
     res.send(err);
-    res.json("faild");
+    res.send("faild");
   });
 });
 

@@ -38,7 +38,6 @@ function Certificateview() {
     courses:content.c_content,
     cDuration:content.c_duration,
     test:content.test,
-    
   }
 
   const issuedData={
@@ -112,7 +111,7 @@ function Certificateview() {
     setIsOpen(true);
     axios
       .post(
-        `http://${Port}:8070/request/genarate/certificate/${id}/${tmpName}`,data,content )
+        `http://${Port}:8070/request/genarate/certificate/${id}/${tmpName}`,data )
       .then((res) => {
         if (res.data === true) {
           setIsOpen(false);

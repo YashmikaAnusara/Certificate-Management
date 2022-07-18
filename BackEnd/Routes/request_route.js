@@ -8,21 +8,21 @@ const PizZip = require("pizzip");
 const Docxtemplater = require("docxtemplater");
 const { PDFNet } = require("@pdftron/pdfnet-node");
 
-const pool = mysql.createPool({
-  connectionLimit: 10,
-  host: "localhost",
-  user: "root",
-  password: "1212@Knuwara",
-  database: "c_m_system",
-});
-
 // const pool = mysql.createPool({
 //   connectionLimit: 10,
 //   host: "localhost",
 //   user: "root",
-//   password: "",
+//   password: "1212@Knuwara",
 //   database: "c_m_system",
 // });
+
+const pool = mysql.createPool({
+  connectionLimit: 10,
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "c_m_system",
+});
 
 const CLIENT_ID =
   "27515838946-9m4bur80vck08emcdbqucn1b3m4d6c8f.apps.googleusercontent.com";

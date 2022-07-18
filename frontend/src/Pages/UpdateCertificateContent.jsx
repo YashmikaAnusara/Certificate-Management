@@ -20,6 +20,7 @@ export default function UpdateCertificateContent() {
   const [c_duration, setc_duration] = useState("");
   const [c_content, setc_content] = useState("");
   const navigate = useNavigate();
+  const username=localStorage.getItem('username')
 
   let { id } = useParams();
 
@@ -79,7 +80,7 @@ export default function UpdateCertificateContent() {
     setwc_duration(false);
     setwc_content(false);
   };
-  return (
+  return username?(
     <div>
       <div className="container">
         <div className="mob-navbar-wrapper">
@@ -223,5 +224,5 @@ export default function UpdateCertificateContent() {
         </Alert>
       </Snackbar>
     </div>
-  );
+  ):navigate("/");
 }

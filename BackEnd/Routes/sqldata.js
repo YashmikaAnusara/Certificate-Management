@@ -3,21 +3,21 @@ const { json } = require("body-parser");
 const mysql = require("mysql");
 const ShortUniqueId = require("short-unique-id");
 
-const pool = mysql.createPool({
-  connectionLimit: 10,
-  host: "localhost",
-  user: "root",
-  password: "1212@Knuwara",
-  database: "c_m_system",
-});
-
 // const pool = mysql.createPool({
+//   connectionLimit: 10,
 //   host: "localhost",
 //   user: "root",
-//   password: "",
+//   password: "1212@Knuwara",
 //   database: "c_m_system",
-//   // port: 8082,
 // });
+
+const pool = mysql.createPool({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "c_m_system",
+  // port: 8082,
+});
 
 pool.getConnection(function (err) {
   if (err) throw err;

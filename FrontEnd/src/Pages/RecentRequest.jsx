@@ -9,10 +9,16 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Port from "../port";
 import Loader from '../Components/Loader'
+
 function CertificateRequest() {
   const [details, setDetails] = useState([]);
   const [found, setFound] = useState("");
   const [isOpen,setIsopen]=useState(false)
+  const navigate=useNavigate();
+
+  const username=localStorage.getItem('username')
+
+
   useEffect(() => {
     setIsopen(true)
     axios
@@ -38,7 +44,7 @@ function CertificateRequest() {
     );
   });
 
-  return (
+  return username?(
     <div className="container">
        <Loader open={isOpen}/>
       <div className="mob-navbar-wrapper">
@@ -57,7 +63,7 @@ function CertificateRequest() {
             <div>
               <input
                 type="search"
-                placeholder="Search NIC..."
+                placeholder="Search Name or NIC..."
                 className="certificate-request-search"
                 onChange={(event) => {
                   setFound(event.target.value);
@@ -117,7 +123,7 @@ function CertificateRequest() {
         </div>
       </div>
     </div>
-  );
+  ):navigate("/");
 }
 
 export default CertificateRequest;

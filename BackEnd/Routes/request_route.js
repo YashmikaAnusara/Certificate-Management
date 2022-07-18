@@ -8,21 +8,21 @@ const PizZip = require("pizzip");
 const Docxtemplater = require("docxtemplater");
 const { PDFNet } = require("@pdftron/pdfnet-node");
 
-const pool = mysql.createPool({
-  connectionLimit: 10,
-  host: "localhost",
-  user: "root",
-  password: "1212@Knuwara",
-  database: "c_m_system",
-});
-
 // const pool = mysql.createPool({
 //   connectionLimit: 10,
 //   host: "localhost",
 //   user: "root",
-//   password: "",
+//   password: "1212@Knuwara",
 //   database: "c_m_system",
 // });
+
+const pool = mysql.createPool({
+  connectionLimit: 10,
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "c_m_system",
+});
 
 const CLIENT_ID =
   "27515838946-9m4bur80vck08emcdbqucn1b3m4d6c8f.apps.googleusercontent.com";
@@ -372,9 +372,10 @@ router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
         during: "From: " + data.sDate + " " + "To: " + data.eDate,
         id: data.msID,
         c_content: data.courses,
-        duration: data.cDuration,
-        grade: "A Grade",
-        verified: id,
+        duration:data.cDuration,
+        grade:"A Grade",
+        verified:id
+
       });
 
       const buf = doc.getZip().generate({
@@ -397,6 +398,7 @@ router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
       resolve();
     }, 3000);
   });
+
   //convert docx file into pdf
   DOCXpromise.then((data) => {
     const PDFpromise = new Promise((resolve, reject) => {
@@ -446,7 +448,7 @@ router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
     });
   }).catch((err) => {
     res.send(err);
-    res.json("faild");
+    res.send("faild");
   });
 });
 
@@ -469,6 +471,35 @@ router.route("/send/:id/:email").get((req, res) => {
     subject: "CADD CERTIFICATE!",
     // text: "This is a testing certificate!",
     attachments: [{ filename: `${id}.pdf`, path: certificate }],
+  };
+
+  mailservice.sendMail(sender, function (error, info) {
+    if (error) {
+      res.send(error);
+    } else {
+      console.log("Email has been send.." + info.response);
+      res.send(info.response);
+    }
+  });
+});
+
+//send reject certificates through the email
+router.route("/send/reject/certificate/:email/:message").get((req, res) => {
+  let email = req.params.email;
+  let message = req.params.message;
+
+  const mailservice = nodemailer.createTransport({
+    service: "outlook",
+    auth: {
+      user: "noreplycert@caddcentre.lk",
+      pass: "1212@Knuwara",
+    },
+  });
+  const sender = {
+    from: "CADD CENTER Management <noreplycert@caddcentre.lk>",
+    to: email,
+    subject: "CADD CERTIFICATE!",
+    text: message,
   };
 
   mailservice.sendMail(sender, function (error, info) {

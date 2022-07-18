@@ -12,6 +12,8 @@ function RejectedRequest() {
   const [details, setDetails] = useState([]);
   const [found, setFound] = useState("");
   const [isOpen, setIsopen] = useState(false);
+  const username=localStorage.getItem('username')
+  const navigate=useNavigate()
 
   useEffect(() => {
     setIsopen(true);
@@ -35,11 +37,12 @@ function RejectedRequest() {
   const requests = details.filter((data) => {
     return (
       data.nic.toLowerCase().includes(found.toLowerCase()) ||
+      data.uuid.toLowerCase().includes(found.toLowerCase()) ||
       data.name.toLowerCase().includes(found.toLowerCase())
     );
   });
 
-  return (
+  return username?(
     <div className="container">
       <Loader open={isOpen} />
       <div className="mob-navbar-wrapper">
@@ -58,7 +61,7 @@ function RejectedRequest() {
             <div>
               <input
                 type="search"
-                placeholder="Search..."
+                placeholder="Search ID Name or NIC..."
                 className="certificate-request-search"
                 onChange={(event) => {
                   setFound(event.target.value);
@@ -117,7 +120,7 @@ function RejectedRequest() {
         </div>
       </div>
     </div>
-  );
+  ):navigate("/");
 }
 
 export default RejectedRequest;

@@ -8,11 +8,15 @@ import BarChart2 from "../Components/BarChart2";
 import BarChart3 from "../Components/BarChart3";
 import axios from "axios";
 import Port from "../port";
+import {useNavigate} from 'react-router-dom'
 
 function AdminHome() {
   const [pending, setpending] = useState();
   const [issued, setissued] = useState();
   const [rejected, setrejected] = useState();
+  const navigate=useNavigate()
+  
+  const username=localStorage.getItem('username')
 
   useEffect(() => {
     axios
@@ -51,7 +55,7 @@ function AdminHome() {
   }, []);
 
 
-  return (
+  return username?(
     <div className="container">
       <div className="mob-navbar-wrapper">
         <MobNavBar />
@@ -108,7 +112,7 @@ function AdminHome() {
         </div>
       </div>
     </div>
-  );
+  ):navigate("/");
 }
 
 export default AdminHome;

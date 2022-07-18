@@ -69,7 +69,7 @@ export default function CertificateContent() {
     );
   });
 
-  return username?(
+  return username ? (
     <div className="container">
       <div className="mob-navbar-wrapper">
         <MobNavBar />
@@ -85,7 +85,7 @@ export default function CertificateContent() {
           <div className="button">
             <input
               type="search"
-              placeholder="Course Name or Course Duration Search..."
+              placeholder="Search Course Name or Course Duration..."
               className="certificate-content-search"
               onChange={(event) => {
                 setFound(event.target.value);
@@ -146,5 +146,7 @@ export default function CertificateContent() {
         </Alert>
       </Snackbar>
     </div>
-  ):nav("/");
+  ) : (
+    nav("/")
+  );
 }

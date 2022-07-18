@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios from "axios";
 import Port from "../port";
 
@@ -43,6 +44,10 @@ export default function Addusers() {
     }
   };
 
+   const backBtnHandler = () => {
+     navigate(-1);
+  };
+  
   const handleClose = (event, reason) => {
     setwdata(false);
     setwusername(false);
@@ -62,6 +67,7 @@ export default function Addusers() {
             <AccountMenu />
           </div>
           <div className="body-container">
+            <ArrowBackIcon onClick={backBtnHandler} className="back-btn" />
             <div className="form">
               <Box
                 component="form"

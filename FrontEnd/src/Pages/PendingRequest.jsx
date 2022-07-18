@@ -14,6 +14,9 @@ function PendingRequest() {
   const [details, setDetails] = useState([]);
   const [found, setFound] = useState("");
   const [isOpen,setIsopen]=useState(false);
+  const username=localStorage.getItem('username')
+  const navigate=useNavigate()
+
   useEffect(() => {
     setIsopen(true)
     axios
@@ -41,7 +44,7 @@ function PendingRequest() {
     );
   });
 
-  return (
+  return username?(
     <div className="container">
       <Loader open={isOpen}/>
       <div className="mob-navbar-wrapper">
@@ -60,7 +63,7 @@ function PendingRequest() {
             <div>
               <input
                 type="search"
-                placeholder="Search NIC..."
+                placeholder="Search Name or NIC..."
                 className="pending-request-search"
                 onChange={(event) => {
                   setFound(event.target.value);
@@ -118,7 +121,7 @@ function PendingRequest() {
         </div>
       </div>
     </div>
-  );
+  ):navigate("/");
 }
 
 export default PendingRequest;

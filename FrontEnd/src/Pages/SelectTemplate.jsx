@@ -14,6 +14,7 @@ function CertificateTemplates() {
   const navigate = useNavigate()
   const [isOpen,setOpen]=useState(false)
   const [details, setDetails] = useState([]);
+  const username=localStorage.getItem('username')
   
   useEffect(() => {
     setOpen(true)
@@ -36,7 +37,7 @@ function CertificateTemplates() {
     navigate(-1)
 }
  
-  return (
+  return username?(
     <div className="container">
       <Loader open={isOpen}/>
       <div className="mob-navbar-wrapper">
@@ -65,7 +66,7 @@ function CertificateTemplates() {
         </div>
       </div>
     </div>
-  );
+  ):navigate("/");
 }
 
 export default CertificateTemplates;

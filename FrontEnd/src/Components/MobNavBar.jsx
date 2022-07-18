@@ -8,6 +8,7 @@ import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutli
 import DoDisturbAltOutlinedIcon from '@mui/icons-material/DoDisturbAltOutlined';
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 import { NavLink } from 'react-router-dom'
+import AssignmentIcon from "@mui/icons-material/Assignment";
 
 
 import AccountMenu from './Profile';
@@ -36,6 +37,7 @@ function MonNavBar() {
                 <NavLink to="/issue/request" className='navbar-link'><div className='mob-nav-body-links' ><CheckCircleOutlineOutlinedIcon /><p>Issued Certificate</p></div></NavLink>
                 <NavLink to="/reject/request" className='navbar-link'><div className='mob-nav-body-links' ><DoDisturbAltOutlinedIcon /><p>Rejected Certificate</p></div></NavLink>
                 <NavLink to="/certificate/templates" className='navbar-link'><div className='mob-nav-body-links' ><AddPhotoAlternateOutlinedIcon /><p>Templates</p></div></NavLink>
+                <NavLink to="/certificatecontent" className='navbar-link'><div className='mob-nav-body-links' ><AssignmentIcon /><p>Certificate Content</p></div></NavLink>
             </div>}
 
         </div>

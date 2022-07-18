@@ -20,6 +20,8 @@ function Certificateview() {
   const tmpName = params.tempid;
   const type = params.type;
 
+  const username=localStorage.getItem('username')
+
   const today = new Date();
   const date =
         today.getFullYear() +
@@ -38,7 +40,6 @@ function Certificateview() {
     courses:content.c_content,
     cDuration:content.c_duration,
     test:content.test,
-    
   }
 
   const issuedData={
@@ -112,7 +113,7 @@ function Certificateview() {
     setIsOpen(true);
     axios
       .post(
-        `http://${Port}:8070/request/genarate/certificate/${id}/${tmpName}`,data,content )
+        `http://${Port}:8070/request/genarate/certificate/${id}/${tmpName}`,data )
       .then((res) => {
         if (res.data === true) {
           setIsOpen(false);
@@ -213,7 +214,7 @@ function Certificateview() {
     }
   };
 
-  return (
+  return username?(
     <div className="container">
       <Loader open={isOpen} />
       <div className="mob-navbar-wrapper">
@@ -311,7 +312,7 @@ function Certificateview() {
         </div>
       </div>
     </div>
-  );
+  ):navigate("/");
 }
 
 export default Certificateview;

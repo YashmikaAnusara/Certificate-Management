@@ -20,6 +20,10 @@ export default function AddCertificateContent() {
   const [c_content, setc_content] = useState("");
   const navigate = useNavigate();
 
+  const username=localStorage.getItem("username")
+
+
+
   const vertical = "top";
   const horizontal = "right";
 
@@ -59,7 +63,7 @@ export default function AddCertificateContent() {
     setwc_duration(false);
     setwc_content(false);
   };
-  return (
+  return username?(
     <div>
       <div className="container">
         <div className="mob-navbar-wrapper">
@@ -203,5 +207,5 @@ export default function AddCertificateContent() {
         </Alert>
       </Snackbar>
     </div>
-  );
+  ):navigate("/");
 }

@@ -149,4 +149,13 @@
     float: right;
     font-size: 14px;
   }
+  .mob-navbar-wrapper {
+    display: block;
+    order: 1;
+  }
+  .body-wrapper {
+    width: 100%;
+    order: 2;
+    
+  }
 }

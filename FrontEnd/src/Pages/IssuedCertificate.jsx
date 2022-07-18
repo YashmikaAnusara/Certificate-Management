@@ -13,7 +13,9 @@ function IssuedCertificate() {
   const [details, setDetails] = useState([]);
   const [found, setFound] = useState("");
   const [isOpen,setIsopen]=useState(false)
-  
+  const username=localStorage.getItem('username')
+  const navigate=useNavigate()
+
   useEffect(() => {
     setIsopen(true)
     axios
@@ -35,10 +37,11 @@ function IssuedCertificate() {
   const requests = details.filter((data) => {
     return (
       data.nic.toLowerCase().includes(found.toLowerCase()) ||
+      data.uuid.toLowerCase().includes(found.toLowerCase()) ||
       data.name.toLowerCase().includes(found.toLowerCase())
     );
   });
-  return (
+  return username?(
     <div className="container">
        <Loader open={isOpen}/>
       <div className="mob-navbar-wrapper">
@@ -58,7 +61,7 @@ function IssuedCertificate() {
               <div>
                 <input
                   type="search"
-                  placeholder="Search..."
+                  placeholder="Search ID Name or NIC..."
                   className="certificate-request-search"
                   onChange={(event) => {
                     setFound(event.target.value);
@@ -125,7 +128,7 @@ function IssuedCertificate() {
         </div>
       </div>
     </div>
-  );
+  ):navigate("/");
 }
 export default IssuedCertificate;
 

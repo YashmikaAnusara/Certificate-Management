@@ -18,6 +18,8 @@ function CertificateRejectMessage() {
   const [details, setDetails] = useState({});
   const [isOpen, setIsOpen] = useState(false);
 
+  const username = localStorage.getItem("username");
+
   const backBtnHandler = () => {
     navigate(-1);
   };
@@ -44,7 +46,7 @@ function CertificateRejectMessage() {
   }, [id, nic]);
 
   const data = {
-    uuid:id,
+    uuid: id,
     ms_email_id: details.ms_email_id,
     a_submission_d: details.a_submission_d,
     name: details.name,
@@ -67,51 +69,63 @@ function CertificateRejectMessage() {
     l_t_proficiency: parseInt(details.l_t_proficiency),
     s_coordination: parseInt(details.s_coordination),
     c_fee_payment: details.c_fee_payment,
-    b_inquired:details.b_inquired,
+    b_inquired: details.b_inquired,
     c_person: details.c_person,
     feedbak: details.feedbak,
     s_date: details.s_date,
-    s_month:details.s_month,
+    s_month: details.s_month,
     r_date: date,
-    r_month:details.s_month,
+    r_month: details.s_month,
     message: message,
-
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
     setIsOpen(true);
+
     const insertDatafunc = new Promise((resolve, reject) => {
-        axios
-          .post(`http://${Port}:8070/request/reject/${id}/${nic}`, data)
-          .then((res) => {
-            resolve(res);
-          })
-          .catch((err) => {
-            reject(err)
-          });
+      axios
+        .post(`http://${Port}:8070/request/reject/${id}/${nic}`, data)
+        .then((res) => {
+            axios
+              .get(
+                `http://${Port}:8070/request/send/reject/certificate/${data.email}/${message}`
+              )
+              .then((response) => {
+                resolve(response);
+              })
+              .catch((err) => {
+                resolve(err);
+              });
+        })
+        .catch((err) => {
+          reject(err);
+        });
     });
+
     insertDatafunc
       .then((res) => {
-        if(res){
+        if (res) {
           axios
-          .delete(`http://${Port}:8070/request/remove/details/${id}`, data)
-          .then(() => {
-            setIsOpen(false);
-            alert("Done!");
-            navigate("/reject/request");
-          })
-          .catch((err) => {
-            alert(err);
-          });
+            .delete(`http://${Port}:8070/request/remove/details/${id}`, data)
+            .then(() => {
+              setIsOpen(false);
+              alert("Done!");
+              navigate("/reject/request");
+            })
+            .catch((err) => {
+              alert(err);
+            });
         }
       })
       .catch((err) => {
         alert(err);
       });
+
+  
   };
 
-  return (
+  return username ? (
     <div className="container">
       <Loader open={isOpen} />
       <div className="mob-navbar-wrapper">
@@ -129,7 +143,7 @@ function CertificateRejectMessage() {
           <ArrowBackIcon onClick={backBtnHandler} className="back-btn" />
           <div className="student-request-details-header-wrapper">
             <div className="student-request-id">
-              <p>102065042364BB</p>
+              <p>{details.uuid ? details.uuid : "-"}</p>
             </div>
             <div className="student-request-timedate">
               <p>
@@ -192,6 +206,8 @@ function CertificateRejectMessage() {
         </div>
       </div>
     </div>
+  ) : (
+    navigate("/")
   );
 }
 

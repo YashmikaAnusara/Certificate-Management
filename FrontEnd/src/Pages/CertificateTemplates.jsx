@@ -12,11 +12,14 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import DOCXIcon from "../Assets/doc.png";
 import FileDownload from "js-file-download";
 import Loader from "../Components/Loader";
+import {useNavigate} from "react-router-dom"
 
 function CertificateTemplates() {
   const [active, setActive] = useState(false);
   const [details, setDetails] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const username=localStorage.getItem('username')
+  const navigate=useNavigate()
   const tempAddhandler = () => {
     setActive(!active);
   };
@@ -39,7 +42,7 @@ function CertificateTemplates() {
       });
   }, []);
 
-  return (
+  return username?(
     <div className="container">
       <Loader open={isOpen} />
       <div className="mob-navbar-wrapper">
@@ -85,7 +88,7 @@ function CertificateTemplates() {
         </div>
       </div>
     </div>
-  );
+  ):navigate("/");
 }
 
 export default CertificateTemplates;

@@ -27,8 +27,7 @@ export default function LoginPage() {
       .get(`http://${Port}:8070/student/login/${username}/${password}`)
       .then((res) => {
           if (res.data.position === "admin") {
-          localStorage.setItem("admin_username", res.data.username);
-          localStorage.setItem("admin_password", res.data.password);
+          localStorage.setItem("username", res.data.username);
           setTimeout(() => {
             nav("/dashboard");
           }, 3000);
@@ -59,7 +58,7 @@ export default function LoginPage() {
       <div className="LoginCon">
         <div className="LoginText">
           <h1>
-            Hi, Wellcome<br/><div className="typing anim-typewriter">CADD Cente</div>
+            Hi, Wellcome<br/><div className="typing anim-typewriter">CADD Center</div>
           </h1>
         </div>
         <Box

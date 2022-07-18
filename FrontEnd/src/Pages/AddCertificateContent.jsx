@@ -63,7 +63,7 @@ export default function AddCertificateContent() {
     setwc_duration(false);
     setwc_content(false);
   };
-  return username?(
+  return username ? (
     <div>
       <div className="container">
         <div className="mob-navbar-wrapper">
@@ -115,6 +115,9 @@ export default function AddCertificateContent() {
                     maxWidth: "80%",
                     minWidth: "45ch",
                   },
+                  "& p": {
+                    color:"red"
+                  },
                 }}
                 noValidate
                 autoComplete="off"
@@ -126,6 +129,7 @@ export default function AddCertificateContent() {
                   multiline
                   rows={6}
                   variant="outlined"
+                  className="field"
                   value={c_content}
                   onChange={(e) => {
                     setc_content(e.target.value);
@@ -207,5 +211,7 @@ export default function AddCertificateContent() {
         </Alert>
       </Snackbar>
     </div>
-  ):navigate("/");
+  ) : (
+    navigate("/")
+  );
 }

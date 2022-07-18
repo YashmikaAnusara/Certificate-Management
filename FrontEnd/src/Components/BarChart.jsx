@@ -18,7 +18,7 @@ export default function BarChart() {
     axios
       .get(`http://${Port}:8070/student/pending`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setBarchart(res.data);
       })
       .catch((error) => {

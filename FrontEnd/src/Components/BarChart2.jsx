@@ -18,7 +18,7 @@ export default function BarChart2() {
     axios
       .get(`http://${Port}:8070/student/rejected`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setBarchart(res.data);
       })
       .catch((error) => {

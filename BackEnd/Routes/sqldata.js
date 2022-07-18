@@ -535,4 +535,22 @@ router.route("/coursecontent/:id").put((req, res) => {
   });
 });
 
+//add user api
+router.route("/adduser").post((req, res) => {
+  const data = req.body;
+  pool.getConnection((err, connection) => {
+    try {
+      connection.query("INSERT INTO admin SET ?", data, (error, rows) => {
+        connection.release();
+        if (error) {
+          console.log("this is an error");
+        } else {
+          res.json(rows);
+        }
+      });
+    } catch (e) {
+      console.log("this is a try catch error");
+    }
+  });
+});
 module.exports = router;

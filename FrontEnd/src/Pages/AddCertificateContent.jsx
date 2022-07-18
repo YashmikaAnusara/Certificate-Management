@@ -41,15 +41,13 @@ export default function AddCertificateContent() {
     } else if (data.c_content === "") {
       setwc_content(true);
     } else {
-      axios
-        .post(`http://${Port}:8070/student/coursecontent`, data)
-        .then((res) => {
-          // console.log("Data Added");
-          setwdata(true);
-          setTimeout(() => {
-            navigate(-1);
-          }, 900);
-        });
+      axios.post(`http://${Port}:8070/student/adduser`, data).then((res) => {
+        // console.log("Data Added");
+        setwdata(true);
+        setTimeout(() => {
+          navigate(-1);
+        }, 900);
+      });
     }
   };
 

@@ -5,6 +5,8 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Logo from "../Assets/vaild.png";
 import Logo1 from "../Assets/invaild.png";
+import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
 import axios from "axios";
 import Port from "../port";
 
@@ -16,30 +18,47 @@ export default function CertificateVerification() {
   const [photo, setphoto] = useState("");
   const [word, setword] = useState("");
 
+  const [wcertificate_v, setwcertificate_v] = useState(false);
+  const [wcertificate_n, setwcertificate_n] = useState(false);
+
+  const vertical = "top";
+  const horizontal = "right";
+
   const isOpen = () => {
     setOpen(!open);
     setclose(!close);
   };
 
+  const handleClose = (event, reason) => {
+    setwcertificate_v(false);
+    setwcertificate_n(false);
+  };
+
   const submit = () => {
-    axios
-      .get(
-        `http://${Port}:8070/student/certificateverification/${certificate_v}/${certificate_n}`
-      )
-      .then((res) => {
-        if (res.data === 0) {
-          setOpen(true);
-          setphoto(false);
-          setword(false);
-        } else {
-          setOpen(true);
-          setphoto(true);
-          setword(true);
-        }
-      })
-      .catch((err) => {
-        alert("Database not");
-      });
+    if (certificate_v === "") {
+      setwcertificate_v(true);
+    } else if (certificate_n === "") {
+      setwcertificate_n(true);
+    } else {
+      axios
+        .get(
+          `http://${Port}:8070/student/certificateverification/${certificate_v}/${certificate_n}`
+        )
+        .then((res) => {
+          if (res.data === 0) {
+            setOpen(true);
+            setphoto(false);
+            setword(false);
+          } else {
+            setOpen(true);
+            setphoto(true);
+            setword(true);
+          }
+        })
+        .catch((err) => {
+          alert("Database not");
+        });
+    }
   };
   return (
     <div>
@@ -65,7 +84,7 @@ export default function CertificateVerification() {
             />
             <TextField
               id="outlined-basic"
-              label="Enter the Certificate Student Name"
+              label="Enter the Certificate Student NIC"
               variant="outlined"
               onChange={(e) => {
                 setcertificate_n(e.target.value);
@@ -108,6 +127,36 @@ export default function CertificateVerification() {
           </div>
         )}
       </center>
+      <Snackbar
+        open={wcertificate_v}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert
+          variant="filled"
+          onClose={handleClose}
+          severity="warning"
+          sx={{ width: "100%" }}
+        >
+          Enter the Certificate Verification ID
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={wcertificate_n}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      >
+        <Alert
+          variant="filled"
+          onClose={handleClose}
+          severity="warning"
+          sx={{ width: "100%" }}
+        >
+          Enter the Certificate Student NIC
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

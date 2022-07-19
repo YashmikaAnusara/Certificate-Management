@@ -16,6 +16,7 @@ import LoginPage from "./Pages/Loginpage";
 import CertificateContent from "./Pages/CertificateContent";
 import AddCertificateContent from "./Pages/AddCertificateContent";
 import UpdateCertificateContent from "./Pages/UpdateCertificateContent";
+import Addusers from "./Pages/AddUsers";
 
 function App() {
   return (
@@ -66,6 +67,7 @@ function App() {
             path="/updatecertificatecontent/:id"
             element={<UpdateCertificateContent />}
           />
+          <Route path="/addusers" element={<Addusers />} />
         </Routes>
       </Router>
     </div>

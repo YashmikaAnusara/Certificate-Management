@@ -17,6 +17,7 @@ import CertificateContent from "./Pages/CertificateContent";
 import AddCertificateContent from "./Pages/AddCertificateContent";
 import UpdateCertificateContent from "./Pages/UpdateCertificateContent";
 import Addusers from "./Pages/AddUsers";
+import CertificateVerification from "./Pages/CertificateVerification";
 
 function App() {
   return (
@@ -68,6 +69,11 @@ function App() {
             element={<UpdateCertificateContent />}
           />
           <Route path="/addusers" element={<Addusers />} />
+
+          <Route
+            path="/certificateverification"
+            element={<CertificateVerification />}
+          />
         </Routes>
       </Router>
     </div>

@@ -553,4 +553,64 @@ router.route("/adduser").post((req, res) => {
     }
   });
 });
+
+router.route("/verification").get((req, res) => {
+  pool.getConnection((err, connection) => {
+    try {
+      connection.query("SELECT * from issued", (error, rows) => {
+        connection.release();
+        if (error) {
+          console.log("this is an error");
+        } else {
+          res.json(rows);
+        }
+      });
+    } catch (e) {
+      console.log("this is a try catch error");
+    }
+  });
+});
+
+router.route("/verification/name").get((req, res) => {
+  pool.getConnection((err, connection) => {
+    try {
+      connection.query("SELECT * from issued", (error, rows) => {
+        connection.release();
+        if (error) {
+          console.log("this is an error");
+        } else {
+          res.json(rows);
+        }
+      });
+    } catch (e) {
+      console.log("this is a try catch error");
+    }
+  });
+});
+
+router
+  .route("/certificateverification/:certificate_v/:certificate_n")
+  .get((req, res) => {
+    const uuid = req.params.certificate_v;
+    const nic = req.params.certificate_n;
+
+    pool.getConnection((err, connection) => {
+      try {
+        connection.query(
+          `SELECT * from issued WHERE uuid="${uuid}" AND nic="${nic}"`,
+          (error, rows) => {
+            connection.release();
+            let data = rows.length;
+            if (error) {
+              console.log("this is an error");
+            } else {
+              res.json(data);
+            }
+          }
+        );
+      } catch (e) {
+        console.log("this is a try catch error");
+      }
+    });
+  });
 module.exports = router;

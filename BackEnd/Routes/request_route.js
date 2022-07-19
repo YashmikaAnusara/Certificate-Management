@@ -7,6 +7,7 @@ const { google } = require("googleapis");
 const PizZip = require("pizzip");
 const Docxtemplater = require("docxtemplater");
 const { PDFNet } = require("@pdftron/pdfnet-node");
+const { WordsApi, ConvertDocumentRequest } = require("asposewordscloud");
 
 // const pool = mysql.createPool({
 //   connectionLimit: 10,
@@ -405,30 +406,27 @@ router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
       const inputPath = path.resolve(__dirname, `../Certificate/${id}.docx`);
       const outputPath = path.resolve(__dirname, `../Certificate/${id}.pdf`);
 
-      const convert = async () => {
-        const pdfdoc = await PDFNet.PDFDoc.create();
-        await pdfdoc.initSecurityHandler();
-        await PDFNet.Convert.toPdf(pdfdoc, inputPath);
-        pdfdoc.save(outputPath, PDFNet.SDFDoc.SaveOptions.e_linearized);
-      };
-
-      PDFNet.runWithCleanup(
-        convert,
-        "demo:1656359402941:7a7659560300000000ed7ac24c6e1376194f347f304b0916da24823107"
-      )
-        .then(() => {
-          fs.readFile(outputPath, (err, data) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve("done");
-            }
-          });
-        })
-        .catch((err) => {
-          res.statusCode = 500;
-          res.end(err);
+      var appSid = "d0838cc4-e283-4e67-8200-7cf070ff8cac";
+      var appKey = "31b8b4c42d4d4967211e1e95255bf794";
+      
+      var wordsApi = new WordsApi(appSid, appKey);
+      
+      var fileName = inputPath;
+      var request = new ConvertDocumentRequest({
+        format: "pdf", 
+        document: fs.readFileSync(fileName),
+      });
+      
+      wordsApi.convertDocument(request).then((result) => {
+        fs.writeFile(outputPath, result.body, (err) => {
+          if (err) throw err;
+          // console.log('Successfully converted');
+          resolve("Done")
         });
+      }).catch(function(err) {
+        // console.log('Error:', err);
+        reject(err)
+      });       
     });
 
     //delete created docx files

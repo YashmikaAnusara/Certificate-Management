@@ -845,10 +845,10 @@ export default function RequsetForm() {
       } else if (data.email === "") {
         setw_email(true);
         setActiveStep(activeStep);
-      } else if (!(data.p_number.length === 11) || !(data.p_number.length !== 12)) {
+      } else if (data.p_number.length !== 10) {
         setw_p_number(true);
         setActiveStep(activeStep);
-      } else if (data.nic.length !== 10) {
+      } else if (!(data.nic.length === 10 || data.nic.length === 12)) {
         setw_nic(true);
         setActiveStep(activeStep);
       } else if (data.organization === "") {

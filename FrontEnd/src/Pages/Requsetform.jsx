@@ -666,6 +666,7 @@ const FeedbackPaymentDetails = () => {
               <div className="textfeild_sub">
                 <TextField
                   id="bank_slip"
+                  name="file"
                   type="file"
                   accept="image/*"
                   label="Upload bank slip :"
@@ -923,7 +924,7 @@ export default function RequsetForm() {
     }
     if (activeStep === steps.length - 1) {
       axios.post(`http://${Port}:8070/student/requset`, data).then((res) => {
-        // console.log("Data Added");
+        // console.log(data.bank_slip);
         setActiveStep(activeStep + 1);
         sets_datasend(true);
         setTimeout(() => {

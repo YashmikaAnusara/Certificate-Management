@@ -651,6 +651,7 @@ const RatetheCADDCenter = () => {
 };
 const FeedbackPaymentDetails = () => {
   const { control } = useFormContext();
+
   return (
     <>
       <div className="Form">
@@ -666,7 +667,6 @@ const FeedbackPaymentDetails = () => {
               <div className="textfeild_sub">
                 <TextField
                   id="bank_slip"
-                  name="file"
                   type="file"
                   accept="image/*"
                   label="Upload bank slip :"
@@ -674,9 +674,11 @@ const FeedbackPaymentDetails = () => {
                   InputLabelProps={{
                     shrink: true,
                   }}
+                  onChange={(e) => {
+                    field.onChange(e.target.files[0]);
+                  }}
                   fullWidth
                   required
-                  {...field}
                 />
               </div>
             )}
@@ -691,7 +693,6 @@ function getStepContent(step) {
   switch (step) {
     case 0:
       return <PersonalDetails />;
-
     case 1:
       return <ClassDetails />;
     case 2:
@@ -923,13 +924,19 @@ export default function RequsetForm() {
       }
     }
     if (activeStep === steps.length - 1) {
+      const test = data.bank_slip.name.replace(data.bank_slip.name, "testing");
+      console.log(test);
+      const data2 = new FormData();
+      data2.append("slip", test);
+
       axios.post(`http://${Port}:8070/student/requset`, data).then((res) => {
-        // console.log(data.bank_slip);
-        setActiveStep(activeStep + 1);
-        sets_datasend(true);
-        setTimeout(() => {
-          window.location.reload();
-        }, 900);
+        axios.post(`http://${Port}:8070/upload/slip`, data2).then((res) => {
+          setActiveStep(activeStep + 1);
+          sets_datasend(true);
+          setTimeout(() => {
+            // window.location.reload();
+          }, 900);
+        });
       });
     }
     // else {

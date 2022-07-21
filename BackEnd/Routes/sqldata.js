@@ -2,6 +2,9 @@ const router = require("express").Router();
 const { json } = require("body-parser");
 const mysql = require("mysql");
 const ShortUniqueId = require("short-unique-id");
+const fileUpload = require("express-fileupload");
+const path = require("path");
+const multer = require("multer");
 
 // const pool = mysql.createPool({
 //   connectionLimit: 10,
@@ -55,8 +58,6 @@ router.route("/requset").post((req, res) => {
   const b_inquired = req.body.b_inquired;
   const c_person = req.body.c_person;
   const feedbak = req.body.feedbak;
-  const photo = req.body.bank_slip.substring(12);
-  const bank_slip = photo.replace(photo,uuid);
   const s_date = req.body.s_date;
   const s_month = req.body.s_month;
 
@@ -87,7 +88,6 @@ router.route("/requset").post((req, res) => {
     b_inquired,
     c_person,
     feedbak,
-    bank_slip,
     s_date,
     s_month,
   };
@@ -99,7 +99,15 @@ router.route("/requset").post((req, res) => {
         if (error) {
           console.log("this is an error");
         } else {
-           uploadPath = __dirname + "../Payment_Slip/" + bank_slip;
+          // var storage = multer.diskStorage({
+          //   destination: function (req, file, cb) {
+          //     cb(null, "Payment_Slip/");
+          //   },
+          //   filename: function (req, file, cb) {
+          //     let name = path.basename(file.uuid);
+          //     cb(null, name);
+          //   },
+          // });
           res.json("Data Added");
         }
       });

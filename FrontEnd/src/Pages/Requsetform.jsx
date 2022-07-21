@@ -29,12 +29,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 function getSteps() {
-  return [
-    "Personal Details",
-    "Class Details",
-    "Rate the CADD Center",
-    "Feedback & Payment Details",
-  ];
+  return ["Personal Details", "Class Details", "Rate Us", "Payment Details"];
 }
 const PersonalDetails = () => {
   const { control } = useFormContext();
@@ -224,7 +219,7 @@ const ClassDetails = () => {
             render={({ field }) => (
               <TextField
                 id="class_id"
-                label="Class ID (Leave blank if unknown) :"
+                label="Class ID :"
                 variant="outlined"
                 {...field}
               />
@@ -237,7 +232,7 @@ const ClassDetails = () => {
             render={({ field }) => (
               <TextField
                 id="name_cerificate"
-                label="Name of Certificate applying for? (Leave blank if unknown) :"
+                label="Name of Certificate applying for? :"
                 variant="outlined"
                 {...field}
               />
@@ -633,6 +628,22 @@ const RatetheCADDCenter = () => {
               )}
             />
           </div>
+          <Controller
+            control={control}
+            name="feedbak"
+            render={({ field }) => (
+              <div className="textfeild_sub">
+                <TextField
+                  id="feedbak"
+                  label="Feedback/Suggestion :"
+                  variant="outlined"
+                  fullWidth
+                  // required
+                  {...field}
+                />
+              </div>
+            )}
+          />
         </div>
       </div>
     </>
@@ -648,23 +659,6 @@ const FeedbackPaymentDetails = () => {
             "& > :not(style)": { m: 1, maxWidth: "98.5%", minWidth: "55ch" },
           }}
         >
-          <Controller
-            control={control}
-            name="feedbak"
-            render={({ field }) => (
-              <div className="textfeild_sub">
-                <TextField
-                  id="feedbak"
-                  label="Feekback/Suggestion :"
-                  variant="outlined"
-                  fullWidth
-                  // required
-                  {...field}
-                />
-              </div>
-            )}
-          />
-
           <Controller
             control={control}
             name="bank_slip"
@@ -851,7 +845,7 @@ export default function RequsetForm() {
       } else if (data.email === "") {
         setw_email(true);
         setActiveStep(activeStep);
-      } else if (data.p_number.length !== 10) {
+      } else if (!(data.p_number.length === 11) || !(data.p_number.length !== 12)) {
         setw_p_number(true);
         setActiveStep(activeStep);
       } else if (data.nic.length !== 10) {
@@ -913,14 +907,14 @@ export default function RequsetForm() {
       } else if (data.c_person === "") {
         setw_c_person(true);
         setActiveStep(activeStep);
+      } else if (data.feedbak === "") {
+        setw_feedbak(true);
+        setActiveStep(activeStep);
       } else {
         setActiveStep(activeStep + 1);
       }
     } else if (activeStep === 3) {
-      if (data.feedbak === "") {
-        setw_feedbak(true);
-        setActiveStep(activeStep);
-      } else if (data.bank_slip === "") {
+      if (data.bank_slip === "") {
         setw_bank_slip(true);
         setActiveStep(activeStep);
       } else {

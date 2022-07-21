@@ -36,6 +36,8 @@ function RequestDetails() {
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
 
+  const [grade, setgrade] = useState("");
+
   useEffect(() => {
     setOpen(true);
     axios
@@ -290,9 +292,18 @@ function RequestDetails() {
               </div>
             </div>
             <div className="course-content-wrapper">
+              <TextField
+                id="outlined-basic"
+                label="Enter the Grade"
+                variant="outlined"
+                value={grade}
+                onChange={(e) => {
+                  setgrade(e.target.value);
+                }}
+              />
               <Autocomplete
-                id="nic"
-                name="nic"
+                id="c_type"
+                name="c_type"
                 className="course-content-drop-down"
                 open={open}
                 onOpen={() => {

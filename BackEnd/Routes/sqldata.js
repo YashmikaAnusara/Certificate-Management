@@ -55,7 +55,8 @@ router.route("/requset").post((req, res) => {
   const b_inquired = req.body.b_inquired;
   const c_person = req.body.c_person;
   const feedbak = req.body.feedbak;
-  const bank_slip = req.body.bank_slip;
+  const photo = req.body.bank_slip.substring(12);
+  const bank_slip = photo.replace(photo,uuid);
   const s_date = req.body.s_date;
   const s_month = req.body.s_month;
 
@@ -98,6 +99,7 @@ router.route("/requset").post((req, res) => {
         if (error) {
           console.log("this is an error");
         } else {
+           uploadPath = __dirname + "../Payment_Slip/" + bank_slip;
           res.json("Data Added");
         }
       });

@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const upload = require("./middleware/upload");
 const uploadv1 = require("./middleware/slip");
+
 const path = require("path");
 const nodemailer = require("nodemailer");
 
@@ -22,7 +23,6 @@ app.use("/student", require("./Routes/sqldata"));
 app.use("/template/save", upload.single("template"), function (req, res) {
   res.json("Done");
 });
-
 
 // save the slip
 app.use("/upload/slip/:name", uploadv1.single("slip"), function (req, res) {

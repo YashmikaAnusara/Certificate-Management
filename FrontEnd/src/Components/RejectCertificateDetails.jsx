@@ -3,6 +3,7 @@ import '../CSS/RequestDetails.css'
 import MonNavBar from './MobNavBar'
 import AdminNavBar from './AdminNavBar'
 import AccountMenu from './Profile'
+import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate,useParams } from 'react-router-dom'
 import Port from '../port'
@@ -16,7 +17,6 @@ function RejectCertificateDetails() {
     const nic=params.nic
     const[details,setDetails]=useState({})
     const [isOpen,setIsOpen]=useState(false)
-
     const backBtnHandler = () => {
         navigate(-1)
     }
@@ -38,6 +38,29 @@ function RejectCertificateDetails() {
           });
       }, [id, nic]);
 
+      const viewReceiptHandler=()=>{
+        setIsOpen(true)
+        axios({
+          url: `http://${Port}:8070/request/slip/${id}`,
+          method: "GET",
+          responseType: "blob",
+        })
+          .then((res) => {
+            if(res.data){
+              setIsOpen(false)
+              const file = new Blob([res.data], { type: "image/jpg" });
+              const fileURL = URL.createObjectURL(file);
+              window.open(fileURL);
+            }
+          })
+          .catch((err) => {
+            if(err){
+              setIsOpen(false)
+              alert(err);
+            }
+          });
+      }
+
     return (
         <div className='container'>
             <Loader open={isOpen}/>
@@ -54,7 +77,7 @@ function RejectCertificateDetails() {
                 <div className='body-container'>
                     {/* ------------------------------------------------------ */}
                     <ArrowBackIcon onClick={backBtnHandler} className='back-btn' />
-
+                    <ReceiptOutlinedIcon onClick={viewReceiptHandler} className="download-btn" titleAccess='Download the Receipt'/>
                     <div className='student-request-details-header-wrapper'>
                         <div className='student-request-id'>
                             <p>Certificate ID: <b>{details.uuid ? details.uuid : "-"}</b></p>

@@ -548,7 +548,7 @@ router.route("/send/reject/certificate/:email/:message").get((req, res) => {
     if (error) {
       res.send(error);
     } else {
-      console.log("Email has been send.." + info.response);
+      // console.log("Email has been send.." + info.response);
       res.send(info.response);
     }
   });

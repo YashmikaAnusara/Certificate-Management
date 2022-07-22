@@ -15,6 +15,7 @@ import MuiAlert from "@mui/material/Alert";
 import Typography from "@mui/material/Typography";
 import Port from "../port";
 import axios from "axios";
+import ShortUniqueId from "short-unique-id";
 import {
   useForm,
   Controller,
@@ -24,7 +25,6 @@ import {
 
 import "../CSS/Requsetpage.css";
 
-
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -32,8 +32,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 function getSteps() {
   return ["Personal Details", "Class Details", "Rate Us", "Payment Details"];
 }
-
- 
 
 const PersonalDetails = () => {
   const { control } = useFormContext();
@@ -655,7 +653,7 @@ const RatetheCADDCenter = () => {
 };
 const FeedbackPaymentDetails = () => {
   const { control } = useFormContext();
-  
+
   return (
     <>
       <div className="Form">
@@ -671,21 +669,18 @@ const FeedbackPaymentDetails = () => {
               <div className="textfeild_sub">
                 <TextField
                   id="bank_slip"
-                  name="file"
                   type="file"
-                  accept="image/*"
+                  accept=".jpg, .jpeg"
                   label="Upload bank slip :"
                   variant="outlined"
-                  
                   InputLabelProps={{
                     shrink: true,
                   }}
-
+                  onChange={(e) => {
+                    field.onChange(e.target.files[0]);
+                  }}
                   fullWidth
                   required
-                  {...field}
-                  
-                  
                 />
               </div>
             )}
@@ -700,7 +695,6 @@ function getStepContent(step) {
   switch (step) {
     case 0:
       return <PersonalDetails />;
-
     case 1:
       return <ClassDetails />;
     case 2:
@@ -740,8 +734,13 @@ export default function RequsetForm() {
     "December",
   ];
 
+  const uuid = new ShortUniqueId({ length: 7 });
+
+  const [newUUID] = useState(uuid());
+
   const methods = useForm({
     defaultValues: {
+      uuid: newUUID,
       ms_email_id: "",
       a_submission_d: "",
       name: "",
@@ -801,8 +800,6 @@ export default function RequsetForm() {
 
   const vertical = "top";
   const horizontal = "right";
-
-   
 
   const [activeStep, setActiveStep] = useState(0);
   const [skippedSteps] = useState([]);
@@ -934,13 +931,22 @@ export default function RequsetForm() {
       }
     }
     if (activeStep === steps.length - 1) {
+      // const test = data.bank_slip.name.replace(data.bank_slip.name, "testing.jpg");
+      // console.log(test);
+      console.log(steps.length);
+      const data2 = new FormData();
+      data2.append("slip", data.bank_slip);
+
       axios.post(`http://${Port}:8070/student/requset`, data).then((res) => {
-        // console.log(data.bank_slip);
-        setActiveStep(activeStep + 1);
-        sets_datasend(true);
-        setTimeout(() => {
-          window.location.reload();
-        }, 900);
+        axios
+          .post(`http://${Port}:8070/upload/slip/${newUUID}`, data2)
+          .then((res) => {
+            setActiveStep(activeStep + 1);
+            sets_datasend(true);
+            setTimeout(() => {
+              window.location.reload();
+            }, 900);
+          });
       });
     }
     // else {

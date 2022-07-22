@@ -24,6 +24,7 @@ import {
 
 import "../CSS/Requsetpage.css";
 
+
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -31,6 +32,9 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 function getSteps() {
   return ["Personal Details", "Class Details", "Rate Us", "Payment Details"];
 }
+
+ 
+
 const PersonalDetails = () => {
   const { control } = useFormContext();
   return (
@@ -651,6 +655,7 @@ const RatetheCADDCenter = () => {
 };
 const FeedbackPaymentDetails = () => {
   const { control } = useFormContext();
+  
   return (
     <>
       <div className="Form">
@@ -671,12 +676,16 @@ const FeedbackPaymentDetails = () => {
                   accept="image/*"
                   label="Upload bank slip :"
                   variant="outlined"
+                  
                   InputLabelProps={{
                     shrink: true,
                   }}
+
                   fullWidth
                   required
                   {...field}
+                  
+                  
                 />
               </div>
             )}
@@ -792,6 +801,8 @@ export default function RequsetForm() {
 
   const vertical = "top";
   const horizontal = "right";
+
+   
 
   const [activeStep, setActiveStep] = useState(0);
   const [skippedSteps] = useState([]);

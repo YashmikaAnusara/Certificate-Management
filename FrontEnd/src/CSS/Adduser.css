@@ -1,0 +1,27 @@
+.user-adding-form-wrapper{
+    width: 100%;
+    margin-top: 50px;
+}
+.input-feilds-wrapper{
+    width:100%;
+    padding-left: 50px;
+}
+.input-feilds{
+    width:45%;
+}
+.user-adding-btn-wrapper{
+    background-color: aqua;
+    margin-right: 65px;
+    margin-top: 20px;
+    float: right;
+}
+.user-details-wrapper{
+    display: flex;
+    width: 100%;
+    margin-top:5px;
+    background-color: rgb(255, 255, 255);
+    padding:10px
+}
+.user-detail{
+    width:50%
+}

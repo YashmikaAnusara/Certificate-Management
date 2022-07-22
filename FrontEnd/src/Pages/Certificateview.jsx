@@ -10,7 +10,7 @@ import Port from "../port";
 import Loader from "../Components/Loader";
 
 function Certificateview() {
-  const params = useParams();
+  const params = useParams(); 
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [details, setDetails] = useState({});

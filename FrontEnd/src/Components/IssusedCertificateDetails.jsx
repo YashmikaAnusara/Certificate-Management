@@ -9,6 +9,7 @@ import { useNavigate,useParams } from "react-router-dom";
 import axios from "axios";
 import FileDownload from "js-file-download";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
 import Port from '../port'
 import Loader from "./Loader";
 
@@ -61,6 +62,29 @@ function IssuedCertificateDetails() {
 
     window.open(fileURL);
   };
+  
+  const viewReceiptHandler=()=>{
+    setIsOpen(true)
+    axios({
+      url: `http://${Port}:8070/request/slip/${id}`,
+      method: "GET",
+      responseType: "blob",
+    })
+      .then((res) => {
+        if(res.data){
+          setIsOpen(false)
+          const file = new Blob([res.data], { type: "image/jpg" });
+          const fileURL = URL.createObjectURL(file);
+          window.open(fileURL);
+        }
+      })
+      .catch((err) => {
+        if(err){
+          setIsOpen(false)
+          alert(err);
+        }
+      });
+  }
 
   const downloadBtnHandler = () => {
     FileDownload(data, `${id}.pdf`);
@@ -81,11 +105,14 @@ function IssuedCertificateDetails() {
         <div className="body-container">
           {/* ------------------------------------------------------ */}
           <ArrowBackIcon onClick={backBtnHandler} className="back-btn" />
-          <RemoveRedEyeIcon onClick={viewHandler} className="download-btn" />
+          <RemoveRedEyeIcon onClick={viewHandler} className="download-btn" titleAccess='View the Certificate'/>
           <FileDownloadOutlinedIcon
             onClick={downloadBtnHandler}
             className="download-btn"
+            titleAccess='Download the Certificate'
           />
+          <ReceiptOutlinedIcon onClick={viewReceiptHandler} className="download-btn" titleAccess='Download the Receipt'/>
+
 
           <div className="student-request-details-header-wrapper">
             <div className="student-request-id">

@@ -77,12 +77,13 @@ function Templates(props) {
   const id=params.id;
   const nic=params.nic
   const type=params.type
+  const grade=params.grade
 
   const selectTemplate=()=>{
     props.setOpen(true)
     setTimeout(()=>{
       props.setOpen(false)
-      navigate(`/requests/detail/${id}/${nic}/${type}/certificate/${props.name}`);
+      navigate(`/requests/detail/${id}/${nic}/${type}/${grade}/certificate/${props.name}`);
     },2000)
 
   }

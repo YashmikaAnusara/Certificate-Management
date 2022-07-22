@@ -19,6 +19,7 @@ function Certificateview() {
   const nic = params.nic;
   const tmpName = params.tempid;
   const type = params.type;
+  const grade=params.grade;
 
   const username=localStorage.getItem('username')
 
@@ -40,6 +41,7 @@ function Certificateview() {
     courses:content.c_content,
     cDuration:content.c_duration,
     test:content.test,
+    grade:grade
   }
 
   const issuedData={

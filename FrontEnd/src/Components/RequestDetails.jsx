@@ -14,6 +14,7 @@ import Port from "../port";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
+import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
 
 function sleep(delay = 0) {
   return new Promise((resolve) => {
@@ -87,8 +88,11 @@ function RequestDetails() {
   }, [open]);
 
   const checkHandler = () => {
-    if (ctype === "") {
-      alert("Please select the course type!");
+    if (grade === "" ) {
+      alert("Grade cannot be empty!");
+    }
+    else if(ctype === ""){
+      alert("Course type cannot be empty!!");
     } else {
       console.log(ctype);
       setOpen(true);
@@ -100,14 +104,12 @@ function RequestDetails() {
               setOpen(false);
               setpending(false);
               setStatus(false);
-              
             }, 2000);
           } else {
             setTimeout(() => {
               setOpen(false);
               setpending(false);
               setStatus(true);
-              
             }, 2000);
           }
         })
@@ -118,7 +120,9 @@ function RequestDetails() {
   };
 
   const approveHandler = () => {
-    navigate(`/requests/detail/${id}/${nic}/${ctype}/certificate`);
+     
+      navigate(`/requests/detail/${id}/${nic}/${ctype}/${grade}/certificate`);
+  
   };
 
   const backBtnHandler = () => {
@@ -128,6 +132,29 @@ function RequestDetails() {
   const rejectHandler = () => {
     navigate(`/requests/detail/${id}/${nic}/reject`);
   };
+
+  const viewReceiptHandler=()=>{
+    setOpen(true)
+    axios({
+      url: `http://${Port}:8070/request/slip/${id}`,
+      method: "GET",
+      responseType: "blob",
+    })
+      .then((res) => {
+        if(res.data){
+          setOpen(false);
+          const file = new Blob([res.data], { type: "image/jpg" });
+          const fileURL = URL.createObjectURL(file);
+          window.open(fileURL);
+        }
+      })
+      .catch((err) => {
+        if(err){
+          setOpen(false);
+          alert(err);
+        }
+      });
+  }
 
   return (
     <div className="container">
@@ -146,7 +173,7 @@ function RequestDetails() {
           {/* ------------------------------------------------------ */}
 
           <ArrowBackIcon onClick={backBtnHandler} className="back-btn" />
-
+          <ReceiptOutlinedIcon onClick={viewReceiptHandler} className="download-btn" titleAccess='Download the Receipt'/>
           <div className="student-request-details-header-wrapper">
             <div className="student-request-id">
               <p>
@@ -293,6 +320,7 @@ function RequestDetails() {
             </div>
             <div className="course-content-wrapper">
               <TextField
+                className="course-content-drop-down"
                 id="outlined-basic"
                 label="Enter the Grade"
                 variant="outlined"

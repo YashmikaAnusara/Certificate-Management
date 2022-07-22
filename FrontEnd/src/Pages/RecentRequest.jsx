@@ -168,6 +168,7 @@ function PendingRequestTable(props) {
             style={{ color: "green" }}
             onClick={viewHandler}
             className="view-request-btn"
+            titleAccess='More Details..'
           />
         </center>
       </div>

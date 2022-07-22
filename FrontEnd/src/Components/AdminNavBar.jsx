@@ -32,7 +32,7 @@ function AdminNavBar() {
         </div>
 
         <div className="navbar-body">
-          <p className="navbar-section-header">Main Name</p>
+          <p className="navbar-section-header">Main</p>
           <NavLink to="/recent/request" className="navbar-link">
             <div className="navbar-section-detail">
               <MarkUnreadChatAltOutlinedIcon fonrsize="small" />
@@ -71,10 +71,6 @@ function AdminNavBar() {
               <p>Templates</p>
             </div>
           </NavLink>
-        </div>
-
-        <div className="navbar-body">
-          <p className="navbar-section-header">Details</p>
           <NavLink to="/certificatecontent" className="navbar-link">
             <div className="navbar-section-detail">
               <AssignmentIcon fonrsize="small" />

@@ -19,6 +19,7 @@ function AdminHome() {
   const username=localStorage.getItem('username')
 
   useEffect(() => {
+     
     axios
       .get(`http://${Port}:8070/student/pending/count`)
       .then((res) => {

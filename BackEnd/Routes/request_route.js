@@ -614,14 +614,31 @@ router.route("/slip/:id").get((req, res) => {
   const id = req.params.id;
 
   const Path = path.resolve(__dirname, `../Payment_Slip/${id}.jpg`);
-  fs.readFile(Path, function (err, data) {
-    if (err) {
-      res.json("Not Found");
-    } else {
-      res.writeHead(200, { ContentType: "image/jpg" });
-      res.end(data);
-    }
-  });
+  const Path2 = path.resolve(__dirname, `../Payment_Slip/${id}.jpeg`);
+  const Path3 = path.resolve(__dirname, `../Payment_Slip/${id}.png`);
+
+    fs.readFile(Path, function (err, data) {
+      if (err) {
+          fs.readFile(Path2, function (err, data) {
+            if (err) {
+              fs.readFile(Path3, function (err, data) {
+                if (err) {
+                  console.log(err)
+                } else {
+                  res.writeHead(200, { ContentType: "image/jpg" });
+                  res.end(data);
+                }
+              });
+            } else {
+              res.writeHead(200, { ContentType: "image/jpg" });
+              res.end(data);
+            }
+          });
+      } else {
+        res.writeHead(200, { ContentType: "image/jpg" });
+        res.end(data);
+      }
+    });
 });
 
 module.exports = router;

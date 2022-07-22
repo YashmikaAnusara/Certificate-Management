@@ -47,12 +47,12 @@ function App() {
             element={<CertificateTemplates />}
           />
           <Route
-            path="/requests/detail/:id/:nic/:type/certificate/:tempid"
+            path="/requests/detail/:id/:nic/:type/:grade/certificate/:tempid"
             element={<Certificateview />}
           />
           <Route path="/requestform" element={<RequestForm />} />
           <Route
-            path="/requests/detail/:id/:nic/:type/certificate"
+            path="/requests/detail/:id/:nic/:type/:grade/certificate"
             element={<SelectTemplatale />}
           />
           <Route

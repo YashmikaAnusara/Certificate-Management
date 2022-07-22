@@ -58,12 +58,13 @@ function CertificateTemplates() {
         <div className="body-container">
           {/* ------------------------------------------------------ */}
           <div className="certificate-temp-add-btn-wrapper clearfix">
-            <p className="certificate-temp-add-dis">Add Template</p>
+            <p className="certificate-temp-add-dis">Add a Template</p>
             {!active ? (
               <AddCircleOutlineOutlinedIcon
                 className="certificate-temp-add-btn"
                 fontSize="medium"
                 onClick={tempAddhandler}
+                titleAccess='Upload the Template'
               />
             ) : (
               <DoDisturbIcon
@@ -98,6 +99,7 @@ function TemplateAdd(props) {
   const filename = file.name;
 
   const fileUploadHandler = () => {
+
     const data = new FormData();
     data.append("template", file);
     if (!file) {
@@ -112,6 +114,7 @@ function TemplateAdd(props) {
           setTimeout(() => {
             props.setIsOpen(false);
             alert("Template added successful!");
+            
             window.location.reload(false);
           }, 2000);
         })
@@ -119,6 +122,7 @@ function TemplateAdd(props) {
           console.log(err);
         });
     }
+
   };
   return (
     <div className="tempplate-adding-wrapper clearfix">
@@ -134,6 +138,7 @@ function TemplateAdd(props) {
           fontSize="medium"
           className="upload-btn"
           onClick={fileUploadHandler}
+          titleAccess='Upload the Template'
         />
       </form>
     </div>

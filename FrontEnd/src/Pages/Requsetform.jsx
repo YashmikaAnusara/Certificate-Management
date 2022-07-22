@@ -32,6 +32,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 function getSteps() {
   return ["Personal Details", "Class Details", "Rate Us", "Payment Details"];
 }
+
 const PersonalDetails = () => {
   const { control } = useFormContext();
   return (
@@ -718,7 +719,6 @@ export default function RequsetForm() {
 
   const month = requestmonth.getMonth();
 
-  
   const months = [
     "January",
     "February",
@@ -737,7 +737,6 @@ export default function RequsetForm() {
   const uuid = new ShortUniqueId({ length: 7 });
 
   const [newUUID] = useState(uuid());
-
 
   const methods = useForm({
     defaultValues: {

@@ -269,6 +269,31 @@ router.route("/remove/details/:id").delete((req, res) => {
   });
 });
 
+//get student certificates
+router.route("/delete/user/:username/:password").delete((req, res) => {
+  const username = req.params.username;
+  const password = req.params.password;
+
+  pool.getConnection((err, connection) => {
+    try {
+      connection.query(
+        `DELETE FROM admin WHERE username="${username}" AND password="${password}" `,
+        (error, rows) => {
+          connection.release();
+          if (error) {
+            res.send(err);
+          } else {
+            res.send(rows);
+          }
+        }
+      );
+    } catch (e) {
+      res.send(e);
+    }
+  });
+});
+
+
 //get rejected certificate
 router.route("/reject/certificates/details").get((req, res) => {
   pool.getConnection((err, connection) => {
@@ -330,6 +355,24 @@ router.route("/issued/certificates/details").get((req, res) => {
   });
 });
 
+//get user details
+router.route("/user/details").get((req, res) => {
+  pool.getConnection((err, connection) => {
+    try {
+      connection.query("SELECT * from admin", (error, rows) => {
+        connection.release();
+        if (error) {
+          res.send(err);
+        } else {
+          res.json(rows);
+        }
+      });
+    } catch (e) {
+      res.send(e);
+    }
+  });
+});
+
 //get student certificates
 router.route("/certificate/:id").get((req, res) => {
   const id = req.params.id;
@@ -345,6 +388,7 @@ router.route("/certificate/:id").get((req, res) => {
   });
 });
 
+ 
 //genarate a certificates
 router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
   const id = req.params.id;
@@ -374,7 +418,7 @@ router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
         id: data.msID,
         c_content: data.courses,
         duration:data.cDuration,
-        grade:"A Grade",
+        grade:data.grade,
         verified:id
 
       });
@@ -559,6 +603,22 @@ router.route("/template/:id").get((req, res) => {
       res.json("Not Found");
     } else {
       res.writeHead(200, { ContentType: "application/pdf" });
+      res.end(data);
+    }
+  });
+});
+
+// get relevent student slip
+
+router.route("/slip/:id").get((req, res) => {
+  const id = req.params.id;
+
+  const Path = path.resolve(__dirname, `../Slip/${id}.jpg`);
+  fs.readFile(Path, function (err, data) {
+    if (err) {
+      res.json("Not Found");
+    } else {
+      res.writeHead(200, { ContentType: "image/jpg" });
       res.end(data);
     }
   });

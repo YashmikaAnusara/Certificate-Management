@@ -173,7 +173,7 @@ function RequestDetails() {
           {/* ------------------------------------------------------ */}
 
           <ArrowBackIcon onClick={backBtnHandler} className="back-btn" />
-          <ReceiptOutlinedIcon onClick={viewReceiptHandler} className="download-btn" titleAccess='Download the Receipt'/>
+          <ReceiptOutlinedIcon onClick={viewReceiptHandler} className="download-btn" titleAccess='View the Receipt'/>
           <div className="student-request-details-header-wrapper">
             <div className="student-request-id">
               <p>
@@ -182,7 +182,7 @@ function RequestDetails() {
             </div>
             <div className="student-request-timedate">
               <p>
-                Request Date: <b>{details.s_date ? details.s_date : "-"}</b>
+                Requested Date: <b>{details.s_date ? details.s_date : "-"}</b>
               </p>
             </div>
           </div>

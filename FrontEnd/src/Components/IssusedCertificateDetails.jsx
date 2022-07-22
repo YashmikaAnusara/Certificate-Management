@@ -111,7 +111,7 @@ function IssuedCertificateDetails() {
             className="download-btn"
             titleAccess='Download the Certificate'
           />
-          <ReceiptOutlinedIcon onClick={viewReceiptHandler} className="download-btn" titleAccess='Download the Receipt'/>
+          <ReceiptOutlinedIcon onClick={viewReceiptHandler} className="download-btn" titleAccess='View the Receipt'/>
 
 
           <div className="student-request-details-header-wrapper">
@@ -120,7 +120,7 @@ function IssuedCertificateDetails() {
             </div>
             <div className="student-request-timedate">
               <p>
-                Request Date: <b>{details.s_date ? details.s_date : "-"}</b>
+                Requested Date: <b>{details.s_date ? details.s_date : "-"}</b>
               </p>
               <p>
                 Approved Date: <b>{details.a_date ? details.a_date : "-"}</b>
@@ -182,6 +182,8 @@ function IssuedCertificateDetails() {
                 <p className="student-question">Have you completed the course fee payment?</p>
                 <p className="student-question">Name of the branch inquired at?</p>
                 <p className="student-question">Name of the contact person</p>
+                <br/>
+                <p className="student-question">Feedback</p>
               </div>
               <div className="student-answer-wrapper">
                 <p className="student-answer">{details.c_o_a_submission ? details.c_o_a_submission : "-"}</p>
@@ -194,6 +196,8 @@ function IssuedCertificateDetails() {
                 <p className="student-answer">{details.c_fee_payment ? details.c_fee_payment : "-"}</p>
                 <p className="student-answer">{details.b_inquired ? details.b_inquired : "-"}</p>
                 <p className="student-answer">{details.c_person ? details.c_person : "-"}</p>
+                <br/>
+                <p className="student-answer">{details.feedbak ? details.feedbak : "-"}</p>
               </div>
             </div>
           </div>

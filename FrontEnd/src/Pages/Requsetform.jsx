@@ -934,6 +934,7 @@ export default function RequsetForm() {
     if (activeStep === steps.length - 1) {
       // const test = data.bank_slip.name.replace(data.bank_slip.name, "testing.jpg");
       // console.log(test);
+      console.log(steps.length);
       const data2 = new FormData();
       data2.append("slip", data.bank_slip);
 

@@ -194,6 +194,7 @@ function RequestDetails() {
                 <p className="student-question">Email Address</p>
                 <p className="student-question">Contact No</p>
                 <p className="student-question">Occupation</p>
+                <p className="student-question">Organization</p>
                 <p className="student-question">Assignment Submission Date</p>
               </div>
               <div className="student-answer-wrapper">
@@ -211,6 +212,9 @@ function RequestDetails() {
                 </p>
                 <p className="student-answer">
                   {details.occupation ? details.occupation : "-"}
+                </p>
+                <p className="student-answer">
+                  {details.organization ? details.organization : "-"}
                 </p>
                 <p className="student-answer">
                   {details.a_submission_d ? details.a_submission_d : "-"}

@@ -77,13 +77,13 @@ function RejectCertificateDetails() {
                 <div className='body-container'>
                     {/* ------------------------------------------------------ */}
                     <ArrowBackIcon onClick={backBtnHandler} className='back-btn' />
-                    <ReceiptOutlinedIcon onClick={viewReceiptHandler} className="download-btn" titleAccess='Download the Receipt'/>
+                    <ReceiptOutlinedIcon onClick={viewReceiptHandler} className="download-btn" titleAccess='View the Receipt'/>
                     <div className='student-request-details-header-wrapper'>
                         <div className='student-request-id'>
                             <p>Certificate ID: <b>{details.uuid ? details.uuid : "-"}</b></p>
                         </div>
                         <div className='student-request-timedate'>
-                            <p>Request Date: <b>{details.s_date ? details.s_date : "-"}</b></p>
+                            <p>Requested Date: <b>{details.s_date ? details.s_date : "-"}</b></p>
                             <p>Rejected Date: <b>{details.r_date ? details.r_date : "-"}</b></p>
                         </div>
                     </div>
@@ -140,6 +140,9 @@ function RejectCertificateDetails() {
                                 <p className='student-question'>Have you completed the course fee payment?</p>
                                 <p className='student-question'>Name of the branch inquired at?</p>
                                 <p className='student-question'>Name of the contact person</p>
+                                <br/>
+                                <p className='student-question'>Feedback</p>
+
                             </div>
                             <div className='student-answer-wrapper'>
                                 <p className='student-answer'>{details.c_o_a_submission ? details.c_o_a_submission : "-"}</p>
@@ -152,11 +155,13 @@ function RejectCertificateDetails() {
                                 <p className='student-answer'>{details.c_fee_payment ? details.c_fee_payment : "-"}</p>
                                 <p className='student-answer'>{details.b_inquired ? details.b_inquired : "-"}</p>
                                 <p className='student-answer'>{details.c_person ? details.c_person : "-"}</p>
+                                <br/>
+                                <p className='student-answer'>{details.feedbak ? details.feedbak : "-"}</p>
                             </div>
                         </div>
                         <hr />
                         <div className='reject-reason-body'>
-                           <p style={{fontSize:"14px",fontWeight:"500",marginBottom:"15px"}}>Reason for Reject the Certificate</p>
+                           <p style={{fontSize:"14px",fontWeight:"500",marginBottom:"15px",color:"red"}}>Reason for Reject the Certificate...</p>
                            <p style={{fontSize:"14px"}}>{details.message ? details.message : "-"}</p>
                         </div>
 

@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { json } = require("body-parser");
 const mysql = require("mysql");
-const ShortUniqueId = require("short-unique-id");
+// const ShortUniqueId = require("short-unique-id");
 const fileUpload = require("express-fileupload");
 const path = require("path");
 const multer = require("multer");
@@ -32,8 +32,7 @@ router.route("/requset").post((req, res) => {
   const reqdata = req.body;
 
   const ms_email_id = req.body.ms_email_id;
-  const uuidv1 = new ShortUniqueId({ length: 7 });
-  const uuid = uuidv1();
+  const uuid = req.body.uuid;
   const a_submission_d = req.body.a_submission_d;
   const name = req.body.name;
   const email = req.body.email;

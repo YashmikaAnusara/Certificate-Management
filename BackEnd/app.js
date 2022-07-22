@@ -22,8 +22,9 @@ app.use("/student", require("./Routes/sqldata"));
 app.use("/template/save", upload.single("template"), function (req, res) {
   res.json("Done");
 });
+
 // save the slip
-app.use("/upload/slip", uploadv1.single("slip"), function (req, res) {
+app.use("/upload/slip/:name", uploadv1.single("slip"), function (req, res) {
   res.json("Done");
 });
 //get templates

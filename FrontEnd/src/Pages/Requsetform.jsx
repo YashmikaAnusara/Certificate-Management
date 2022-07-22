@@ -15,6 +15,7 @@ import MuiAlert from "@mui/material/Alert";
 import Typography from "@mui/material/Typography";
 import Port from "../port";
 import axios from "axios";
+import ShortUniqueId from "short-unique-id";
 import {
   useForm,
   Controller,
@@ -668,7 +669,7 @@ const FeedbackPaymentDetails = () => {
                 <TextField
                   id="bank_slip"
                   type="file"
-                  accept="image/*"
+                  accept=".jpg, .jpeg"
                   label="Upload bank slip :"
                   variant="outlined"
                   InputLabelProps={{
@@ -717,6 +718,7 @@ export default function RequsetForm() {
 
   const month = requestmonth.getMonth();
 
+  
   const months = [
     "January",
     "February",
@@ -732,8 +734,14 @@ export default function RequsetForm() {
     "December",
   ];
 
+  const uuid = new ShortUniqueId({ length: 7 });
+
+  const [newUUID] = useState(uuid());
+
+
   const methods = useForm({
     defaultValues: {
+      uuid: newUUID,
       ms_email_id: "",
       a_submission_d: "",
       name: "",
@@ -924,19 +932,21 @@ export default function RequsetForm() {
       }
     }
     if (activeStep === steps.length - 1) {
-      const test = data.bank_slip.name.replace(data.bank_slip.name, "testing");
-      console.log(test);
+      // const test = data.bank_slip.name.replace(data.bank_slip.name, "testing.jpg");
+      // console.log(test);
       const data2 = new FormData();
-      data2.append("slip", test);
+      data2.append("slip", data.bank_slip);
 
       axios.post(`http://${Port}:8070/student/requset`, data).then((res) => {
-        axios.post(`http://${Port}:8070/upload/slip`, data2).then((res) => {
-          setActiveStep(activeStep + 1);
-          sets_datasend(true);
-          setTimeout(() => {
-            // window.location.reload();
-          }, 900);
-        });
+        axios
+          .post(`http://${Port}:8070/upload/slip/${newUUID}`, data2)
+          .then((res) => {
+            setActiveStep(activeStep + 1);
+            sets_datasend(true);
+            setTimeout(() => {
+              window.location.reload();
+            }, 900);
+          });
       });
     }
     // else {

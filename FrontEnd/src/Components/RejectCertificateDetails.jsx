@@ -17,7 +17,6 @@ function RejectCertificateDetails() {
     const nic=params.nic
     const[details,setDetails]=useState({})
     const [isOpen,setIsOpen]=useState(false)
-   //test
     const backBtnHandler = () => {
         navigate(-1)
     }

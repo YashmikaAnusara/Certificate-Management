@@ -617,28 +617,28 @@ router.route("/slip/:id").get((req, res) => {
   const Path2 = path.resolve(__dirname, `../Payment_Slip/${id}.jpeg`);
   const Path3 = path.resolve(__dirname, `../Payment_Slip/${id}.png`);
 
-    fs.readFile(Path, function (err, data) {
-      if (err) {
-          fs.readFile(Path2, function (err, data) {
+  fs.readFile(Path, function (err, data) {
+    if (err) {
+      fs.readFile(Path2, function (err, data) {
+        if (err) {
+          fs.readFile(Path3, function (err, data) {
             if (err) {
-              fs.readFile(Path3, function (err, data) {
-                if (err) {
-                  console.log(err)
-                } else {
-                  res.writeHead(200, { ContentType: "image/jpg" });
-                  res.end(data);
-                }
-              });
+              console.log(err);
             } else {
               res.writeHead(200, { ContentType: "image/jpg" });
               res.end(data);
             }
           });
-      } else {
-        res.writeHead(200, { ContentType: "image/jpg" });
-        res.end(data);
-      }
-    });
+        } else {
+          res.writeHead(200, { ContentType: "image/jpg" });
+          res.end(data);
+        }
+      });
+    } else {
+      res.writeHead(200, { ContentType: "image/jpg" });
+      res.end(data);
+    }
+  });
 });
 
 module.exports = router;

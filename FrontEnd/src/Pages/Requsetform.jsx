@@ -670,6 +670,7 @@ const FeedbackPaymentDetails = () => {
                 <TextField
                   id="bank_slip"
                   type="file"
+                  accept="image/*"
                   label="Upload bank slip :"
                   variant="outlined"
                   InputLabelProps={{
@@ -680,7 +681,7 @@ const FeedbackPaymentDetails = () => {
                   }}
                   fullWidth
                   required
-                ></TextField>
+                />
               </div>
             )}
           />

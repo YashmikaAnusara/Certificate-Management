@@ -8,8 +8,9 @@ import AccountMenu from "../Components/Profile";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Port from "../port";
 import Loader from "../Components/Loader";
+
 function Certificateview() {
-  const params = useParams();
+  const params = useParams(); 
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [details, setDetails] = useState({});
@@ -216,7 +217,7 @@ function Certificateview() {
     }
   };
 
-  return username?(
+  return username ? (
     <div className="container">
       <Loader open={isOpen} />
       <div className="mob-navbar-wrapper">
@@ -244,7 +245,7 @@ function Certificateview() {
             </div>
           ) : (
             <p className="download-btn gen" style={{ color: "blue" }}>
-              Click "Genarate" Button to get a certificate...
+              Click "Generate" Button to get a certificate...
             </p>
           )}
 
@@ -305,7 +306,7 @@ function Certificateview() {
                 className="check-btn"
                 onClick={certificateGenarateHandler}
               >
-                Genarate
+                Generate
               </button>
             </center>
           )}
@@ -314,7 +315,9 @@ function Certificateview() {
         </div>
       </div>
     </div>
-  ):navigate("/");
+  ) : (
+    navigate("/")
+  );
 }
 
 export default Certificateview;

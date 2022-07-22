@@ -217,7 +217,7 @@ function Certificateview() {
     }
   };
 
-  return username?(
+  return username ? (
     <div className="container">
       <Loader open={isOpen} />
       <div className="mob-navbar-wrapper">
@@ -244,8 +244,8 @@ function Certificateview() {
               </p>
             </div>
           ) : (
-            <p className="download-btn" style={{ color: "blue" }}>
-              Click "Generate" button to get a certificate...
+            <p className="download-btn gen" style={{ color: "blue" }}>
+              Click "Generate" Button to get a certificate...
             </p>
           )}
 
@@ -315,7 +315,9 @@ function Certificateview() {
         </div>
       </div>
     </div>
-  ):navigate("/");
+  ) : (
+    navigate("/")
+  );
 }
 
 export default Certificateview;

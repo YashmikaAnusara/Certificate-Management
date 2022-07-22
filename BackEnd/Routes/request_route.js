@@ -293,7 +293,6 @@ router.route("/delete/user/:username/:password").delete((req, res) => {
   });
 });
 
-
 //get rejected certificate
 router.route("/reject/certificates/details").get((req, res) => {
   pool.getConnection((err, connection) => {
@@ -388,7 +387,6 @@ router.route("/certificate/:id").get((req, res) => {
   });
 });
 
- 
 //genarate a certificates
 router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
   const id = req.params.id;
@@ -417,10 +415,9 @@ router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
         during: "From: " + data.sDate + " " + "To: " + data.eDate,
         id: data.msID,
         c_content: data.courses,
-        duration:data.cDuration,
-        grade:data.grade,
-        verified:id
-
+        duration: data.cDuration,
+        grade: data.grade,
+        verified: id,
       });
 
       const buf = doc.getZip().generate({
@@ -452,25 +449,28 @@ router.route("/genarate/certificate/:id/:tmpid").post(async (req, res) => {
 
       var appSid = "d0838cc4-e283-4e67-8200-7cf070ff8cac";
       var appKey = "31b8b4c42d4d4967211e1e95255bf794";
-      
+
       var wordsApi = new WordsApi(appSid, appKey);
-      
+
       var fileName = inputPath;
       var request = new ConvertDocumentRequest({
-        format: "pdf", 
+        format: "pdf",
         document: fs.readFileSync(fileName),
       });
-      
-      wordsApi.convertDocument(request).then((result) => {
-        fs.writeFile(outputPath, result.body, (err) => {
-          if (err) throw err;
-          // console.log('Successfully converted');
-          resolve("Done")
+
+      wordsApi
+        .convertDocument(request)
+        .then((result) => {
+          fs.writeFile(outputPath, result.body, (err) => {
+            if (err) throw err;
+            // console.log('Successfully converted');
+            resolve("Done");
+          });
+        })
+        .catch(function (err) {
+          // console.log('Error:', err);
+          reject(err);
         });
-      }).catch(function(err) {
-        // console.log('Error:', err);
-        reject(err)
-      });       
     });
 
     //delete created docx files

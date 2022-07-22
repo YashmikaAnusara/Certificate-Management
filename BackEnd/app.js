@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const upload = require("./middleware/upload");
+
 const path = require("path");
 const nodemailer = require("nodemailer");
 
@@ -21,7 +22,6 @@ app.use("/student", require("./Routes/sqldata"));
 app.use("/template/save", upload.single("template"), function (req, res) {
   res.json("Done");
 });
-
 
 //get templates
 

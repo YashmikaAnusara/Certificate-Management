@@ -613,7 +613,7 @@ router.route("/template/:id").get((req, res) => {
 router.route("/slip/:id").get((req, res) => {
   const id = req.params.id;
 
-  const Path = path.resolve(__dirname, `../Slip/${id}.jpg`);
+  const Path = path.resolve(__dirname, `../Payment_Slip/${id}.jpg`);
   fs.readFile(Path, function (err, data) {
     if (err) {
       res.json("Not Found");

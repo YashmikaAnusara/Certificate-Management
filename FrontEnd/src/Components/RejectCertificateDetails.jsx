@@ -23,7 +23,7 @@ function RejectCertificateDetails() {
     }
     useEffect(() => {
         setIsOpen(true)
-        axios 
+        axios
           .get(`http://${Port}:8070/request/reject/details/${id}/${nic}`)
           .then((res) => {
             if(res.data){

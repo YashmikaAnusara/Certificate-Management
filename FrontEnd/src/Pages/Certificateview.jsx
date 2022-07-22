@@ -8,6 +8,7 @@ import AccountMenu from "../Components/Profile";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Port from "../port";
 import Loader from "../Components/Loader";
+
 function Certificateview() {
   const params = useParams();
   const navigate = useNavigate();
@@ -244,7 +245,7 @@ function Certificateview() {
             </div>
           ) : (
             <p className="download-btn" style={{ color: "blue" }}>
-              Click "Genarate" Button to get a certificate...
+              Click "Generate" button to get a certificate...
             </p>
           )}
 
@@ -305,7 +306,7 @@ function Certificateview() {
                 className="check-btn"
                 onClick={certificateGenarateHandler}
               >
-                Genarate
+                Generate
               </button>
             </center>
           )}

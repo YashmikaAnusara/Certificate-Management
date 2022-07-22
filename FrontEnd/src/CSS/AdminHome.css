@@ -98,6 +98,20 @@
     order: 2;
   }
 }
+.gen {
+  animation: blinkDot 1s infinite;
+}
+@keyframes blinkDot {
+  0% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
 
 /* -----------------------------admin body-------------------------------- */
 .card-wrapper {

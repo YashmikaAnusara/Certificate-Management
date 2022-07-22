@@ -243,7 +243,7 @@ function Certificateview() {
               </p>
             </div>
           ) : (
-            <p className="download-btn" style={{ color: "blue" }}>
+            <p className="download-btn gen" style={{ color: "blue" }}>
               Click "Genarate" Button to get a certificate...
             </p>
           )}
